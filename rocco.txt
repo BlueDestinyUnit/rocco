@@ -1,0 +1,140 @@
+-- =============================
+--		Customer
+-- =============================
+
+CREATE TABLE Customer
+(
+    id        BIGINT primary key auto_increment,
+    firstName VARCHAR(100) not null,
+    lastName  VARCHAR(100) NOT NULL,
+    birthDate Date         NOT null,
+    phone     VARCHAR(11)  not NULL,
+
+    addressId BIGINT       not NULL,
+    constraint Customer_addressId_FK foreign key (addressId) references Address (id)
+) auto_increment = 1001;
+
+
+-- =============================
+--		Address
+-- =============================
+
+CREATE TABLE Address
+(
+    id      BIGINT primary key auto_increment,
+    region  VARCHAR(100) not null,
+    street1 VARCHAR(100) NOT NULL,
+    street2 VARCHAR(100) NOT null,
+    zipCode VARCHAR(100) not NULL
+) auto_increment = 1001;
+
+
+
+-- =============================
+--		Payment
+-- =============================
+
+CREATE TABLE Payment
+(
+    id            BIGINT primary key,
+    cardNum       VARCHAR(100) not null,
+    cardType      VARCHAR(100) NOT NULL,
+    reservationId BIGINT       NOT null,
+    isApprove     boolean      not NULL,
+    customerId    BIGINT       not null,
+    regDate       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updateDate    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    constraint Payment_reservationId_FK foreign key (reservationId) references Reservation (id)
+) auto_increment = 1001;
+
+
+-- =============================
+--		Reservation
+-- =============================
+
+CREATE TABLE Reservation
+(
+    id             BIGINT primary key,
+    reservationNum VARCHAR(100) not null,
+    status         CHAR(1)      not NULL,
+    customerId     BIGINT       not null,
+    regDate        TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updateDate     TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    constraint Reservation_customerId_FK foreign key (customerId) references Customer (id)
+) auto_increment = 1001;
+
+-- =============================
+--		ReservationRoom
+-- =============================
+
+CREATE TABLE ReservationRoom
+(
+    id            BIGINT primary key,
+    reservationId BIGINT not null,
+    roomId        BIGINT NOT NULL,
+    arrivalDate    TIMESTAMP    NOT NULL,
+    departureDate  TIMESTAMP    NOT null,
+    constraint ReservationRoom_reservationId_FK foreign key (reservationId) references Reservation (id),
+    constraint ReservationRoom_roomId_FK foreign key (roomId) references Room (id)
+) auto_increment = 1001;
+
+
+-- =============================
+--		Room
+-- =============================
+
+CREATE TABLE Room
+(
+    id         BIGINT primary key,
+    propertyId BIGINT       not null,
+    roomNum    INT          NOT NULL,
+    name       VARCHAR(100) NOT null,
+    capacity   INT          not NULL,
+    price      DOUBLE       not null,
+    constraint Room_propertyId_FK foreign key (propertyId) references Property (id)
+) auto_increment = 1001;
+
+
+-- =============================
+--		Property
+-- =============================
+
+CREATE TABLE Property
+(
+    id      BIGINT primary key,
+    name    VARCHAR(100) not null,
+    address VARCHAR(100) NOT NULL,
+    grade   int NOT null,
+    intro   VARCHAR(100) not NULL
+) auto_increment = 1001;
+
+
+
+
+-- =============================
+--		Property
+-- =============================
+
+CREATE TABLE Property
+(
+    id      BIGINT primary key,
+    name    VARCHAR(100) not null,
+    address VARCHAR(100) NOT NULL,
+    grade   VARCHAR(100) NOT null,
+    intro   VARCHAR(100) not NULL
+) auto_increment = 1001;
+
+-- =============================
+--		Recepit
+-- =============================
+
+CREATE TABLE Recepit
+(
+    id           BIGINT primary key,
+    customerId   BIGINT    not null,
+    resrvationId BIGINT    NOT NULL,
+    price        DOUBLE    not null,
+    regDate      TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    constraint Recepit_customerId_FK foreign key (customerId) references Customer (id),
+    constraint Recepit_resrvationId_FK foreign key (resrvationId) references Reservation (id)
+) auto_increment = 1001;

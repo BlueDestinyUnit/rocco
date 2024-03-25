@@ -1,0 +1,22 @@
+CREATE TABLE `RoccoUser`
+(
+    `id`               BIGINT PRIMARY KEY AUTO_INCREMENT,
+    `email`            VARCHAR(100) UNIQUE,
+    `password`         VARCHAR(156) NOT NULL,
+    `sex`              CHAR(1)      NOT NULL DEFAULT 'x',
+    `birthDate`        DATE         NOT NULL,
+
+    `telCompany`       VARCHAR(10)  NOT NULL,
+    `phone`            VARCHAR(11)  NOT NULL,
+
+    `addressPostal`    VARCHAR(5)   NOT NULL,
+    `addressPrimary`   VARCHAR(100) NOT NULL,
+    `addressSecondary` VARCHAR(100) NOT NULL,
+
+    `userRole`         VARCHAR(20)  NOT NULL,
+
+    `regDate`          TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateDate`       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `expireDate`       TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+) auto_increment = 1;
+
