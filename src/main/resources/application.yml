@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      jdbc-url: jdbc:mysql://web-db.cwyul76uxnv8.ap-northeast-2.rds.amazonaws.com:3306/rocco
+      username: root
+      password: qwer1234
+      maximum-pool-size: 30
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    generate-ddl: false
+    show-sql: true
+    properties:
+      hibernate:
+        default_batch_fetch_size: 1
+  data:
+    jpa:
+      repositories:
+        bootstrap-mode: deferred
+  security:
+    user:
+      name: user
+      password: 1234
+server:
+  port: 8081
