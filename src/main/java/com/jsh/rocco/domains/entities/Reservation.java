@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,7 +19,9 @@ public class Reservation {
     private long id;
     private String reservationNum;
     private char status = 'H';
-    private ReservationRoom reservationRoom;
+
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
+    private List<ReservationRoom> reservationRooms;
 
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
