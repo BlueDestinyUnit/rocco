@@ -1,11 +1,9 @@
 package com.jsh.rocco;
 
-import com.jsh.rocco.domains.entities.Address;
-import com.jsh.rocco.domains.entities.Customer;
-import com.jsh.rocco.domains.entities.Property;
-import com.jsh.rocco.domains.entities.Room;
+import com.jsh.rocco.domains.entities.*;
 import com.jsh.rocco.services.CustomerService;
 import com.jsh.rocco.services.PropertyService;
+import com.jsh.rocco.services.ReservationService;
 import com.jsh.rocco.services.RoomService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,9 @@ class RoccoApplicationTests {
 
     @Autowired
     private RoomService roomService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Test
     @Transactional
@@ -51,17 +52,17 @@ class RoccoApplicationTests {
     @Transactional
     @Commit
     void contextLoads2() {
-//        Property property = new Property();
-//        property.setAddress("대구");
-//        property.setName("4성");
-//        property.setGrade(4);
-//        property.setIntro("멋진");
-//
-//        propertyService.addProperty(property);
+        Property property = new Property();
+        property.setAddress("대구");
+        property.setName("4성");
+        property.setGrade(4);
+        property.setIntro("멋진");
 
-        Property property = propertyService.getProperty(1001);
+        propertyService.addProperty(property);
 
-        System.out.println(property.getRooms());
+//        Property property = propertyService.getProperty(1001);
+
+
 
     }
 
@@ -89,12 +90,20 @@ class RoccoApplicationTests {
         }
         room2 = new Room();
         room2.setName("방4");
-        room.setRoomNum(4);
+        room2.setRoomNum(4);
         room2.setCapacity(200);
         room2.setPrice(3000);
         room2.setProperty(property);
         roomService.addRoom(room2);
 
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    void textReservation(){
+        Reservation reservation = new Reservation();
+        reservationService.addReservation(reservation,1001);
     }
 
 }

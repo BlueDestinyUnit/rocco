@@ -20,8 +20,8 @@ public class Room {
     @JoinColumn(name = "propertyId")
     private Property property;
 
-    @OneToMany(mappedBy = "reservationId")
-    private List<ReservationRoom> reservation;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    private List<ReservationRoom> reservationRooms;
 
     private int roomNum;
     private String name;
