@@ -73,25 +73,25 @@ class RoccoApplicationTests {
     void testRoom() {
 
         Property property = propertyService.getProperty(1001);
-        Room room = roomService.findUniqueRoomNumber(property.getId(),3);
+        Room room = roomService.findUniqueRoomNumber(property.getId(),5);
         if(room != null){
             return;
         }
         room = new Room();
-        room.setRoomNum(3);
-        room.setName("방3");
+        room.setRoomNum(5);
+        room.setName("방5");
         room.setCapacity(100);
         room.setPrice(2000);
         room.setProperty(property);
         roomService.addRoom(room);
 
-        Room room2 = roomService.findUniqueRoomNumber(property.getId(),4);
+        Room room2 = roomService.findUniqueRoomNumber(property.getId(),6);
         if(room2 != null){
             return;
         }
         room2 = new Room();
-        room2.setName("방4");
-        room2.setRoomNum(4);
+        room2.setName("방6");
+        room2.setRoomNum(6);
         room2.setCapacity(200);
         room2.setPrice(3000);
         room2.setProperty(property);
@@ -107,15 +107,24 @@ class RoccoApplicationTests {
         Customer customer = customerService.findById(1001);
         reservation.setReservationNum("1001");
         reservation.setCustomer(customer);
-        reservationService.addReservation(reservation,1002);
+        reservationService.addReservation(reservation,1001);
     }
 
     @Test
     @Transactional
     @Commit
     void testReservationRoom(){
-        List<ReservationRoom> rooms = reservationService.findMyReservationRoom(1001);
+        List<ReservationRoom> rooms = reservationService.findMyReservationRoom("1001");
         System.out.println(rooms.size());;
         rooms.forEach(r -> System.out.println(r));
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    void testReservationRooms(){
+        List<ReservationRoom> reservationRoomList = roomService.reservationRoomList(1001,3);
+        System.out.println(reservationRoomList.size());;
+        reservationRoomList.forEach(r -> System.out.println(r));
     }
 }

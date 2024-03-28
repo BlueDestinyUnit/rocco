@@ -8,6 +8,9 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface ReservationRoomRepository extends CrudRepository<ReservationRoom,Long> {
-    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.reservation.id = ?1")
-    List<ReservationRoom> rooms (long customerId);
+//    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.reservation.id = ?1")
+//    List<ReservationRoom> rooms (long customerId);
+
+    @Query("SELECT rr FROM ReservationRoom rr INNER JOIN rr.reservation r WHERE r.reservationNum = ?1")
+    List<ReservationRoom> findByReservationNum(String reservationNum);
 }

@@ -40,8 +40,8 @@ public class ReservationService {
     }
 
     @Transactional
-    public List<ReservationRoom> findMyReservationRoom(long id){
-        return reservationRoomRepository.rooms(id);
+    public List<ReservationRoom> findMyReservationRoom(String reservationNum){
+        return reservationRoomRepository.findByReservationNum(reservationNum);
     }
 
 
