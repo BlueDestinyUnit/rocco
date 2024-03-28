@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "reservationRooms")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

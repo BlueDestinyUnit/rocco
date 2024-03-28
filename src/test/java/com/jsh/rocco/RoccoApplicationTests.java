@@ -13,6 +13,7 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 class RoccoApplicationTests {
@@ -31,7 +32,7 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
-    void contextLoads() {
+    void testCustomer() {
         Address address = new Address();
         address.setRegion("대구");
         address.setStreet1("테스트1");
@@ -51,7 +52,7 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
-    void contextLoads2() {
+    void testProvperty() {
         Property property = new Property();
         property.setAddress("대구");
         property.setName("4성");
@@ -69,7 +70,7 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
-    void contextLoads3() {
+    void testRoom() {
 
         Property property = propertyService.getProperty(1001);
         Room room = roomService.findUniqueRoomNumber(property.getId(),3);
@@ -101,9 +102,20 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
-    void textReservation(){
+    void testReservation(){
         Reservation reservation = new Reservation();
-        reservationService.addReservation(reservation,1001);
+        Customer customer = customerService.findById(1001);
+        reservation.setReservationNum("1001");
+        reservation.setCustomer(customer);
+        reservationService.addReservation(reservation,1002);
     }
 
+    @Test
+    @Transactional
+    @Commit
+    void testReservationRoom(){
+        List<ReservationRoom> rooms = reservationService.findMyReservationRoom(1001);
+        System.out.println(rooms.size());;
+        rooms.forEach(r -> System.out.println(r));
+    }
 }

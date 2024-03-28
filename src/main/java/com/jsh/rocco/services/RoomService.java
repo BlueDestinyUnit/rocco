@@ -17,4 +17,8 @@ public class RoomService {
     public Room findUniqueRoomNumber(long id, int roomNumber){
        return roomRepository.findRoomByRoomNum(id,roomNumber).orElse(null);
     }
+
+    public Room findById(long id){
+        return roomRepository.findById(id).orElse(null);
+    }
 }

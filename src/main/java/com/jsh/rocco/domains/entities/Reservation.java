@@ -3,6 +3,7 @@ package com.jsh.rocco.domains.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,12 +14,17 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString(exclude = "reservationRooms")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String reservationNum;
     private char status = 'H';
+
+    @ManyToOne
+    @JoinColumn(name = "CustomerId")
+    private Customer customer;
 
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL)
     private List<ReservationRoom> reservationRooms;
