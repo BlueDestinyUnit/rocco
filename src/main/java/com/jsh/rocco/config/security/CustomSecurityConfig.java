@@ -36,15 +36,16 @@ public class CustomSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-
-
         return  http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry.requestMatchers("/").permitAll()
                                 .requestMatchers("layouts/layout").permitAll()
                                 .requestMatchers("user/login").permitAll()
+                                .requestMatchers("room/*").permitAll()
+                                .requestMatchers("hotel/*").permitAll()
+                                .requestMatchers("search").permitAll()
+                                .requestMatchers("search/*").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
@@ -57,8 +58,6 @@ public class CustomSecurityConfig {
                         .tokenValiditySeconds(60 * 60))
                 .build();
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){

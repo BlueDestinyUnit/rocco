@@ -1,17 +1,16 @@
 package com.jsh.rocco;
 
 import com.jsh.rocco.domains.entities.*;
-import com.jsh.rocco.services.CustomerService;
-import com.jsh.rocco.services.PropertyService;
-import com.jsh.rocco.services.ReservationService;
-import com.jsh.rocco.services.RoomService;
+import com.jsh.rocco.services.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.parameters.P;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,23 +28,22 @@ class RoccoApplicationTests {
     @Autowired
     private ReservationService reservationService;
 
+    @Autowired
+    private ReservationRoomService reservationRoomService;
+
+
+    @Autowired
+    private PaymentService paymentService;
+
     @Test
     @Transactional
     @Commit
     void testCustomer() {
-        Address address = new Address();
-        address.setRegion("대구");
-        address.setStreet1("테스트1");
-        address.setStreet2("테스트2");
-        address.setZipCode("11111");
-        customerService.addAddress(address);
-
         Customer customer = new Customer();
         customer.setPhone("01049333657");
         customer.setBirthDate(new Date());
         customer.setFirstName("테스트1");
         customer.setLastName("테스트1");
-        customer.setAddress(address);
         customerService.addCustomer(customer);
     }
 
@@ -53,50 +51,37 @@ class RoccoApplicationTests {
     @Transactional
     @Commit
     void testProvperty() {
+        PropertyAddress propertyAddress = new PropertyAddress();
+        propertyAddress.setRegion("대구");
+        propertyAddress.setStreet1("테스트거리");
+        propertyAddress.setStreet2("테스트거리2");
+        propertyAddress.setZipCode("11111");
+
+        propertyService.addAddress(propertyAddress);
+
         Property property = new Property();
-        property.setAddress("대구");
         property.setName("4성");
         property.setGrade(4);
         property.setIntro("멋진");
+        property.setPropertyAddress(propertyAddress);
 
         propertyService.addProperty(property);
-
-//        Property property = propertyService.getProperty(1001);
-
-
-
     }
 
     @Test
     @Transactional
     @Commit
     void testRoom() {
-
         Property property = propertyService.getProperty(1001);
-        Room room = roomService.findUniqueRoomNumber(property.getId(),5);
-        if(room != null){
-            return;
+        for(int i=1;i<=4; i++) {
+            Room room2 = new Room();
+            room2.setRoomNum(i);
+            room2.setName("방"+i);
+            room2.setCapacity(4);
+            room2.setPrice(2000);
+            room2.setProperty(property);
+            roomService.addRoom(room2);
         }
-        room = new Room();
-        room.setRoomNum(5);
-        room.setName("방5");
-        room.setCapacity(100);
-        room.setPrice(2000);
-        room.setProperty(property);
-        roomService.addRoom(room);
-
-        Room room2 = roomService.findUniqueRoomNumber(property.getId(),6);
-        if(room2 != null){
-            return;
-        }
-        room2 = new Room();
-        room2.setName("방6");
-        room2.setRoomNum(6);
-        room2.setCapacity(200);
-        room2.setPrice(3000);
-        room2.setProperty(property);
-        roomService.addRoom(room2);
-
     }
 
     @Test
@@ -107,15 +92,32 @@ class RoccoApplicationTests {
         Customer customer = customerService.findById(1001);
         reservation.setReservationNum("1001");
         reservation.setCustomer(customer);
-        reservationService.addReservation(reservation,1001);
+        List<ReservationRoom> rooms = new ArrayList<>();
+        Room room = new Room();
+        room.setId(1001);
+        ReservationRoom Room = new ReservationRoom(room,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
+        Room room2 = new Room();
+        room2.setId(1001);
+        ReservationRoom Room2 = new ReservationRoom(room,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
+        Room room3 = new Room();
+        room3.setId(1001);
+        ReservationRoom Room3 = new ReservationRoom(room,parseDate("2024-03-27 14:00:00"), parseDate("2024-03-28 12:00:00"));
+        rooms.add(Room);
+        rooms.add(Room2);
+        rooms.add(Room3);
+
+        reservationService.addReservation(reservation,rooms);
+
+        rooms = reservationRoomService.findMyReservationRoom("1001");
+
+
     }
 
     @Test
     @Transactional
     @Commit
-    void testReservationRoom(){
-        List<ReservationRoom> rooms = reservationService.findMyReservationRoom("1001");
-        System.out.println(rooms.size());;
+    void testfindRooms(){
+        List<ReservationRoom> rooms = reservationRoomService.findByRoomAndDate(1001,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         rooms.forEach(r -> System.out.println(r));
     }
 
@@ -123,8 +125,27 @@ class RoccoApplicationTests {
     @Transactional
     @Commit
     void testReservationRooms(){
-        List<ReservationRoom> reservationRoomList = roomService.reservationRoomList(1001,3);
+        List<ReservationRoom> reservationRoomList = reservationRoomService.findRooms(1001,parseDate("2024-03-28 14:00:00"), parseDate("2024-03-30 12:00:00"));
         System.out.println(reservationRoomList.size());;
         reservationRoomList.forEach(r -> System.out.println(r));
+    }
+
+
+    void testPayment() {
+        Reservation reservation = reservationService.findByReservationNum("1001");
+        Payment payment = new Payment();
+        payment.setCardNum("22222");
+        payment.setCardType("VIA");
+        payment.setReservation(reservation);
+        payment.setPaymentNumber("212121");
+
+        paymentService.addPayment(reservation, payment , parseDate("2024-03-28 14:00:00"), parseDate("2024-03-30 12:00:00"));
+    }
+
+
+    private Date parseDate(String dateStr) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        ParsePosition pos = new ParsePosition(0);
+        return format.parse(dateStr, pos);
     }
 }

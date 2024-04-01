@@ -11,4 +11,7 @@ public class MainController {
     String getMain(){
         return "main";
     }
+
+    @GetMapping("search")
+    String getSearch(){return "/search";}
 }

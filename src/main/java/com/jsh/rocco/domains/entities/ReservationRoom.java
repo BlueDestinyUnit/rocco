@@ -27,4 +27,14 @@ public class ReservationRoom {
     private Date arrivalDate;
     private Date departureDate;
 
+    public ReservationRoom() {
+        super();
+    }
+
+    public ReservationRoom(Room room, Date arrivalDate, Date departureDate) {
+        super();
+        this.room = room;
+        this.arrivalDate = arrivalDate;
+        this.departureDate = departureDate;
+    }
 }

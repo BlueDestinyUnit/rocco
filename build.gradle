@@ -33,6 +33,7 @@ dependencies {
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation group: 'org.json', name: 'json', version: '20240303'
 }
 
 tasks.named('test') {

@@ -20,9 +20,4 @@ public class Customer {
     private String lastName;
     private Date birthDate;
     private String phone;
-
-    @OneToOne
-    @JoinColumn(name = "addressId")
-    private Address address;
-
 }

@@ -1,5 +1,6 @@
 package com.jsh.rocco.services;
 
+
 import com.jsh.rocco.domains.entities.Reservation;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
@@ -25,24 +26,30 @@ public class ReservationService {
     private ReservationRoomRepository reservationRoomRepository;
 
     @Transactional
-    public void addReservation(Reservation reservation, long roomId){
-        Room dbRoom = roomRepository.findById(roomId).orElse(null);
-        if(dbRoom == null){
-            throw new RuntimeException(dbRoom + " does not exist");
-        }
-        reservationRepository.save(reservation);
-        ReservationRoom reservationRoom = new ReservationRoom();
-        reservationRoom.setReservation(reservation);
-        reservationRoom.setRoom(dbRoom);
-        reservationRoom.setArrivalDate(new Date());
-        reservationRoom.setDepartureDate(new Date());
-        reservationRoomRepository.save(reservationRoom);
+    public void addReservation(Reservation reservation, List<ReservationRoom> rooms){
+    	for(ReservationRoom room : rooms) {
+            Room dbRoom = roomRepository.findById(room.getRoom().getId()).orElse(null);
+            if(dbRoom == null){
+                throw new RuntimeException(dbRoom + " does not exist");
+            }
+            reservationRepository.save(reservation);
+            ReservationRoom reservationRoom = new ReservationRoom();
+            reservationRoom.setReservation(reservation);
+            reservationRoom.setRoom(dbRoom);
+            reservationRoom.setArrivalDate(room.getArrivalDate());
+            reservationRoom.setDepartureDate(room.getDepartureDate());
+            reservationRoomRepository.save(reservationRoom);
+    	}
+    }
+    
+    @Transactional
+    public Reservation findByReservationNum(String reservationNum) {
+    	
+    	return reservationRepository.findByReservationNum(reservationNum).orElse(null);
     }
 
-    @Transactional
-    public List<ReservationRoom> findMyReservationRoom(String reservationNum){
-        return reservationRoomRepository.findByReservationNum(reservationNum);
-    }
+
+
 
 
 

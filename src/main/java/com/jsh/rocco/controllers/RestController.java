@@ -1,11 +1,19 @@
 package com.jsh.rocco.controllers;
 
+import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.RoccoUser;
+import lombok.extern.log4j.Log4j2;
+import org.json.JSONObject;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @org.springframework.web.bind.annotation.RestController
+@Log4j2
+
 public class RestController {
 
     @PostMapping("user/login")
@@ -16,4 +24,7 @@ public class RestController {
         // 여기서는 사용자 인증 및 토큰 생성 등을 수행합니다.
         return ResponseEntity.ok().body("Login successful");
     }
+
+
+
 }

@@ -6,11 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-public class Address {
+@ToString
+public class PropertyAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
