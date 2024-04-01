@@ -10,7 +10,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Address {
+public class PropertyAddress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

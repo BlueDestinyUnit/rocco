@@ -16,10 +16,14 @@ public class Property {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String address;
     private int grade;
     private String intro;
+
+    @OneToOne
+    @JoinColumn(name = "addressId")
+    private PropertyAddress propertyAddress;
 
     @OneToMany(mappedBy = "property",cascade = CascadeType.ALL)
     private List<Room> rooms;
 }
+
