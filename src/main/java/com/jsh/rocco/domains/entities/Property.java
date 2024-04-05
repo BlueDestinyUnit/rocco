@@ -1,5 +1,6 @@
 package com.jsh.rocco.domains.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Property {
     @JoinColumn(name = "addressId")
     private PropertyAddress propertyAddress;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "property",cascade = CascadeType.ALL)
     private List<Room> rooms;
 }

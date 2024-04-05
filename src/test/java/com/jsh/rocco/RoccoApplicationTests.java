@@ -116,7 +116,7 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
-    void testfindRooms(){
+    void testFindRooms(){
         List<ReservationRoom> rooms = reservationRoomService.findByRoomAndDate(1001,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         rooms.forEach(r -> System.out.println(r));
     }

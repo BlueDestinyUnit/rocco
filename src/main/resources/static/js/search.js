@@ -1,28 +1,32 @@
 const searchForm = document.getElementById('searchForm');
 console.log(searchForm);
 
+
 searchForm.onsubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(searchForm);
-    // fetch("./searchTest")
-    //     .then((response) => response.json())
-    //     .then((data) => console.log(data));
+    const propertyId = searchForm['propertyId'].value;
+    const arrivalDate = searchForm['arrivalDate'].value;
+    const arrivalTime = searchForm['arrivalTime'].value;
+    const departureDate = searchForm['departureDate'].value;
+    const departureTime = searchForm['departureTime'].value;
+
+
+    const queryString = `propertyId=${propertyId}&arrivalDate=${arrivalDate} ${arrivalTime}&departureDate=${departureDate} ${departureTime}`;
+    console.log(queryString);
+    fetch(`/searchReservation?${queryString}`) // URL에 쿼리 문자열 추가
+        .then((response) => {
+            console.log("Response status:", response.status);
+            console.log("Response headers:", response.headers);
+            return response.json();
+        })
+        .then((data) => {console.log(data);
+            const jsondate = data['message'];
+            console.log(jsondate);
+            }
+        )
+        .catch((error) => console.error("Error fetching data:", error));
+
     const xhr = new XMLHttpRequest();
-    // const formData = new FormData();
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState !== XMLHttpRequest.DONE) {
-            return;
-        }
-        if (xhr.status < 200 || xhr.status >= 300) {
-            alert("알 수없는 오류가 발생했습니다.")
-            return;
-        }
-        const responseObject = JSON.parse(xhr.responseText);
-
-    }
-    xhr.open('GET','/searchTest');
-    xhr.send();
 }
 
 function submit() {

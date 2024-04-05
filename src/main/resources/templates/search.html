@@ -15,11 +15,19 @@
         <label>
             <input name="propertyId" type="text" value="1001">
         </label>
-        <label>
-            <input type="date" id="arrivalDate" name="arrivalDate" value="2024-03-27">
+        <label class="arriv">
+            <input type="date" id="arrivalDate" name="arrivalDate">
+            <select name="arrivalTime" class="time">
+                <option value="12:00:00">오후 12시</option>
+                <option value="14:00:00">오후 2시</option>
+            </select>
         </label>
-        <label>
-            <input type="date" id="depatureDate" name="depatureDate" value="2024-03-30">
+        <label class="depart">
+            <input type="date" id="departureDate" name="departureDate">
+            <select name="departureTime" class="time">
+                <option value="12:00:00">오후 12시</option>
+                <option value="14:00:00">오후 2시</option>
+            </select>
         </label>
         <button type="reset">리셋</button>
         <button type="submit">검색</button>
