@@ -24,3 +24,7 @@ searchForm.onsubmit = (e) => {
     xhr.open('GET','/searchTest');
     xhr.send();
 }
+
+function submit() {
+
+}
