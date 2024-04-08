@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationRoomRepository extends CrudRepository<ReservationRoom,Long> {
 
@@ -16,7 +17,13 @@ public interface ReservationRoomRepository extends CrudRepository<ReservationRoo
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
     List<ReservationRoom> findByRoomAndDate(long roomId, Date appri, Date depart);
 
+    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.property.propertyAddress.region = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
+    List<ReservationRoom> findHotelByPropertyRegionAndDate(String region, Date appri, Date depart);
+
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.property.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
     List<ReservationRoom> findRoomsByRoomAndDate(long propertyId, Date appri, Date depart);
+    
+    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
+    Optional<ReservationRoom> findRoomByRoomIdAndDate(long roomId, Date appri, Date depart);
 }
 

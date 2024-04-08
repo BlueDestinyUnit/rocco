@@ -5,12 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
+    <script th:src="@{/js/main.js}" defer></script>
     <!-- 추가적으로 필요한 CSS나 스타일시트를 로드할 수 있습니다. -->
 </head>
 <body>
 <!-- 이 부분은 layout.html에서 정의한 컨텐츠 영역에 삽입됩니다. -->
 <section layout:fragment="content">
     <h1>Main Content</h1>
+    <section>
+        <form id="searchForm">
+            <label>
+                <span>호텔 이름</span>
+                <input name="propertyName" type="text" value="1001">
+            </label>
+            <label class="arriv">
+                <input type="date" id="arrivalDate" name="arrivalDate">
+                <input hidden name="arrivalTime" class="time" value="14:00:00">
+            </label>
+            <label class="depart">
+                <input type="date" id="departureDate" name="departureDate">
+                <input hidden name="departureTime" class="time" value="12:00:00">
+            </label>
+            <button type="reset">리셋</button>
+            <button type="submit">검색</button>
+        </form>
+    </section>
+
     <!-- 추가적인 메인 페이지의 컨텐츠를 여기에 추가할 수 있습니다. -->
 </section>
 </body>

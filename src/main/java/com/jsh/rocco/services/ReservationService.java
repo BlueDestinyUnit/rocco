@@ -1,6 +1,7 @@
 package com.jsh.rocco.services;
 
 
+import com.jsh.rocco.domains.entities.Customer;
 import com.jsh.rocco.domains.entities.Reservation;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
@@ -24,6 +25,9 @@ public class ReservationService {
 
     @Autowired
     private ReservationRoomRepository reservationRoomRepository;
+    
+    @Autowired
+    private ReservationRoomService reservationRoomService;
 
     @Transactional
     public void addReservation(Reservation reservation, List<ReservationRoom> rooms){
@@ -43,8 +47,28 @@ public class ReservationService {
     }
     
     @Transactional
+    public String addReservation2(List<Room> rooms,Customer customer, Date arriv,Date departure){
+    	Reservation reservation = new Reservation();
+    	reservation.setCustomer(customer);
+    	reservation.setRegDate(new Date());
+    	reservation.setReservationNum("R10001");
+    	reservationRepository.save(reservation);
+    	for(Room room : rooms) {
+    		if(reservationRoomService.findReservationRoom(room.getId(), arriv, departure) != false) {
+    			throw new RuntimeException( "this room exist");
+    		};
+    		ReservationRoom reservationRoom = new ReservationRoom();
+	        reservationRoom.setReservation(reservation);
+	        reservationRoom.setRoom(room);
+	        reservationRoom.setArrivalDate(arriv);
+	        reservationRoom.setDepartureDate(departure);
+	        reservationRoomRepository.save(reservationRoom);
+    	}
+    	return reservation.getReservationNum();
+    }
+    
+    @Transactional
     public Reservation findByReservationNum(String reservationNum) {
-    	
     	return reservationRepository.findByReservationNum(reservationNum).orElse(null);
     }
 

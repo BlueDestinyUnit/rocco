@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface RoccoUserRepository extends CrudRepository<RoccoUser,String> {
+public interface RoccoUserRepository extends CrudRepository<RoccoUser,Long> {
 
     @Query("SELECT u FROM RoccoUser u WHERE u.email = ?1")
     Optional<RoccoUser> findUserByEmail(String email);

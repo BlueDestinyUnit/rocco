@@ -50,7 +50,7 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
-    void testProvperty() {
+    void testProperty() {
         PropertyAddress propertyAddress = new PropertyAddress();
         propertyAddress.setRegion("대구");
         propertyAddress.setStreet1("테스트거리");
@@ -101,7 +101,7 @@ class RoccoApplicationTests {
         ReservationRoom Room2 = new ReservationRoom(room,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         Room room3 = new Room();
         room3.setId(1001);
-        ReservationRoom Room3 = new ReservationRoom(room,parseDate("2024-03-27 14:00:00"), parseDate("2024-03-28 12:00:00"));
+        ReservationRoom Room3 = new ReservationRoom(room,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         rooms.add(Room);
         rooms.add(Room2);
         rooms.add(Room3);
@@ -125,22 +125,41 @@ class RoccoApplicationTests {
     @Transactional
     @Commit
     void testReservationRooms(){
-        List<ReservationRoom> reservationRoomList = reservationRoomService.findRooms(1001,parseDate("2024-03-28 14:00:00"), parseDate("2024-03-30 12:00:00"));
+        List<ReservationRoom> reservationRoomList = reservationRoomService.findByRoomAndDate(1001,parseDate("2024-03-28 14:00:00"), parseDate("2024-03-30 12:00:00"));
         System.out.println(reservationRoomList.size());;
         reservationRoomList.forEach(r -> System.out.println(r));
     }
 
-
+    
+    @Test
+    @Transactional
     void testPayment() {
-        Reservation reservation = reservationService.findByReservationNum("1001");
+    	List<Room> rooms = new ArrayList<>();
+    	Customer customer = customerService.findById(1001);
+    	 Room room = new Room();
+         room.setId(1001);     
+         Room room2 = new Room();
+         room2.setId(1001);
+         Room room3 = new Room();
+         room3.setId(1001);
+         rooms.add(room);
+         rooms.add(room2);
+         rooms.add(room3);
+    	
+    	
+    	reservationService.addReservation2(rooms, customer,parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
+    	
+    	
+        Reservation reservation = reservationService.findByReservationNum("R10001");
         Payment payment = new Payment();
         payment.setCardNum("22222");
         payment.setCardType("VIA");
         payment.setReservation(reservation);
         payment.setPaymentNumber("212121");
 
-        paymentService.addPayment(reservation, payment , parseDate("2024-03-28 14:00:00"), parseDate("2024-03-30 12:00:00"));
+        paymentService.addPayment(reservation, payment , parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
     }
+    
 
 
     private Date parseDate(String dateStr) {

@@ -35,6 +35,6 @@ public class RoomService {
 
     @Transactional
     public List<Room> findRooms(Property property){
-        return this.roomRepository.findRoomsByPropertyId(property.getId());
+        return this.roomRepository.findRoomsByPropertyName(property.getName());
     }
 }

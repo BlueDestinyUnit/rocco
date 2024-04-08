@@ -23,5 +23,8 @@ public interface RoomRepository extends CrudRepository<Room,Long> {
     @Query("SELECT r FROM Room r  WHERE r.property.id = ?1")
     List<Room> findRoomsByPropertyId(long propertyId);
 
+    @Query("SELECT r FROM Room r  WHERE r.property.name = ?1")
+    List<Room> findRoomsByPropertyName(String propertyName);
+
 }
 
