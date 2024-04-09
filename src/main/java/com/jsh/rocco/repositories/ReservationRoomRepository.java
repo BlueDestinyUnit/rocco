@@ -1,6 +1,7 @@
 package com.jsh.rocco.repositories;
 
 
+import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,11 +18,20 @@ public interface ReservationRoomRepository extends CrudRepository<ReservationRoo
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
     List<ReservationRoom> findByRoomAndDate(long roomId, Date appri, Date depart);
 
-    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.property.propertyAddress.region = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
-    List<ReservationRoom> findHotelByPropertyRegionAndDate(String region, Date appri, Date depart);
+    @Query("SELECT distinct p FROM Property p WHERE NOT EXISTS (" +
+            "SELECT 1 FROM ReservationRoom rr " +
+            "WHERE rr.room.property = p " +
+            "AND (rr.arrivalDate >= ?2 AND rr.departureDate <= ?3)" +
+            ") AND p.propertyAddress.region = ?1")
+    List<Property> findHotelByPropertyRegionAndDate(String region, Date appri, Date depart);
 
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.property.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
     List<ReservationRoom> findRoomsByRoomAndDate(long propertyId, Date appri, Date depart);
+
+    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
+    List<ReservationRoom> findReservationByDate(Date appri, Date depart);
+    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.property.propertyAddress.region = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
+    List<ReservationRoom> findReservationByRegionAndDate(String region,Date appri, Date depart);
     
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
     Optional<ReservationRoom> findRoomByRoomIdAndDate(long roomId, Date appri, Date depart);

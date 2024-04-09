@@ -52,7 +52,7 @@ class RoccoApplicationTests {
     @Commit
     void testProperty() {
         PropertyAddress propertyAddress = new PropertyAddress();
-        propertyAddress.setRegion("대구");
+        propertyAddress.setRegion("광주");
         propertyAddress.setStreet1("테스트거리");
         propertyAddress.setStreet2("테스트거리2");
         propertyAddress.setZipCode("11111");
@@ -60,7 +60,7 @@ class RoccoApplicationTests {
         propertyService.addAddress(propertyAddress);
 
         Property property = new Property();
-        property.setName("4성");
+        property.setName("5성");
         property.setGrade(4);
         property.setIntro("멋진");
         property.setPropertyAddress(propertyAddress);
@@ -72,11 +72,11 @@ class RoccoApplicationTests {
     @Transactional
     @Commit
     void testRoom() {
-        Property property = propertyService.getProperty(1001);
+        Property property = propertyService.getProperty(1002);
         for(int i=1;i<=4; i++) {
             Room room2 = new Room();
             room2.setRoomNum(i);
-            room2.setName("방"+i);
+            room2.setName("방2_"+i);
             room2.setCapacity(4);
             room2.setPrice(2000);
             room2.setProperty(property);
@@ -90,17 +90,17 @@ class RoccoApplicationTests {
     void testReservation(){
         Reservation reservation = new Reservation();
         Customer customer = customerService.findById(1001);
-        reservation.setReservationNum("1001");
+        reservation.setReservationNum("1002");
         reservation.setCustomer(customer);
         List<ReservationRoom> rooms = new ArrayList<>();
         Room room = new Room();
-        room.setId(1001);
+        room.setId(1005);
         ReservationRoom Room = new ReservationRoom(room,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         Room room2 = new Room();
-        room2.setId(1001);
+        room2.setId(1006);
         ReservationRoom Room2 = new ReservationRoom(room,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         Room room3 = new Room();
-        room3.setId(1001);
+        room3.setId(1007);
         ReservationRoom Room3 = new ReservationRoom(room,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         rooms.add(Room);
         rooms.add(Room2);
@@ -128,6 +128,14 @@ class RoccoApplicationTests {
         List<ReservationRoom> reservationRoomList = reservationRoomService.findByRoomAndDate(1001,parseDate("2024-03-28 14:00:00"), parseDate("2024-03-30 12:00:00"));
         System.out.println(reservationRoomList.size());;
         reservationRoomList.forEach(r -> System.out.println(r));
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    void testHotel(){
+        List<Property> reservationRoomList = reservationRoomService.findHotel("광주",parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
+        System.out.println(reservationRoomList);
     }
 
     

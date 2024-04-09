@@ -32,13 +32,13 @@ public class SearchController {
         log.info(propertyName);
         log.info(reservationRoom);
         System.out.println("테스트");
-        List<ReservationRoom> rooms = reservationRoomService.findHotel(propertyName,reservationRoom.getArrivalDate(),reservationRoom.getDepartureDate());
-        System.out.println(rooms);
+//        List<ReservationRoom> rooms = reservationRoomService.findHotel(propertyName,reservationRoom.getArrivalDate(),reservationRoom.getDepartureDate());
+//        System.out.println(rooms);
         // 검색 요청을 처리하고 필요한 데이터를 얻는 코드를 작성합니다.
         // 이 예시에서는 간단히 성공 메시지를 반환합니다.
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Search successful");
-        response.put("list",rooms);
+//        response.put("list",rooms);
         return ResponseEntity.ok().body(response);
     }
 

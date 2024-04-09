@@ -2,10 +2,9 @@ package com.jsh.rocco.services;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
 import com.jsh.rocco.repositories.PropertyRepository;
@@ -49,7 +48,21 @@ public class ReservationRoomService {
     }
     
     @Transactional
-    public List<ReservationRoom> findHotel(String region,Date arriv, Date depart){  // 빈 호텔 찾기
+    public List<Property> findHotel(String region, Date arriv, Date depart){  // 빈 호텔 찾기
+        return reservationRoomRepository.findHotelByPropertyRegionAndDate(region, arriv, depart);
+    }
+
+    @Transactional
+    public List<Property> findHotels(String region, Date arriv, Date depart){  // 빈 호텔 찾기
+        List<ReservationRoom> reserveRooms = reservationRoomRepository.findReservationByRegionAndDate(region,arriv,depart);
+        Set<Room> roomSet = new HashSet<>();
+        for(ReservationRoom reservationRoom : reserveRooms){
+
+        }
+
+
+        List<Property> properties = propertyRepository.findListByRegion(region);
+
         return reservationRoomRepository.findHotelByPropertyRegionAndDate(region, arriv, depart);
     }
     
