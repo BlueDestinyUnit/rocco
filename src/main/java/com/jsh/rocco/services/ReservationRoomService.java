@@ -4,6 +4,8 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.jsh.rocco.domains.dtos.AvailableProperty;
+import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
@@ -47,25 +49,8 @@ public class ReservationRoomService {
     	return reservationRoomRepository.findByReservationNum(reservationNum);
     }
     
-    @Transactional
-    public List<Property> findHotel(String region, Date arriv, Date depart){  // 빈 호텔 찾기
-        return reservationRoomRepository.findHotelByPropertyRegionAndDate(region, arriv, depart);
-    }
-
-    @Transactional
-    public List<Property> findHotels(String region, Date arriv, Date depart){  // 빈 호텔 찾기
-        List<ReservationRoom> reserveRooms = reservationRoomRepository.findReservationByRegionAndDate(region,arriv,depart);
-        Set<Room> roomSet = new HashSet<>();
-        for(ReservationRoom reservationRoom : reserveRooms){
-
-        }
 
 
-        List<Property> properties = propertyRepository.findListByRegion(region);
-
-        return reservationRoomRepository.findHotelByPropertyRegionAndDate(region, arriv, depart);
-    }
-    
     @Transactional
     public List<Room> availableRooms(long propertyId,Date arriv, Date depart){
     	List<Room> rooms = propertyRepository.findById(propertyId).orElse(null).getRooms();
@@ -91,6 +76,36 @@ public class ReservationRoomService {
     		return false;
     	};
     	return true;
+    }
+
+    /* 지역에 따른 호텔 찾기 1*/
+    public List<Room> findAvailableRooms(String region, int capacity, Date arriv, Date depart ){
+        return reservationRoomRepository.findAvailableRoomsByDateRangeAndProperty(region,capacity,arriv,depart);
+    }
+
+    /* 지역에 따른 호텔 찾기 2*/
+    public Map<Property,List<AvailableRoom>> findAvailableRooms2(String region,int capacity, Date arriv, Date depart ){
+        List<Room> rooms = reservationRoomRepository.findAvailableRoomsByDateRangeAndProperty(region,capacity, arriv,depart);
+        Map<Property,List<AvailableRoom>> properties = new HashMap<>();
+        rooms.forEach(room -> {
+            AvailableRoom availableRoom = new AvailableRoom();
+            availableRoom.setId(room.getId());
+            availableRoom.setRoomNum(room.getRoomNum());
+            availableRoom.setName(room.getName());
+            availableRoom.setCapacity(room.getCapacity());
+            availableRoom.setPrice(room.getPrice());
+            if(properties.get(room.getProperty()) == null ) {
+                List<AvailableRoom> roomList = new ArrayList<>();
+                roomList.add(availableRoom);
+                properties.put(room.getProperty(),roomList);
+            }else {
+                List<AvailableRoom> roomList = properties.get(room.getProperty());
+                roomList.add(availableRoom);
+                properties.put(room.getProperty(),roomList);
+            }
+        });
+
+        return properties;
     }
     
     

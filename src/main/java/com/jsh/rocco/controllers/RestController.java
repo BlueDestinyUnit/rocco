@@ -25,6 +25,4 @@ public class RestController {
         return ResponseEntity.ok().body("Login successful");
     }
 
-
-
 }

@@ -37,7 +37,6 @@ class RoccoApplicationTests {
 
     @Test
     @Transactional
-    @Commit
     void testCustomer() {
         Customer customer = new Customer();
         customer.setPhone("01049333657");
@@ -52,15 +51,15 @@ class RoccoApplicationTests {
     @Commit
     void testProperty() {
         PropertyAddress propertyAddress = new PropertyAddress();
-        propertyAddress.setRegion("광주");
-        propertyAddress.setStreet1("테스트거리");
-        propertyAddress.setStreet2("테스트거리2");
-        propertyAddress.setZipCode("11111");
+        propertyAddress.setRegion("대구");
+        propertyAddress.setStreet1("테스트거리3");
+        propertyAddress.setStreet2("테스트거리3");
+        propertyAddress.setZipCode("22222");
 
         propertyService.addAddress(propertyAddress);
 
         Property property = new Property();
-        property.setName("5성");
+        property.setName("테스트3");
         property.setGrade(4);
         property.setIntro("멋진");
         property.setPropertyAddress(propertyAddress);
@@ -130,13 +129,13 @@ class RoccoApplicationTests {
         reservationRoomList.forEach(r -> System.out.println(r));
     }
 
-    @Test
-    @Transactional
-    @Commit
-    void testHotel(){
-        List<Property> reservationRoomList = reservationRoomService.findHotel("광주",parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
-        System.out.println(reservationRoomList);
-    }
+//    @Test
+//    @Transactional
+//    @Commit
+//    void testHotel(){
+//        List<Room> reservationRoomList = reservationRoomService.findAvailableRooms("대구",parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
+//        reservationRoomList.forEach(r -> System.out.println(r.getProperty().getRooms()));
+//    }
 
     
     @Test
