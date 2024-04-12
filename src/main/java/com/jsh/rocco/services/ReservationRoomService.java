@@ -92,10 +92,11 @@ public class ReservationRoomService {
 
     /* 지역에 따른 호텔 찾기 2*/
     public Map<Property, List<AvailableRoom>> findAvailableRooms2(FindHotel findHotel) {
-
+        int capacity = findHotel.getCustomers()/findHotel.getRoomCount() == 0 ?
+                findHotel.getCustomers() : findHotel.getCustomers()/findHotel.getRoomCount();
         // 지역에 따른 예약이 되지 않은 빈방들
         List<Room> rooms = reservationRoomRepository.findAvailableRoomsByDateRangeAndProperty(findHotel.getPropertyRegion(),
-                findHotel.getCapacity(), dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
+                capacity, dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
                 dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
         // 각각의 호텔과 예약이 가능한 방 리스트
         Map<Property, List<AvailableRoom>> properties = new HashMap<>();
@@ -117,17 +118,8 @@ public class ReservationRoomService {
             }
         });
         Map<Property, List<AvailableRoom>> filteredMap = properties.entrySet().stream()
-                .filter(entry -> entry.getValue().size() == findHotel.getRequestedRoomCount())
+                .filter(entry -> entry.getValue().size() >= findHotel.getRoomCount())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return filteredMap;
     }
-
-
-    private Date parseDate(String dateStr) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        ParsePosition pos = new ParsePosition(0);
-        return format.parse(dateStr, pos);
-    }
-
-    // 특정 호텔(방)에 특정 기간에 비어있는 방 검색
 }

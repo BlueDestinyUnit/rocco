@@ -1,5 +1,7 @@
 package com.jsh.rocco.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.dtos.FindHotel;
 import com.jsh.rocco.domains.entities.Property;
@@ -8,6 +10,8 @@ import com.jsh.rocco.services.ReservationRoomService;
 import com.jsh.rocco.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -38,29 +42,31 @@ public class MainController {
 
     @GetMapping("/searchReservation")
     @ResponseBody
-    public ResponseEntity<?> searchReservation(HttpServletRequest request, FindHotel findHotel) {
-        System.out.println(request.getParameter("arrivalDate"));
+    public ResponseEntity<?> searchReservation(HttpServletRequest request, FindHotel findHotel) throws JsonProcessingException {
         log.info("테스트");
+
         Map<Property, List<AvailableRoom>> propertyMap = reservationRoomService.findAvailableRooms2(findHotel);
+        JSONArray jsonArray = new JSONArray();
+        for(Map.Entry<Property,List<AvailableRoom>> entry : propertyMap.entrySet()){
+            JSONObject jsonObject = new JSONObject();
+            Property property = entry.getKey();
+            List<AvailableRoom> availableRooms = entry.getValue();
+            ObjectMapper objectMapper = new ObjectMapper();
+            String jsonString = objectMapper.writeValueAsString(property);
+            System.out.println(jsonString);
+            jsonObject.put("property",jsonString);
+            jsonObject.put("rooms",availableRooms);
+            jsonArray.put(jsonObject);
+        }
+        System.out.println(jsonArray.toString());
+
+
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Search successful");
-        response.put("list",propertyMap);
+        response.put("list",jsonArray.toString());
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/search")
-    @ResponseBody
-    public ResponseEntity<?> searchReservation2() {
-        log.info("테스트");
 
-        System.out.println("테스트");
-
-        // 검색 요청을 처리하고 필요한 데이터를 얻는 코드를 작성합니다.
-        // 이 예시에서는 간단히 성공 메시지를 반환합니다.
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Search successful");
-
-        return ResponseEntity.ok().body(response);
-    }
 
 }

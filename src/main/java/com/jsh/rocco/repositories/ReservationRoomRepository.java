@@ -34,8 +34,8 @@ public interface ReservationRoomRepository extends CrudRepository<ReservationRoo
             "    WHERE rr.room = r " +
             "    AND rr.arrivalDate >= ?3 " +
             "    AND rr.departureDate <= ?4" +
-            ") AND r.property.propertyAddress.region = ?1 AND r.capacity <= ?2")
-    List<Room> findAvailableRoomsByDateRangeAndProperty(String region,int capacity, Date arrivalDate, Date departureDate);
+            ") AND r.property.propertyAddress.region = ?1 AND r.capacity >= ?2")
+    List<Room> findAvailableRoomsByDateRangeAndProperty(String region,int customers, Date arrivalDate, Date departureDate);
 
 }
 

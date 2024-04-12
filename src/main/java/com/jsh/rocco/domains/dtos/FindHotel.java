@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @ToString
 public class FindHotel {
     private String propertyRegion;
-    private int capacity;
-    private int requestedRoomCount;
+    private int customers;
+    private int roomCount;
     private String arrivalDate;
     private String departureDate;
 }

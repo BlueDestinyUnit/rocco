@@ -1,0 +1,26 @@
+#hotelSection{
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: black solid 1px;
+  display: flex;
+  flex-direction: column;
+
+  > .hotelItem {
+
+    height: 170px;
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+
+    > .hotelImg{
+      background: aqua;
+      width: 20%;
+    }
+
+    > .hotelContent{
+      padding: 5px;
+    }
+  }
+
+}

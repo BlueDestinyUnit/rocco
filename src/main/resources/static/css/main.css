@@ -1,0 +1,23 @@
+#hotelSection {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: black solid 1px;
+  display: flex;
+  flex-direction: column;
+}
+#hotelSection > .hotelItem {
+  height: 170px;
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+}
+#hotelSection > .hotelItem > .hotelImg {
+  background: aqua;
+  width: 20%;
+}
+#hotelSection > .hotelItem > .hotelContent {
+  padding: 5px;
+}
+
+/*# sourceMappingURL=main.css.map */
