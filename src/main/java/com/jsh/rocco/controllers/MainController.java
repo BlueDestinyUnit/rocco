@@ -41,9 +41,7 @@ public class MainController {
     public ResponseEntity<?> searchReservation(HttpServletRequest request, FindHotel findHotel) {
         System.out.println(request.getParameter("arrivalDate"));
         log.info("테스트");
-        Map<Property, List<AvailableRoom>> propertyMap = reservationRoomService.findAvailableRooms2(findHotel.getPropertyRegion(),findHotel.getCapacity(),dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()), dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
-        // 검색 요청을 처리하고 필요한 데이터를 얻는 코드를 작성합니다.
-        // 이 예시에서는 간단히 성공 메시지를 반환합니다.
+        Map<Property, List<AvailableRoom>> propertyMap = reservationRoomService.findAvailableRooms2(findHotel);
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Search successful");
         response.put("list",propertyMap);

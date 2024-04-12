@@ -109,7 +109,6 @@ class RoccoApplicationTests {
 
         rooms = reservationRoomService.findMyReservationRoom("1001");
 
-
     }
 
     @Test
@@ -152,11 +151,9 @@ class RoccoApplicationTests {
          rooms.add(room);
          rooms.add(room2);
          rooms.add(room3);
-    	
-    	
+
     	reservationService.addReservation2(rooms, customer,parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
-    	
-    	
+
         Reservation reservation = reservationService.findByReservationNum("R10001");
         Payment payment = new Payment();
         payment.setCardNum("22222");
