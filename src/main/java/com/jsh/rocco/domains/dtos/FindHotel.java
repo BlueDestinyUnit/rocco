@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 @Data
 @ToString
 public class FindHotel {
+    private long propertyId;
     private String propertyRegion;
     private int customers;
     private int roomCount;

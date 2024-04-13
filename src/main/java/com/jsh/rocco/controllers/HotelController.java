@@ -1,7 +1,10 @@
 package com.jsh.rocco.controllers;
 
+import com.jsh.rocco.domains.dtos.AvailableProperty;
+import com.jsh.rocco.domains.dtos.FindHotel;
 import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.services.PropertyService;
+import com.jsh.rocco.services.ReservationRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,15 +16,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HotelController {
     private final PropertyService propertyService;
 
+    private final ReservationRoomService reservationRoomService;
+
     @Autowired
-    HotelController(PropertyService propertyService){
+    public HotelController(PropertyService propertyService, ReservationRoomService reservationRoomService) {
         this.propertyService = propertyService;
+        this.reservationRoomService = reservationRoomService;
     }
 
+
+
+//    @GetMapping("/detail")
+//    public void getHotels(Property property, Model model) {
+//        property = propertyService.getProperty(property.getId());
+//        model.addAttribute("property",property);
+//    }
+
     @GetMapping("/detail")
-    public void getHotels(Property property, Model model) {
-        property = propertyService.getProperty(property.getId());
+    public void getHotels(FindHotel findHotel, Model model) {
+        AvailableProperty property = reservationRoomService.findAvailablePropertyAndRooms(findHotel);
         model.addAttribute("property",property);
+        model.addAttribute("findHotel",findHotel);
     }
 
 }

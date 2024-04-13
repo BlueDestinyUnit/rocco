@@ -1,5 +1,7 @@
 package com.jsh.rocco;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.entities.*;
 import com.jsh.rocco.services.*;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class RoccoApplicationTests {
@@ -163,7 +166,6 @@ class RoccoApplicationTests {
 
         paymentService.addPayment(reservation, payment , parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
     }
-    
 
 
     private Date parseDate(String dateStr) {

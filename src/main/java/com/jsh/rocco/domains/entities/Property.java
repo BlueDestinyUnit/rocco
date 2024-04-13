@@ -1,19 +1,19 @@
 package com.jsh.rocco.domains.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @ToString(exclude = "rooms")
-public class Property {
+public class Property implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

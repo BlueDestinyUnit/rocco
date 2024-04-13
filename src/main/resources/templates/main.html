@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
     <title>Main Page</title>
     <script th:src="@{/js/main.js}" defer></script>
     <!-- 추가적으로 필요한 CSS나 스타일시트를 로드할 수 있습니다. -->
@@ -19,10 +20,10 @@
                 <input name="propertyRegion" type="text" value="대구">
             </label>
             <label class="arriv">
-                <input type="date" id="arrivalDate" name="arrivalDate">
+                <input type="date" id="arrivalDate" name="arrivalDate" value="2024-04-13">
             </label>
             <label class="depart">
-                <input type="date" id="departureDate" name="departureDate">
+                <input type="date" id="departureDate" name="departureDate" value="2024-04-13">
             </label>
             <label>
                 <input name="customers" type="number" value="1">

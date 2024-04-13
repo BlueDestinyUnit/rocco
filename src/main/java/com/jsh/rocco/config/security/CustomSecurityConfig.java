@@ -45,7 +45,7 @@ public class CustomSecurityConfig {
                                 .requestMatchers("room/*").permitAll()
                                 .requestMatchers("hotel/*").permitAll()
                                 .requestMatchers("search").permitAll()
-                                .requestMatchers("searchReservation").permitAll()
+                                .requestMatchers("searchAvailableProperty").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(

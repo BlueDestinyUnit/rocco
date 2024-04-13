@@ -2,10 +2,12 @@ package com.jsh.rocco.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jsh.rocco.domains.dtos.AvailableProperty;
 import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.dtos.FindHotel;
 import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.domains.entities.ReservationRoom;
+import com.jsh.rocco.domains.enums.results.CommonResult;
 import com.jsh.rocco.services.ReservationRoomService;
 import com.jsh.rocco.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,33 +42,17 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/searchReservation")
+    @GetMapping("/searchAvailableProperty")
     @ResponseBody
-    public ResponseEntity<?> searchReservation(HttpServletRequest request, FindHotel findHotel) throws JsonProcessingException {
-        log.info("테스트");
-
-        Map<Property, List<AvailableRoom>> propertyMap = reservationRoomService.findAvailableRooms2(findHotel);
-        JSONArray jsonArray = new JSONArray();
-        for(Map.Entry<Property,List<AvailableRoom>> entry : propertyMap.entrySet()){
-            JSONObject jsonObject = new JSONObject();
-            Property property = entry.getKey();
-            List<AvailableRoom> availableRooms = entry.getValue();
-            ObjectMapper objectMapper = new ObjectMapper();
-            String jsonString = objectMapper.writeValueAsString(property);
-            System.out.println(jsonString);
-            jsonObject.put("property",jsonString);
-            jsonObject.put("rooms",availableRooms);
-            jsonArray.put(jsonObject);
-        }
-        System.out.println(jsonArray.toString());
-
-
+    public ResponseEntity<?> searchAvailableProperty(FindHotel findHotel) {
+        List<AvailableProperty> propertyList = reservationRoomService.findAvailablePropertiesAndRooms(findHotel);
         Map<String, Object> response = new HashMap<>();
-        response.put("message", "Search successful");
-        response.put("list",jsonArray.toString());
+        if(propertyList.isEmpty()){
+            response.put("message", CommonResult.FAILURE.name().toLowerCase());
+        }else{
+            response.put("message", "Search successful");
+        }
+        response.put("list",propertyList);
         return ResponseEntity.ok().body(response);
     }
-
-
-
 }

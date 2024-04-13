@@ -25,4 +25,13 @@ public class RestController {
         return ResponseEntity.ok().body("Login successful");
     }
 
+    @GetMapping("test")
+    public ResponseEntity<?> test() {
+        // 로그인 요청을 처리하는 코드
+
+        Map<String, Object> response = new HashMap<>();
+        // 여기서는 사용자 인증 및 토큰 생성 등을 수행합니다.
+        return ResponseEntity.ok().body("Login successful");
+    }
+
 }

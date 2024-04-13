@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>방 정보</title>
+    <link rel="stylesheet" th:href="@{/css/hotel/detail.css}">
 </head>
 <body>
 <!-- 이 부분은 layout.html에서 정의한 컨텐츠 영역에 삽입됩니다. -->
@@ -25,10 +26,20 @@
     <div>
         <span>주소:</span><span th:text="${property.propertyAddress}"></span>
     </div>
-    <div>방의 리스트</div>
-    <div th:each="room : ${property.rooms}">
-        <div th:text="${room}"></div>
+    <h2>방의 리스트</h2>
+    <div class="roomIntro" th:each="room : ${property.rooms}">
+        <label>
+            <input type="checkbox" th:value="${room.id}">
+            <div>
+                <div th:text="${room.name}"></div>
+                <div th:text="${room.capacity}"></div>
+                <div th:text="${room.price}"></div>
+            </div>
+        </label>
     </div>
+
+    <button></button>
+
 </section>
 </body>
 </html>

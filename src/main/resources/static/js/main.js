@@ -12,7 +12,7 @@ searchForm.onsubmit = (e) => {
 
     // const queryString = `propertyRegion=${propertyRegion}&arrivalDate=${arrivalDate} 14:00:00&departureDate=${departureDate} 12:00:00&capacity=${capacity}&customers=${customers}`;
     console.log(queryString);
-    fetch(`/searchReservation?${queryString}`) // URL에 쿼리 문자열 추가
+    fetch(`/searchAvailableProperty?${queryString}`) // URL에 쿼리 문자열 추가
         .then((response) => {
             console.log("Response status:", response.status);
             console.log("Response headers:", response.headers);
@@ -22,14 +22,9 @@ searchForm.onsubmit = (e) => {
             console.log(typeof data);
             console.log(typeof data['list']);
             console.log(data['list']);
-            const hotels = JSON.parse(data['list']);
-
-
+            const hotels = data['list'];
             hotelSection.innerHTML = '';
-            for (const orginHotel of hotels){
-                console.log(orginHotel)
-                const inner = JSON.parse(orginHotel['property']);
-
+            for (const hotel of hotels){
                 const itemEl = new DOMParser().parseFromString(`
                 <div class="hotelItem">
                     <div class="hotelImg">
@@ -38,9 +33,19 @@ searchForm.onsubmit = (e) => {
                         </a>
                     </div>
                     <div class="hotelContent">
-                        <div>${inner.name}</div>
-                        <div>${inner.grade}</div>
-                        <div>${inner.intro}</div>
+                        <div class="hotelName"><a href="/hotel/detail?propertyId=${hotel.id}&arrivalDate=${arrivalDate}&departureDate=${departureDate}&roomCount=${roomCount}&customers=${customers}">${hotel.name}</a></div>
+                        <div>
+                            <span>등급 : </span><span>${hotel.grade}</span>
+                        </div>
+                        <div>
+                            <span>인트로 : </span><span>${hotel.intro}</span>
+                        </div>
+                        <div>
+                            <span>지역 : </span><span>${hotel['propertyAddress'].region}</span>
+                        </div>
+                        <div>
+                            <span>예약 가능한 방 :</span><span>${hotel.rooms.length}</span>
+                        </div>
                     </div>
                 </div>`, "text/html").querySelector('div');
                 hotelSection.append(itemEl);
