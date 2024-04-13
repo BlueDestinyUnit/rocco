@@ -21,9 +21,5 @@ spring:
     jpa:
       repositories:
         bootstrap-mode: deferred
-  security:
-    user:
-      name: user
-      password: 1234
 server:
   port: 8081

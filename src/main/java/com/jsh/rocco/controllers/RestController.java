@@ -16,14 +16,18 @@ import java.util.Map;
 
 public class RestController {
 
-    @PostMapping("user/login")
-    public ResponseEntity<?> login(@RequestBody RoccoUser roccoUser) {
-
-        System.out.println(roccoUser);
-        // 로그인 요청을 처리하는 코드
-        // 여기서는 사용자 인증 및 토큰 생성 등을 수행합니다.
-        return ResponseEntity.ok().body("Login successful");
-    }
+//    @PostMapping("user/login")
+//    public ResponseEntity<?> login(@RequestBody RoccoUser roccoUser) {
+//
+//        System.out.println(roccoUser);
+//        // 로그인 요청을 처리하는 코드
+//        // 여기서는 사용자 인증 및 토큰 생성 등을 수행합니다.
+//        return ResponseEntity.ok().body("Login successful");
+//    }
+//    @PostMapping("user/login/register")
+//    public ResponseEntity<?> register() {
+//        return ResponseEntity.ok().body("Register successful");
+//    }
 
     @GetMapping("test")
     public ResponseEntity<?> test() {

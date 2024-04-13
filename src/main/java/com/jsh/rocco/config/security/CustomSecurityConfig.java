@@ -1,12 +1,18 @@
 package com.jsh.rocco.config.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsh.rocco.services.securities.CustomUserDetailsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,15 +29,25 @@ import java.util.Arrays;
 
 @Log4j2
 @Configuration
+@EnableWebSecurity
 public class CustomSecurityConfig {
 
+    private final ObjectMapper objectMapper;
     private DataSource dataSource;
     private CustomUserDetailsService customUserDetailsService;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
 
     @Autowired
-    CustomSecurityConfig(DataSource dataSource, CustomUserDetailsService customUserDetailsService){
+    public CustomSecurityConfig(ObjectMapper objectMapper, DataSource dataSource, CustomUserDetailsService customUserDetailsService,
+                                CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+                                CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+        this.objectMapper = objectMapper;
         this.dataSource = dataSource;
         this.customUserDetailsService = customUserDetailsService;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
 
     @Bean
@@ -41,16 +57,26 @@ public class CustomSecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry.requestMatchers("/").permitAll()
                                 .requestMatchers("layouts/layout").permitAll()
+                                .requestMatchers("register").permitAll()
                                 .requestMatchers("user/login").permitAll()
+                                .requestMatchers("user/login/*").permitAll()
+                                .requestMatchers("user/login/test").permitAll()
+                                .requestMatchers("user/login/test2").permitAll()
                                 .requestMatchers("room/*").permitAll()
                                 .requestMatchers("hotel/*").permitAll()
                                 .requestMatchers("search").permitAll()
                                 .requestMatchers("searchAvailableProperty").permitAll()
                                 .anyRequest().authenticated()
                 )
+
                 .formLogin(
                         httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                                 .loginPage("/user/login").defaultSuccessUrl("/")
+                                .loginProcessingUrl("/user/login/")
+                                .usernameParameter("email").passwordParameter("password")
+                                .successHandler(customAuthenticationSuccessHandler)
+                                .failureHandler(customAuthenticationFailureHandler)
+                                .permitAll()
                 )
                 .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
                         .userDetailsService(customUserDetailsService)
@@ -58,6 +84,32 @@ public class CustomSecurityConfig {
                         .tokenValiditySeconds(60 * 60))
                 .build();
     }
+
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() throws Exception {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+
+        daoAuthenticationProvider.setUserDetailsService(customUserDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+
+        return daoAuthenticationProvider;
+    }
+
+
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {//AuthenticationManager 등록
+        DaoAuthenticationProvider provider = daoAuthenticationProvider();//DaoAuthenticationProvider 사용
+        provider.setPasswordEncoder(passwordEncoder());//PasswordEncoder로는 PasswordEncoderFactories.createDelegatingPasswordEncoder() 사용
+        return new ProviderManager(provider);
+    }
+
+    @Bean
+    public JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordLoginFilter() throws Exception {
+        JsonUsernamePasswordAuthenticationFilter jsonUsernamePasswordLoginFilter = new JsonUsernamePasswordAuthenticationFilter(objectMapper);
+        jsonUsernamePasswordLoginFilter.setAuthenticationManager(authenticationManager());
+        return jsonUsernamePasswordLoginFilter;
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder(){

@@ -9,7 +9,7 @@ loginForm.onsubmit = function (e) {
     };
 
 
-    fetch('user/login', {
+    fetch('/user/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

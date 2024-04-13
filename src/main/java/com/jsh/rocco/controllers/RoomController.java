@@ -20,6 +20,7 @@ public class RoomController {
 
     @GetMapping("/rooms")
     public void getRooms(){}
+
     @GetMapping("/detail")
     public void getRoomDetail(Room room, Model model){
         Room dbRoom = roomService.findById(room.getId());

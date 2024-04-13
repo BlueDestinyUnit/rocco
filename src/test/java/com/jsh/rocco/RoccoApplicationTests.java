@@ -3,10 +3,16 @@ package com.jsh.rocco;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.entities.*;
+import com.jsh.rocco.domains.enums.roccouser.TelCompany;
+import com.jsh.rocco.domains.enums.roccouser.UserRole;
+import com.jsh.rocco.repositories.RoccoUserRepository;
 import com.jsh.rocco.services.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.config.authentication.PasswordEncoderParser;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,9 +40,15 @@ class RoccoApplicationTests {
     @Autowired
     private ReservationRoomService reservationRoomService;
 
-
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoccoUserRepository roccoUserRepository;
+
 
     @Test
     @Transactional
@@ -165,6 +177,24 @@ class RoccoApplicationTests {
         payment.setPaymentNumber("212121");
 
         paymentService.addPayment(reservation, payment , parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
+    }
+
+    @Test
+    @Transactional
+    @Commit
+    public void userRegister(){
+        RoccoUser roccoUser = new RoccoUser();
+        roccoUser.setEmail("test1@test.com");
+        roccoUser.setPassword(new BCryptPasswordEncoder().encode("1234"));
+        roccoUser.setBirthDate(parseDate("2024-04-10 14:00:00"));
+        roccoUser.setTelCompany(TelCompany.SKT);
+        roccoUser.setPhone("01011112222");
+        roccoUser.setAddressPostal("11111");
+        roccoUser.setAddressPrimary("대구 중앙대로 226");
+        roccoUser.setAddressSecondary("테스트중입니다.");
+        roccoUser.setUserRole(UserRole.USER);
+
+        roccoUserRepository.save(roccoUser);
     }
 
 
