@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +20,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -33,26 +37,35 @@ import java.util.Arrays;
 public class CustomSecurityConfig {
 
     private final ObjectMapper objectMapper;
-    private DataSource dataSource;
-    private CustomUserDetailsService customUserDetailsService;
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
-    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    private final DataSource dataSource;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+    private final AuthenticationConfiguration authenticationConfiguration;
 
 
     @Autowired
     public CustomSecurityConfig(ObjectMapper objectMapper, DataSource dataSource, CustomUserDetailsService customUserDetailsService,
                                 CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
-                                CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+                                CustomAuthenticationFailureHandler customAuthenticationFailureHandler
+                                ,AuthenticationConfiguration authenticationConfiguration) {
         this.objectMapper = objectMapper;
         this.dataSource = dataSource;
         this.customUserDetailsService = customUserDetailsService;
         this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+        this.authenticationConfiguration = authenticationConfiguration;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder sharedObject = http.getSharedObject(AuthenticationManagerBuilder.class);
+        AuthenticationManager authenticationManager = sharedObject.build();
+
+
+
         return  http.csrf(AbstractHttpConfigurer::disable)
+                .authenticationManager(authenticationManager)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                         authorizationManagerRequestMatcherRegistry.requestMatchers("/").permitAll()
@@ -71,12 +84,17 @@ public class CustomSecurityConfig {
 
                 .formLogin(
                         httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
-                                .loginPage("/user/login").defaultSuccessUrl("/")
-                                .loginProcessingUrl("/user/login/")
-                                .usernameParameter("email").passwordParameter("password")
-                                .successHandler(customAuthenticationSuccessHandler)
-                                .failureHandler(customAuthenticationFailureHandler)
-                                .permitAll()
+//                                .loginPage("/user/login").defaultSuccessUrl("/")
+//                                .loginProcessingUrl("/user/login/")
+//                                .usernameParameter("email").passwordParameter("password")
+//                                .successHandler(customAuthenticationSuccessHandler)
+//                                .failureHandler(customAuthenticationFailureHandler)
+//                                .permitAll()
+                                .disable()
+                )
+                .addFilterAt(
+                        this.abstractAuthenticationProcessingFilter(authenticationManager),
+                        UsernamePasswordAuthenticationFilter.class
                 )
                 .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
                         .userDetailsService(customUserDetailsService)
@@ -84,6 +102,17 @@ public class CustomSecurityConfig {
                         .tokenValiditySeconds(60 * 60))
                 .build();
     }
+
+    public AbstractAuthenticationProcessingFilter abstractAuthenticationProcessingFilter(final AuthenticationManager authenticationManager) {
+        return new LoginAuthenticationFilter(
+                "/user/login/",
+                authenticationManager
+        );
+    }
+
+
+
+
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() throws Exception {

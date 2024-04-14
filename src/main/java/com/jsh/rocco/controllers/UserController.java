@@ -17,16 +17,16 @@ public class UserController {
         return "user/login";
     }
 
-    @PostMapping("login/")
-    @ResponseBody
-    public ResponseEntity<?> postLogin(@RequestBody RoccoUser roccoUser){
-        System.out.println(roccoUser);
-        System.out.println("성공은 한거야?");
-        Map<String, Object> response = new HashMap<>();
-        response.put("roccoUser", roccoUser);
-        response.put("success", CommonResult.SUCCESS.name().toLowerCase());
-        return ResponseEntity.ok().body(response);
-    }
+//    @PostMapping("login/")
+//    @ResponseBody
+//    public ResponseEntity<?> postLogin(@RequestBody RoccoUser roccoUser){
+//        System.out.println(roccoUser);
+//        System.out.println("성공은 한거야?");
+//        Map<String, Object> response = new HashMap<>();
+//        response.put("roccoUser", roccoUser);
+//        response.put("success", CommonResult.SUCCESS.name().toLowerCase());
+//        return ResponseEntity.ok().body(response);
+//    }
     @PostMapping("login/test2")
     @ResponseBody
     public ResponseEntity<?> postLogin2(){
