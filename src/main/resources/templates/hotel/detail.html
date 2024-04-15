@@ -39,45 +39,50 @@
         </label>
     </div>
 
-    <div class="dialog -visible" id="dialog" >
+    <div class="dialog" id="dialog" >
         <div class="customer" data-index="1">
             <h2 class="title">고객 정보</h2>
-            <form id="customerRegisForm" class="type-wrapper" rel="typeWrapper" >
-                <label class="type">
+            <form id="customerRegisForm" >
+                <label class="_obj-label label">
                     <span class="title">성 </span>
-                    <input class="text" name="firstName" type="text">
+                    <input class="_obj-input __field input" name="firstName" type="text">
                 </label>
-                <label class="type">
+                <label class="_obj-label label">
                     <span class="title">이름</span>
-                    <input class="text" name="lastName" type="text">
+                    <input class="_obj-input __field input" name="lastName" type="text">
                 </label>
-                <label class="type">
+                <label class="_obj-label label">
                     <span class="title">폰 번호</span>
-                    <input class="text" name="phone" type="text">
+                    <input class="_obj-input __field input" name="phone" type="text">
                 </label>
-                <button class="_obj-button" rel="nextButton" type="button">결제하러 가기</button>
+                <button class="_obj-button" rel="nextButton" type="submit">결제하러 가기</button>
             </form>
         </div>
 
         <div class="payment" data-index="2">
             <h2 class="title">카드 결제</h2>
-            <form id="paymentRegisForm" class="type-wrapper" rel="typeWrapper" >
-                <label class="type">
+            <form id="paymentRegisForm" >
+                <label class="_obj-label label">
+                    <span class="title">결제 방식</span>
+                    <select class="_obj-input" name="category">
+                        <option disabled hidden selected value="-1">분류</option>
+                        <option value="card">카드 결제</option>
+                        <option value="kakao">카카오 페이</option>
+                        <option value="credit">실시간 계좌 이체</option>
+                    </select>
+                </label>
+                <label class="_obj-label label">
                     <span class="title">카드 번호</span>
-                    <input class="text" maxlength="25" name="cardNumber" type="text">
+                    <input class="_obj-input __field input" maxlength="25" name="cardNumber" type="text">
                 </label>
                 <input type="hidden" name="cardType" value="pay">
-                <button class="_obj-button" rel="nextButton" type="button">결제 하기</button>
+                <button class="_obj-button" type="button">돌아 가기</button>
+                <button class="_obj-button" type="submit">결제 하기</button>
             </form>
         </div>
-
-
-
-        <button class="_obj-button" rel="cancelButton" type="button">돌아가기</button>
+        <button class="_obj-button" rel="cancelButton" type="button">취소하기</button>
     </div>
-
-    <button>결제하기</button>
-
+    <button id="paymentReady" class="_obj-button" type="button">결제하기</button>
 </section>
 </body>
 </html>
