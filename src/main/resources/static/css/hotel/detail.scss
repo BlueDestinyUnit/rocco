@@ -1,7 +1,7 @@
 .dialog {
   top: calc(50% + 0.25rem);
   left: 50%;
-  width: 25rem;
+  width: 28rem;
   background-color: #ffffff;
   border-radius: 0.25rem;
   box-sizing: border-box;
@@ -39,14 +39,41 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+    }
+  }
 
-      > .label > .horizontal {
-        align-items: stretch;
-        display: flex;
-        flex-direction: row;
-        gap: 0.375rem;
-        justify-content: flex-start;
+  > .selectRooms {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    > .title {
+      font-size: 1.75rem;
+      font-weight: 100;
+      margin-bottom: 0.75rem;
+    }
+
+    > .reserveDays {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      >.reserveGrid{
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        > div{
+          border: 1px black solid;
+          height: 5rem;
+        }
       }
+    }
+
+
+
+    > button {
+      width: 100%;
     }
   }
 }

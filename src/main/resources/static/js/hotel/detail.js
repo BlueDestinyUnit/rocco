@@ -1,19 +1,59 @@
 const dialog = document.getElementById('dialog');
 const elementsWithIndex = document.querySelectorAll('[data-index]');
-const paymentReady = document.getElementById('paymentReady');
+const paymentReady = document.querySelector('[rel="paymentReady"]');
 
-let currentIndex = 1;
-
+// form
 const customerRegisForm = document.getElementById('customerRegisForm');
-
 const paymentRegisForm = document.getElementById('paymentRegisForm');
 
+// 버튼
+const returnButtons = document.querySelectorAll('[rel="returnButton"]');
+const cancleButton =document.querySelector('[rel="cancleButton"]');
+const nextButton = document.querySelector('[rel="nextButton"]');
+
+// 다이아로그 인덱스
+let currentIndex = 1;
+
+// 뒤로 가기 버튼
+for (let i = 0; i < returnButtons.length; i++) {
+    returnButtons[i].addEventListener('click', (e) => {
+       currentIndex -=1;
+       findDataIndex();
+    });
+}
+
+
+
+
+// 다이아로그를 여는 함수
+paymentReady.onclick = function (e) {
+    cover.show();
+    dialog.show();
+    findDataIndex();
+}
+
+// 취소 버튼
+cancleButton.onclick = function (e) {
+    e.preventDefault();
+    currentIndex = 1;
+    cover.hide();
+    dialog.hide();
+}
+
+nextButton.onclick = function (e) {
+    e.preventDefault();
+    currentIndex += 1;
+    findDataIndex();
+}
+
+// 고객 정보 입력
 customerRegisForm.onsubmit = function (e) {
     e.preventDefault();
     currentIndex = currentIndex + 1;
     findDataIndex();
 }
 
+// 결제 입력
 paymentRegisForm.onsubmit = function (e) {
     e.preventDefault();
     currentIndex = 1;
@@ -21,13 +61,8 @@ paymentRegisForm.onsubmit = function (e) {
     dialog.hide();
 }
 
-paymentReady.onclick = function (e) {
-    cover.show();
-    dialog.show();
-    findDataIndex();
 
-}
-
+// 다이아로그 순서를 정하는 함수
 function findDataIndex() {
     Array.from(elementsWithIndex).forEach(element => {
         console.log(element)

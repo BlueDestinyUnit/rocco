@@ -40,7 +40,33 @@
     </div>
 
     <div class="dialog" id="dialog" >
-        <div class="customer" data-index="1">
+        <div class="selectRooms" data-index="1">
+            <h2 class="title">예약 목록 확인</h2>
+            <div class="reserveDays">
+                <h3>예약 날짜</h3>
+                <div class="reserveGrid">
+                    <div>
+                        <span>체크인</span>
+                        <div>2024-4-16 14:00</div>
+                    </div>
+                    <div>
+                        <span>체크아웃</span>
+                        <div>2024-4-17 12:00</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+            <div>
+                a
+            </div>
+            <button class="_obj-button" rel="nextButton" type="button">고객정보 입력</button>
+        </div>
+
+
+
+        <div class="customer" data-index="2">
             <h2 class="title">고객 정보</h2>
             <form id="customerRegisForm" >
                 <label class="_obj-label label">
@@ -55,11 +81,12 @@
                     <span class="title">폰 번호</span>
                     <input class="_obj-input __field input" name="phone" type="text">
                 </label>
+                <button class="_obj-button" rel="returnButton" type="button">돌아 가기</button>
                 <button class="_obj-button" rel="nextButton" type="submit">결제하러 가기</button>
             </form>
         </div>
 
-        <div class="payment" data-index="2">
+        <div class="payment" data-index="3">
             <h2 class="title">카드 결제</h2>
             <form id="paymentRegisForm" >
                 <label class="_obj-label label">
@@ -75,14 +102,14 @@
                     <span class="title">카드 번호</span>
                     <input class="_obj-input __field input" maxlength="25" name="cardNumber" type="text">
                 </label>
-                <input type="hidden" name="cardType" value="pay">
-                <button class="_obj-button" type="button">돌아 가기</button>
+                <button class="_obj-button" rel="returnButton" type="button">돌아 가기</button>
                 <button class="_obj-button" type="submit">결제 하기</button>
             </form>
         </div>
-        <button class="_obj-button" rel="cancelButton" type="button">취소하기</button>
+        <button class="_obj-button" rel="cancleButton" type="button">취소하기</button>
     </div>
-    <button id="paymentReady" class="_obj-button" type="button">결제하기</button>
+
+    <button class="_obj-button" rel="paymentReady" type="button">결제하기</button>
 </section>
 </body>
 </html>
