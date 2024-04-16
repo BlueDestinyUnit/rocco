@@ -1,4 +1,4 @@
-const dialog = document.getElementById('dialog');
+const paymentDialog = document.getElementById('paymentDialog');
 const elementsWithIndex = document.querySelectorAll('[data-index]');
 const paymentReady = document.querySelector('[rel="paymentReady"]');
 
@@ -22,13 +22,10 @@ for (let i = 0; i < returnButtons.length; i++) {
     });
 }
 
-
-
-
 // 다이아로그를 여는 함수
 paymentReady.onclick = function (e) {
     cover.show();
-    dialog.show();
+    paymentDialog.show();
     findDataIndex();
 }
 
@@ -37,7 +34,7 @@ cancleButton.onclick = function (e) {
     e.preventDefault();
     currentIndex = 1;
     cover.hide();
-    dialog.hide();
+    paymentDialog.hide();
 }
 
 nextButton.onclick = function (e) {
@@ -58,7 +55,7 @@ paymentRegisForm.onsubmit = function (e) {
     e.preventDefault();
     currentIndex = 1;
     cover.hide();
-    dialog.hide();
+    paymentDialog.hide();
 }
 
 

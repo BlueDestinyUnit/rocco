@@ -11,56 +11,82 @@
 <body>
 <!-- 이 부분은 layout.html에서 정의한 컨텐츠 영역에 삽입됩니다. -->
 <section layout:fragment="content">
-    <h1>호텔 상세 정보</h1>
-    <div>
-        <span th:text="${property.id}"></span>
-    </div>
-    <div>
-        <span>호텔이름:</span><span th:text="${property.name}"></span>
-    </div>
-    <div>
-        <span>등급:</span><span th:text="${property.grade}"></span>
-    </div>
-    <div>
-        <span>소개:</span><span th:text="${property.intro}"></span>
-    </div>
-    <div>
-        <span>주소:</span><span th:text="${property.propertyAddress}"></span>
-    </div>
-    <h2>방의 리스트</h2>
-    <div class="roomIntro" th:each="room : ${property.rooms}">
-        <label>
-            <input type="checkbox" th:value="${room.id}">
+    <h1 th:text="${property.name}">호텔 상세 정보</h1>
+    <section class="hotelDetail">
+        <div class="propertyImg">
+            <img src="" alt="">
+        </div>
+        <div class="hotelContent">
             <div>
-                <div th:text="${room.name}"></div>
-                <div th:text="${room.capacity}"></div>
-                <div th:text="${room.price}"></div>
+                <span>등급:</span><span th:text="${property.grade}"></span>
             </div>
-        </label>
-    </div>
+            <div>
+                <span>소개:</span><span th:text="${property.intro}"></span>
+            </div>
+            <div>
+                <span>주소:</span><span th:text="${property.propertyAddress.region + ' ' +
+                property.propertyAddress.street1 + ' ' +property.propertyAddress.street2 +
+                ' ' + property.propertyAddress.zipCode}"></span>
+            </div>
+        </div>
+    </section>
 
-    <div class="dialog" id="dialog" >
+    <section id="rooms">
+        <h2>방의 리스트</h2>
+        <div class="roomItem" th:each="room : ${property.rooms}">
+            <label>
+                <input type="checkbox" th:value="${room.id}">
+                <div class="roomImg">
+                    <img src="" alt="">
+                </div>
+                <div>
+                    <div th:text="${room.name}"></div>
+                    <div th:text="${room.capacity}"></div>
+                    <div th:text="${room.price}"></div>
+                </div>
+            </label>
+        </div>
+    </section>
+<!--    <div>-->
+<!--        <span th:text="${property.id}"></span>-->
+<!--    </div>-->
+
+    <section class="dialog" id="paymentDialog" >
         <div class="selectRooms" data-index="1">
             <h2 class="title">예약 목록 확인</h2>
             <div class="reserveDays">
                 <h3>예약 날짜</h3>
                 <div class="reserveGrid">
                     <div>
-                        <span>체크인</span>
+                        <span class="title">체크인</span>
                         <div>2024-4-16 14:00</div>
                     </div>
                     <div>
-                        <span>체크아웃</span>
+                        <span class="title">체크아웃</span>
                         <div>2024-4-17 12:00</div>
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="availableRooms">
+                <h3>예약할 방</h3>
+                <div class="roomItem">
+                    <img src="" alt="">
+                    <div>
+                        <div>방이름</div>
+                        <div>capacity</div>
+                        <div>가격</div>
+                    </div>
+                </div>
+            </div>
+            <div class="totalPrice">
+                <span class="title">
+                    총금액 :
+                </span>
+
+                <span> 300,000</span>
 
             </div>
-            <div>
-                a
-            </div>
+
             <button class="_obj-button" rel="nextButton" type="button">고객정보 입력</button>
         </div>
 
@@ -107,7 +133,7 @@
             </form>
         </div>
         <button class="_obj-button" rel="cancleButton" type="button">취소하기</button>
-    </div>
+    </section>
 
     <button class="_obj-button" rel="paymentReady" type="button">결제하기</button>
 </section>
