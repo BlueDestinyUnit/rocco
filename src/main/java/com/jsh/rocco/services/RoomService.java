@@ -4,6 +4,7 @@ package com.jsh.rocco.services;
 import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
+import com.jsh.rocco.repositories.PropertyRepository;
 import com.jsh.rocco.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,15 @@ import java.util.List;
 
 @Service
 public class RoomService {
+    private final RoomRepository roomRepository;
+
+    private final PropertyRepository propertyRepository;
+
     @Autowired
-    private RoomRepository roomRepository;
+    public RoomService(RoomRepository roomRepository, PropertyRepository propertyRepository) {
+        this.roomRepository = roomRepository;
+        this.propertyRepository = propertyRepository;
+    }
 
     public void addRoom(Room room){
         roomRepository.save(room);
@@ -36,5 +44,12 @@ public class RoomService {
     @Transactional
     public List<Room> findRooms(Property property){
         return this.roomRepository.findRoomsByPropertyName(property.getName());
+    }
+
+    @Transactional
+    public void addRoom2(Room room, long propertyId){
+        Property property = propertyRepository.findById(propertyId).orElse(null);
+        room.setProperty(property);
+        roomRepository.save(room);
     }
 }

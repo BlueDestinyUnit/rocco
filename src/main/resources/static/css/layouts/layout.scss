@@ -21,6 +21,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-inline: initial;
 }
 
+ol, ul {
+  list-style-type: none;
+  margin-block: initial;
+  margin-inline: initial;
+  padding-inline: initial;
+}
+
 ._obj-button {
   $background_color: #757575;
 

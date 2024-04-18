@@ -37,7 +37,7 @@
             <label>
                 <input type="checkbox" th:value="${room.id}">
                 <div class="roomImg">
-                    <img src="" alt="">
+                    <img th:src="'../room/thumbnail?index='+${room.id}" alt="">
                 </div>
                 <div>
                     <div th:text="${room.name}"></div>
@@ -47,16 +47,16 @@
             </label>
         </div>
     </section>
-<!--    <div>-->
-<!--        <span th:text="${property.id}"></span>-->
-<!--    </div>-->
+    <!--    <div>-->
+    <!--        <span th:text="${property.id}"></span>-->
+    <!--    </div>-->
 
-    <section class="dialog" id="paymentDialog" >
-        <div class="selectRooms" data-index="1">
+    <section class="dialog" id="paymentDialog">
+        <div class="checked-rooms" data-index="1">
             <h2 class="title">예약 목록 확인</h2>
-            <div class="reserveDays">
+            <div class="reserve-days">
                 <h3>예약 날짜</h3>
-                <div class="reserveGrid">
+                <div class="reserve-grid">
                     <div>
                         <span class="title">체크인</span>
                         <div>2024-4-16 14:00</div>
@@ -67,45 +67,32 @@
                     </div>
                 </div>
             </div>
-            <div class="availableRooms">
+            <div class="available-rooms">
                 <h3>예약할 방</h3>
-<!--                <div class="roomItem">-->
-<!--                    <img src="" alt="">-->
-<!--                    <div>-->
-<!--                        <div>방이름</div>-->
-<!--                        <div>capacity</div>-->
-<!--                        <div>가격</div>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <ul class="list">
-                    <li class="item empty">현재 위치에서 표시할 맛집이 없어요.<br><br>위치를 옮기거나 나만의 맛집을 등록해 보세요.</li>
+                    <li class="item empty">예약할 방을 고르지 않았습니다.<br><br>돌아가서 선택하고 다시 와주세요.</li>
                     <li class="item">
-                        <img alt="" class="image" src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/sPea_ioSgZp2ZJIjf_3EOBg/pea_iosgzp2zjijf_3eobg_2361409510336730.jpg">
+                        <img alt="" class="image"
+                             src="https://image.toast.com/aaaaaqx/catchtable/shopinfo/sPea_ioSgZp2ZJIjf_3EOBg/pea_iosgzp2zjijf_3eobg_2361409510336730.jpg">
                         <div class="spec">
-                <span class="name-wrapper">
-                    <span class="name">솔솥 대구 동성로점</span>
-                    <span class="category">한식</span>
-                </span>
-                            <span class="address">대구 중구 동성로3가</span>
+                            <span class="name-wrapper"><span class="name">스위트룸_1</span>
+                                <span class="category">2박</span>
+                            </span>
+                            <span class="room-price">200,000 (부가세포함)</span>
                             <span class="misc">
-                    <span class="time">09:00~18:00</span>
-                    <span class="review">
-                        <span class="text">리뷰</span>
-                        <span class="count">1,234</span>
-                    </span>
-                </span>
+                                <span class="time">4인실</span>
+                                <span class="review">
+                                    <span class="text"></span>
+                                    <span class="count">VIP전용</span>
+                                </span>
+                            </span>
                             <span class="button-container">
-                    <button class="button" name="modify" type="button">수정</button>
-                    <button class="button" name="delete" type="button">삭제</button>
-                    <button class="button" name="report" type="button">신고</button>
-                </span>
+                                <button class="button" name="modify" type="button">취소</button>
+                            </span>
                         </div>
                     </li>
                 </ul>
             </div>
-
-
-
 
 
             <div class="totalPrice">
@@ -121,10 +108,9 @@
         </div>
 
 
-
         <div class="customer" data-index="2">
             <h2 class="title">고객 정보</h2>
-            <form id="customerRegisForm" >
+            <form id="customerRegisForm">
                 <label class="_obj-label label">
                     <span class="title">성 </span>
                     <input class="_obj-input __field input" name="firstName" type="text">
@@ -144,7 +130,7 @@
 
         <div class="payment" data-index="3">
             <h2 class="title">카드 결제</h2>
-            <form id="paymentRegisForm" >
+            <form id="paymentRegisForm">
                 <label class="_obj-label label">
                     <span class="title">결제 방식</span>
                     <select class="_obj-input" name="category">

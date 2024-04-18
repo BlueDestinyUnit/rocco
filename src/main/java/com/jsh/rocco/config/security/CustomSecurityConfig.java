@@ -62,8 +62,6 @@ public class CustomSecurityConfig {
         AuthenticationManagerBuilder sharedObject = http.getSharedObject(AuthenticationManagerBuilder.class);
         AuthenticationManager authenticationManager = sharedObject.build();
 
-
-
         return  http.csrf(AbstractHttpConfigurer::disable)
                 .authenticationManager(authenticationManager)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -79,6 +77,8 @@ public class CustomSecurityConfig {
                                 .requestMatchers("hotel/*").permitAll()
                                 .requestMatchers("search").permitAll()
                                 .requestMatchers("searchAvailableProperty").permitAll()
+                                .requestMatchers("admin/room").permitAll()
+                                .requestMatchers("admin/room/").permitAll()
                                 .anyRequest().authenticated()
                 )
 

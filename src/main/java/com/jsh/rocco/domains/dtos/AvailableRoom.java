@@ -19,4 +19,6 @@ public class AvailableRoom {
     private String name;
     private int capacity;
     private double price;
+    private byte[] thumbnail;
+    private String thumbnailContentType;
 }
