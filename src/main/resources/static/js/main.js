@@ -41,7 +41,7 @@ searchForm.onsubmit = (e) => {
                             <span>인트로 : </span><span>${hotel.intro}</span>
                         </div>
                         <div>
-                            <span>지역 : </span><span>${hotel['propertyAddress'].region}</span>
+                            <span>지역 : </span><span>${hotel.region}</span>
                         </div>
                         <div>
                             <span>예약 가능한 방 :</span><span>${hotel.rooms.length}</span>

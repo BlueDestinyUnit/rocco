@@ -46,6 +46,7 @@ public class MainController {
     @ResponseBody
     public ResponseEntity<?> searchAvailableProperty(FindHotel findHotel) {
         List<AvailableProperty> propertyList = reservationRoomService.findAvailablePropertiesAndRooms(findHotel);
+        System.out.println(propertyList);
         Map<String, Object> response = new HashMap<>();
         if(propertyList.isEmpty()){
             response.put("message", CommonResult.FAILURE.name().toLowerCase());

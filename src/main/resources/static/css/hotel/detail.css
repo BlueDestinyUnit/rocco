@@ -135,7 +135,7 @@
   color: #3498db;
   font-size: 1.125rem;
 }
-.dialog > .checked-rooms > .available-rooms > .list > .item > .spec > .name-wrapper > .category {
+.dialog > .checked-rooms > .available-rooms > .list > .item > .spec > .name-wrapper > .days {
   top: -0.0625rem;
   color: #9e9e9e;
   position: relative;

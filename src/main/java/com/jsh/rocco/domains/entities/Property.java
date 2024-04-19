@@ -21,9 +21,10 @@ public class Property implements Serializable {
     private int grade;
     private String intro;
 
-    @OneToOne
-    @JoinColumn(name = "addressId")
-    private PropertyAddress propertyAddress;
+    private String region;
+    private String street1;
+    private String street2;
+    private String zipCode;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "property",cascade = CascadeType.ALL)

@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PropertyRepository extends CrudRepository<Property,Long> {
-    @Query("SELECT p FROM Property p WHERE p.propertyAddress.region = ?1")
+    @Query("SELECT p FROM Property p WHERE p.region = ?1")
     List<Property> findListByRegion(String region);
 }

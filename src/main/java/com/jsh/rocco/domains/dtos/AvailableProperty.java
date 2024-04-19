@@ -1,9 +1,5 @@
 package com.jsh.rocco.domains.dtos;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.jsh.rocco.domains.entities.PropertyAddress;
-import com.jsh.rocco.domains.entities.Room;
-import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,9 +14,10 @@ public class AvailableProperty {
     private String name;
     private int grade;
     private String intro;
-
-    private PropertyAddress propertyAddress;
-
+    private String region;
+    private String street1;
+    private String street2;
+    private String zipCode;
     private List<AvailableRoom> rooms;
 
 }

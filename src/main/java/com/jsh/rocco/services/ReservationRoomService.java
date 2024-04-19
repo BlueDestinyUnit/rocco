@@ -124,7 +124,10 @@ public class ReservationRoomService {
             availableProperty.setName(property.getName());
             availableProperty.setGrade(property.getGrade());
             availableProperty.setIntro(property.getIntro());
-            availableProperty.setPropertyAddress(property.getPropertyAddress());
+            availableProperty.setRegion(property.getRegion());
+            availableProperty.setStreet1(property.getStreet1());
+            availableProperty.setStreet2(property.getStreet2());
+            availableProperty.setZipCode(property.getZipCode());
             availableProperty.setRooms(entry.getValue());
             propertyList.add(availableProperty);
         }
@@ -145,7 +148,11 @@ public class ReservationRoomService {
         property.setName(dbProperty.getName());
         property.setIntro(dbProperty.getIntro());
         property.setGrade(dbProperty.getGrade());
-        property.setPropertyAddress(dbProperty.getPropertyAddress());
+        property.setRegion(dbProperty.getRegion());
+        property.setStreet1(dbProperty.getStreet1());
+        property.setStreet2(dbProperty.getStreet2());
+        property.setZipCode(dbProperty.getZipCode());
+
 
         // 지역에 따른 예약이 되지 않은 빈방들
         List<Room> rooms = reservationRoomRepository.findAvailableRoomsByDateRangeAndProperty(findHotel.getPropertyId(),

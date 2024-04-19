@@ -65,19 +65,10 @@ class RoccoApplicationTests {
     @Transactional
     @Commit
     void testProperty() {
-        PropertyAddress propertyAddress = new PropertyAddress();
-        propertyAddress.setRegion("대구");
-        propertyAddress.setStreet1("테스트거리3");
-        propertyAddress.setStreet2("테스트거리3");
-        propertyAddress.setZipCode("22222");
-
-        propertyService.addAddress(propertyAddress);
-
         Property property = new Property();
         property.setName("테스트3");
         property.setGrade(4);
         property.setIntro("멋진");
-        property.setPropertyAddress(propertyAddress);
 
         propertyService.addProperty(property);
     }
