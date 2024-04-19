@@ -27,6 +27,14 @@ public class UserController {
 //        response.put("success", CommonResult.SUCCESS.name().toLowerCase());
 //        return ResponseEntity.ok().body(response);
 //    }
+
+    @PostMapping("login/")
+    @ResponseBody
+    public String apiMessage() {
+        return "messages ok";
+    }
+
+
     @PostMapping("login/test2")
     @ResponseBody
     public ResponseEntity<?> postLogin2(){
@@ -37,4 +45,6 @@ public class UserController {
         response.put("success", CommonResult.SUCCESS.name().toLowerCase());
         return ResponseEntity.ok().body(response);
     }
+
+
 }

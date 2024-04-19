@@ -3,7 +3,7 @@ const loginForm = document.getElementById('loginForm');
 loginForm.onsubmit = function (e) {
     e.preventDefault();
     const formData = {
-        email: loginForm['email'].value,
+        username: loginForm['email'].value,
         password: loginForm['password'].value
         // 다른 필드들도 필요하다면 여기에 추가
     };
