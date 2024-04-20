@@ -26,7 +26,7 @@ public class HotelController {
 
     @GetMapping("/detail")
     public void getHotels(FindHotel findHotel, Model model) {
-        AvailableProperty property = propertyService.findAvailablePropertyAndRooms(findHotel);
+        Property property = this.propertyService.getProperty(findHotel.getPropertyId());
         model.addAttribute("property",property);
         model.addAttribute("findHotel",findHotel);
     }

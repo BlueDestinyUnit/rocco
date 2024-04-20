@@ -28,14 +28,15 @@ public class PropertyService {
     private final DateUtil dateUtil;
 
     @Autowired
-    public PropertyService(PropertyRepository propertyRepository, RoomRepository roomRepository, ReservationRoomRepository reservationRoomRepository, DateUtil dateUtil) {
+    public PropertyService(PropertyRepository propertyRepository,
+                           RoomRepository roomRepository,
+                           ReservationRoomRepository reservationRoomRepository,
+                           DateUtil dateUtil) {
         this.propertyRepository = propertyRepository;
         this.roomRepository = roomRepository;
         this.reservationRoomRepository = reservationRoomRepository;
         this.dateUtil = dateUtil;
     }
-
-
 
 
     public void addProperty(Property property){
@@ -94,47 +95,7 @@ public class PropertyService {
         return propertyList;
     }
 
-    public AvailableProperty findAvailablePropertyAndRooms(FindHotel findHotel) {
-        int capacity = findHotel.getCustomers()/findHotel.getRoomCount() == 0 ?
-                findHotel.getCustomers() : findHotel.getCustomers()/findHotel.getRoomCount();
 
-
-        Property dbProperty = propertyRepository.findById(findHotel.getPropertyId()).orElse(null);
-        if(dbProperty == null){
-            return null;
-        }
-        AvailableProperty property = new AvailableProperty();
-        property.setId(dbProperty.getId());
-        property.setName(dbProperty.getName());
-        property.setIntro(dbProperty.getIntro());
-        property.setGrade(dbProperty.getGrade());
-        property.setRegion(dbProperty.getRegion());
-        property.setStreet1(dbProperty.getStreet1());
-        property.setStreet2(dbProperty.getStreet2());
-        property.setZipCode(dbProperty.getZipCode());
-
-
-        // 지역에 따른 예약이 되지 않은 빈방들
-        List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndProperty(findHotel.getPropertyId(),
-                capacity, dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
-                dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
-        // 호텔과 예약이 가능한 방 리스트
-
-        List<AvailableRoom> roomList = new ArrayList<>();
-        rooms.forEach(room -> {
-            AvailableRoom availableRoom = new AvailableRoom();
-            availableRoom.setId(room.getId());
-            availableRoom.setRoomNum(room.getRoomNum());
-            availableRoom.setName(room.getName());
-            availableRoom.setCapacity(room.getCapacity());
-            availableRoom.setPrice(room.getPrice());
-            roomList.add(availableRoom);
-        });
-
-        property.setRooms(roomList);
-
-        return property;
-    }
 
 
 }

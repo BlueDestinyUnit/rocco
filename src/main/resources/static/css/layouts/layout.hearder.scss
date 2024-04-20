@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+#header {
+  background-color: cornflowerblue;
+
+  > .section {
+    height: 100px;
+    display: flex;
+    align-items: center;
+
+    > .spring {
+      flex: 1;
+    }
+
+    > .menu {
+      display: flex;
+      flex-direction: row;
+      list-style: none;
+      gap: 10px;
+    }
+  }
+}

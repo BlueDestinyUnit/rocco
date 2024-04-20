@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.domains.entities.ReservationRoom;
+import com.jsh.rocco.domains.entities.Room;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,14 @@ public class AvailableRoom {
     private String name;
     private int capacity;
     private double price;
-    private byte[] thumbnail;
-    private String thumbnailContentType;
+
+    public static AvailableRoom of (Room room) {
+        AvailableRoom aRoom = new AvailableRoom();
+        aRoom.setId(room.getId());
+        aRoom.setCapacity(room.getCapacity());
+        aRoom.setPrice(room.getPrice());
+        aRoom.setRoomNum(room.getRoomNum());
+        aRoom.setName(room.getName());
+        return aRoom;
+    }
 }

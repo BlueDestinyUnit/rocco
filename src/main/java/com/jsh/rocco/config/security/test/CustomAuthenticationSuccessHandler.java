@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-public class CustomAuthenticationSuccessHandler2 implements AuthenticationSuccessHandler {
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 

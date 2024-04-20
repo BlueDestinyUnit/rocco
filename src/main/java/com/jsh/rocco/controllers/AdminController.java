@@ -34,9 +34,6 @@ public class AdminController {
     public String postAddRoom(@RequestParam("_thumbnail") MultipartFile thumbnail,
                               @RequestParam("propertyId") long propertyId,
                               Room room) throws IOException {
-        System.out.println(room);
-
-        System.out.println("진입은 했니?");
         room.setThumbnail(thumbnail.getBytes());
         room.setThumbnailContentType(thumbnail.getContentType());
         roomService.addRoom2(room,propertyId);

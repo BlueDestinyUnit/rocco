@@ -1,4 +1,29 @@
 @charset "UTF-8";
+#header {
+  background-color: cornflowerblue;
+}
+#header > .section {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+#header > .section > .spring {
+  flex: 1;
+}
+#header > .section > .menu {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  gap: 10px;
+}
+
+#footer {
+  position: relative;
+  height: 100px;
+  background-color: darkkhaki;
+  transform: translateY(-100%);
+}
+
 :root {
   --container-width: 1050px; /* 변수로 지정한 너비 값 */
 }
@@ -16,7 +41,6 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font: inherit;
   margin-block: initial;
   margin-inline: initial;
 }
@@ -64,24 +88,6 @@ a {
 .section {
   margin: 0 auto;
   width: var(--container-width);
-}
-
-#header {
-  background-color: cornflowerblue;
-}
-#header > .section {
-  height: 100px;
-  display: flex;
-  align-items: center;
-}
-#header > .section > .spring {
-  flex: 1;
-}
-#header > .section > .menu {
-  display: flex;
-  flex-direction: row;
-  list-style: none;
-  gap: 10px;
 }
 
 #cover {
@@ -214,13 +220,6 @@ a {
 #main {
   min-height: 100%;
   padding: 1rem;
-}
-
-#footer {
-  position: relative;
-  height: 100px;
-  background-color: darkkhaki;
-  transform: translateY(-100%);
 }
 
 /*# sourceMappingURL=layout.css.map */

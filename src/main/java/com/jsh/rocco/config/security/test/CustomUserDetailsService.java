@@ -8,14 +8,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomUserDetailsService2 implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
 
     // JPA 사용, Mybatis 사용시 mapper를 등록하셔서 user 정보를 받아오시면 됩니다.
     private final UserRepository userRepository;
 
     @Autowired
-    public CustomUserDetailsService2(UserRepository userRepository) {
+    public CustomUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

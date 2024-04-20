@@ -31,9 +31,9 @@
         </div>
     </section>
 
-    <section class="search">
+    <section class="search room-search">
         <form id="searchForm">
-            <input hidden name="id" type="hidden" th:value="${property.id}">
+            <input hidden name="propertyId" type="hidden" th:value="${property.id}">
             <label class="arriv">
                 <input type="date" id="arrivalDate" name="arrivalDate" value="2024-04-13">
             </label>
@@ -55,19 +55,7 @@
 
     <section id="rooms">
         <h2>방의 리스트</h2>
-        <div class="roomItem" th:each="room : ${property.rooms}">
-            <label>
-                <input name="checkbox" type="checkbox" th:value="${room.id}">
-                <div class="roomImg">
-                    <img th:src="'../room/thumbnail?index='+${room.id}" alt="">
-                </div>
-                <div>
-                    <div class="roomName" th:text="${room.name}"></div>
-                    <div class="roomCapacity" th:text="${room.capacity}"></div>
-                    <div class="roomPrice"th:text="${room.price}"></div>
-                </div>
-            </label>
-        </div>
+        <div class="roomContainer"></div>
     </section>
 
     <section class="dialog" id="paymentDialog">
