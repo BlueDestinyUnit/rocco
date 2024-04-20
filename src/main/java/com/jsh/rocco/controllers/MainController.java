@@ -8,6 +8,7 @@ import com.jsh.rocco.domains.dtos.FindHotel;
 import com.jsh.rocco.domains.entities.Property;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.enums.results.CommonResult;
+import com.jsh.rocco.services.PropertyService;
 import com.jsh.rocco.services.ReservationRoomService;
 import com.jsh.rocco.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,14 +28,14 @@ import java.util.Map;
 @Log4j2
 @RequestMapping("/")
 public class MainController {
-    private final ReservationRoomService reservationRoomService;
+    private final PropertyService propertyService;
 
     private final DateUtil dateUtil;
 
     @Autowired
-    public MainController(ReservationRoomService reservationRoomService, DateUtil dateUtil) {
+    public MainController(PropertyService propertyService, DateUtil dateUtil) {
+        this.propertyService = propertyService;
         this.dateUtil = dateUtil;
-        this.reservationRoomService = reservationRoomService;
     }
 
     @GetMapping("/")
@@ -45,7 +46,7 @@ public class MainController {
     @GetMapping("/searchAvailableProperty")
     @ResponseBody
     public ResponseEntity<?> searchAvailableProperty(FindHotel findHotel) {
-        List<AvailableProperty> propertyList = reservationRoomService.findAvailablePropertiesAndRooms(findHotel);
+        List<AvailableProperty> propertyList = propertyService.findAvailablePropertiesAndRooms(findHotel);
         System.out.println(propertyList);
         Map<String, Object> response = new HashMap<>();
         if(propertyList.isEmpty()){
