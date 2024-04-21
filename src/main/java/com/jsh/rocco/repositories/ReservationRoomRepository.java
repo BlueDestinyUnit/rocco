@@ -26,6 +26,11 @@ public interface ReservationRoomRepository extends CrudRepository<ReservationRoo
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
     Optional<ReservationRoom> findRoomByRoomIdAndDate(long roomId, Date appri, Date depart);
 
+    @Query("SELECT rr FROM ReservationRoom rr  WHERE rr.room.id = ?1 " +
+            "AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3 AND rr.status ='H'")
+    Optional<ReservationRoom> findRoomByDateRange(long roomId, Date arrivalDate, Date departureDate);
+
+
 
 
 

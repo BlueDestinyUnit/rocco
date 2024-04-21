@@ -117,6 +117,9 @@ customerRegisForm.onsubmit = function (e) {
 // 결제 입력
 paymentRegisForm.onsubmit = function (e) {
     e.preventDefault();
+
+    fetch('payment',)
+
     currentIndex = 1;
     cover.hide();
     paymentDialog.hide();
@@ -175,6 +178,7 @@ function checkedRooms() {
             list.append(itemEl);
         }
     });
+    return checkedObject;
 }
 
 

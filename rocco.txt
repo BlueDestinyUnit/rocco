@@ -130,15 +130,15 @@ CREATE TABLE PropertyAddress
 
 CREATE TABLE Payment
 (
-    id            INT PRIMARY KEY AUTO_INCREMENT,
+    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
     customerId    BIGINT         NOT NULL,
  	reservationId BIGINT		 not null,
  	receiptNumber VARCHAR(50)    NOT NULL,
     status        CHAR(1)        NOT NULL,
     cardNumber    VARCHAR(16)    NOT NULL,
     cardType      VARCHAR(50)    NOT NULL,
-    createdAt     DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updatedAt     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    regDate   DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updateDate     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT Payment_customerId_FK FOREIGN KEY (customerId) REFERENCES Customer (id),
     CONSTRAINT Payment_reservationId_FK FOREIGN KEY (reservationId) REFERENCES Reservation (id)
 ) AUTO_INCREMENT = 1001;
@@ -150,11 +150,12 @@ CREATE TABLE Payment
 
 CREATE TABLE Receipt
 (
-    id            INT PRIMARY KEY AUTO_INCREMENT,
+    id            BIGINT PRIMARY KEY AUTO_INCREMENT,
     customerId    BIGINT         NOT NULL,
-    paymentId     INT            NOT NULL,
+    paymentId     BIGINT         NOT NULL,
     receiptNumber VARCHAR(50)    NOT NULL,
-    createdAt     DATETIME DEFAULT CURRENT_TIMESTAMP,
+    price         DOUBLE         NOT NULL,
+    regDate     DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT Receipt_paymentId_FK FOREIGN KEY (paymentId) REFERENCES Payment (id),
     CONSTRAINT Recepit_customerId_FK FOREIGN KEY (customerId) REFERENCES Customer (id)
 );

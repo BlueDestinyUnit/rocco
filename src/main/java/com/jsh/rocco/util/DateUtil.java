@@ -20,6 +20,11 @@ public class DateUtil {
 		ParsePosition position = new ParsePosition(0);
 		return format.parse(dateStr, position);
 	}
+	public Date createPFormat(String dateStr) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		ParsePosition position = new ParsePosition(0);
+		return format.parse(dateStr, position);
+	}
 
 	public Date parseDateStringWithFormat(String dateStr) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

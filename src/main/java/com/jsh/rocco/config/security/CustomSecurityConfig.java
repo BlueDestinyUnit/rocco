@@ -34,14 +34,13 @@ import java.util.Arrays;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
+
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
     private final CustomLoginAuthenticationEntryPoint authenticationEntryPoint;
     private final AuthenticationConfiguration authenticationConfiguration;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final DataSource dataSource;
-
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
@@ -67,6 +66,7 @@ public class CustomSecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler))
@@ -76,11 +76,7 @@ public class CustomSecurityConfig {
                         .tokenValiditySeconds(60 * 60));
 
         return http.build();
-
-
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -138,4 +134,6 @@ public class CustomSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+
 }

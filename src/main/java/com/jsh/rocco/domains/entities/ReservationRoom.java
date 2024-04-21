@@ -34,6 +34,8 @@ public class ReservationRoom {
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date departureDate;
 
+    private char status = 'H';
+
     public ReservationRoom() {
         super();
     }

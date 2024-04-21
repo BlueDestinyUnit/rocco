@@ -5,8 +5,10 @@ import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.entities.*;
 import com.jsh.rocco.domains.enums.roccouser.TelCompany;
 import com.jsh.rocco.domains.enums.roccouser.UserRole;
+import com.jsh.rocco.repositories.ReservationRepository;
 import com.jsh.rocco.repositories.RoccoUserRepository;
 import com.jsh.rocco.services.*;
+import com.jsh.rocco.util.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.DateUtils;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -44,10 +47,16 @@ class RoccoApplicationTests {
     private PaymentService paymentService;
 
     @Autowired
-    private UserService userService;
+    private DateUtil dateUtil;
+
+
+//    @Autowired
+//    private UserService userService;
 
     @Autowired
     private RoccoUserRepository roccoUserRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
 
 
     @Test
@@ -120,6 +129,20 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
+    void testReservation2(){
+        Reservation reservation = new Reservation();
+        Customer customer = customerService.findById(1001);
+        reservation.setReservationNum("1003");
+        reservation.setCustomer(customer);
+        reservationRepository.save(reservation);
+
+    }
+
+
+
+    @Test
+    @Transactional
+    @Commit
     void testFindRooms(){
         List<ReservationRoom> rooms = reservationRoomService.findByRoomAndDate(1001,parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
         rooms.forEach(r -> System.out.println(r));
@@ -167,7 +190,7 @@ class RoccoApplicationTests {
         payment.setReservation(reservation);
         payment.setPaymentNumber("212121");
 
-        paymentService.addPayment(reservation, payment , parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
+        paymentService.addPayment2(reservation, payment , parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
     }
 
     @Test
@@ -193,5 +216,16 @@ class RoccoApplicationTests {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ParsePosition pos = new ParsePosition(0);
         return format.parse(dateStr, pos);
+    }
+
+    @Test
+    public void date(){
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String formattedDate = dateFormat.format(parseDate("2024-04-10 14:00:00"));
+        System.out.println(formattedDate.substring(1,8));
+        System.out.println(String.format("P%s-1", formattedDate));
+
+
     }
 }

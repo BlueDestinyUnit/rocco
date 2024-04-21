@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +47,20 @@ public class ReservationService {
             reservationRoomRepository.save(reservationRoom);
     	}
     }
+
+
+    public Reservation addReservation(Reservation reservation){
+        Reservation dbReservation = reservationRepository.findReservation().orElse(null);
+        if(dbReservation == null){
+            reservation.setReservationNum("1001");
+        }else{
+            int incresedNum = Integer.parseInt(dbReservation.getReservationNum())+1;
+            reservation.setReservationNum(String.valueOf(incresedNum));
+        }
+        reservationRepository.save(reservation);
+        return reservation;
+    }
+
     
     @Transactional
     public String addReservation2(List<Room> rooms,Customer customer, Date arriv,Date departure){

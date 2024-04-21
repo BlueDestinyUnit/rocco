@@ -29,13 +29,14 @@ public class Recepit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
 
 	@OneToOne
 	@JoinColumn(name = "paymentId")
 	private Payment payment;
 	
 	private String receiptNumber;
+
+	private double price;
 	
 	@Column(updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
