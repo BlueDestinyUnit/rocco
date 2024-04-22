@@ -139,7 +139,6 @@ CREATE TABLE Payment
     cardType      VARCHAR(50)    NOT NULL,
     regDate   DATETIME DEFAULT CURRENT_TIMESTAMP,
     updateDate     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT Payment_customerId_FK FOREIGN KEY (customerId) REFERENCES Customer (id),
     CONSTRAINT Payment_reservationId_FK FOREIGN KEY (reservationId) REFERENCES Reservation (id)
 ) AUTO_INCREMENT = 1001;
 
@@ -151,13 +150,11 @@ CREATE TABLE Payment
 CREATE TABLE Receipt
 (
     id            BIGINT PRIMARY KEY AUTO_INCREMENT,
-    customerId    BIGINT         NOT NULL,
     paymentId     BIGINT         NOT NULL,
     receiptNumber VARCHAR(50)    NOT NULL,
     price         DOUBLE         NOT NULL,
     regDate     DATETIME DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT Receipt_paymentId_FK FOREIGN KEY (paymentId) REFERENCES Payment (id),
-    CONSTRAINT Recepit_customerId_FK FOREIGN KEY (customerId) REFERENCES Customer (id)
+    CONSTRAINT Receipt_paymentId_FK FOREIGN KEY (paymentId) REFERENCES Payment (id)
 );
 
 

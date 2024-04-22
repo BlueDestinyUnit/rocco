@@ -10,7 +10,6 @@ public interface ReservationRepository extends CrudRepository<Reservation,Long> 
     @Query("SELECT r FROM Reservation r WHERE r.reservationNum = ?1")
     Optional<Reservation> findByReservationNum(String reservationNum);
 
-
     @Query("SELECT r FROM Reservation r ORDER BY r.id DESC LIMIT 1")
     Optional<Reservation> findReservation();
 }

@@ -2,9 +2,11 @@ package com.jsh.rocco;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsh.rocco.domains.dtos.AvailableRoom;
+import com.jsh.rocco.domains.dtos.FindHotel;
 import com.jsh.rocco.domains.entities.*;
 import com.jsh.rocco.domains.enums.roccouser.TelCompany;
 import com.jsh.rocco.domains.enums.roccouser.UserRole;
+import com.jsh.rocco.repositories.PaymentRepository;
 import com.jsh.rocco.repositories.ReservationRepository;
 import com.jsh.rocco.repositories.RoccoUserRepository;
 import com.jsh.rocco.services.*;
@@ -45,6 +47,9 @@ class RoccoApplicationTests {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Autowired
     private DateUtil dateUtil;
@@ -166,32 +171,61 @@ class RoccoApplicationTests {
 //    }
 
     
+//    @Test
+//    @Transactional
+//    void testPayment() {
+//    	List<Room> rooms = new ArrayList<>();
+//    	Customer customer = customerService.findById(1001);
+//    	 Room room = new Room();
+//         room.setId(1001);
+//         Room room2 = new Room();
+//         room2.setId(1001);
+//         Room room3 = new Room();
+//         room3.setId(1001);
+//         rooms.add(room);
+//         rooms.add(room2);
+//         rooms.add(room3);
+//
+//    	reservationService.addReservation2(rooms, customer,parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
+//
+//        Reservation reservation = reservationService.findByReservationNum("R10001");
+//        Payment payment = new Payment();
+//        payment.setCardNum("22222");
+//        payment.setCardType("VIA");
+//        payment.setReservation(reservation);
+//        payment.setPaymentNumber("212121");
+//
+//        paymentService.addPayment2(reservation, payment , parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
+//    }
+
     @Test
     @Transactional
-    void testPayment() {
-    	List<Room> rooms = new ArrayList<>();
-    	Customer customer = customerService.findById(1001);
-    	 Room room = new Room();
-         room.setId(1001);     
-         Room room2 = new Room();
-         room2.setId(1001);
-         Room room3 = new Room();
-         room3.setId(1001);
-         rooms.add(room);
-         rooms.add(room2);
-         rooms.add(room3);
+    public void payment(){
+        Customer customer = new Customer();
+        customer.setPhone("0102221111");
+        customer.setFirstName("안녕");
+        customer.setLastName("ㄹㄴㄹㅇㄴ");
+        FindHotel findHotel = new FindHotel();
 
-    	reservationService.addReservation2(rooms, customer,parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
-
-        Reservation reservation = reservationService.findByReservationNum("R10001");
+        findHotel.setArrivalDate("2024-04-12 14:00:00");
+        findHotel.setDepartureDate("2024-04-13 12:00:00");
+        findHotel.setPropertyId(1001);
+        long[] array = {1001,1002,1003};
         Payment payment = new Payment();
-        payment.setCardNum("22222");
-        payment.setCardType("VIA");
-        payment.setReservation(reservation);
-        payment.setPaymentNumber("212121");
+        payment.setCardNum("1001-1001-1001");
+        payment.setCardType("pay");
 
-        paymentService.addPayment2(reservation, payment , parseDate("2024-04-10 14:00:00"), parseDate("2024-04-11 12:00:00"));
+        paymentService.addPayment(findHotel,customer,payment,array);
     }
+
+    @Test
+    @Transactional
+    @Commit
+    public void testing(){
+        Reservation payment = reservationRepository.findReservation().orElse(null);
+        System.out.println(payment);
+    }
+
 
     @Test
     @Transactional

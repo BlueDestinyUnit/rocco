@@ -68,7 +68,6 @@ public class RoomService {
         int capacity = findHotel.getCustomers()/findHotel.getRoomCount() == 0 ?
                 findHotel.getCustomers() : findHotel.getCustomers()/findHotel.getRoomCount();
 
-
         Property dbProperty = propertyRepository.findById(findHotel.getPropertyId()).orElse(null);
         if(dbProperty == null){
             return null;

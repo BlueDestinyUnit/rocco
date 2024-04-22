@@ -48,13 +48,14 @@ public class ReservationRoomService {
         Arrays.stream(roomArray).forEach(room ->{
             ReservationRoom reservationRoom = new ReservationRoom();
             Reservation reservation = reservationRepository.findById(reservationId).orElse(null);
-            if(reservation != null){
+            if(reservation == null){
+
                 throw new RuntimeException("error");
             }
             reservationRoom.setReservation(reservation);
             Room dbRoom = roomRepository.findById(room).orElse(null);
             reservationRoom.setArrivalDate(dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()));
-            reservationRoom.setArrivalDate(dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
+            reservationRoom.setDepartureDate(dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
             reservationRoom.setRoom(dbRoom);
             reservationRoom.setStatus('H');
             reservationRoomRepository.save(reservationRoom);
