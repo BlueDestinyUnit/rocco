@@ -34,6 +34,20 @@ public class UserController {
         return "messages ok";
     }
 
+    @PostMapping("logout")
+    @ResponseBody
+    public String logoutMessage() {
+        System.out.println("뭐냐?");
+        return "messages ok";
+    }
+
+    @PostMapping("logout/")
+    @ResponseBody
+    public String logout2Message() {
+        System.out.println("뭐냐?2");
+        return "messages ok";
+    }
+
 
     @PostMapping("login/test2")
     @ResponseBody

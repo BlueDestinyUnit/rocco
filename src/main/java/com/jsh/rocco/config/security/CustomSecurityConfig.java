@@ -4,6 +4,7 @@ import com.jsh.rocco.config.security.test.*;
 //import com.jsh.rocco.services.securities.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
@@ -32,7 +35,7 @@ import java.util.Arrays;
 @Log4j2
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+
 public class CustomSecurityConfig {
 
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
@@ -41,6 +44,22 @@ public class CustomSecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final DataSource dataSource;
+
+
+    @Autowired
+    public CustomSecurityConfig(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+                                CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
+                                CustomLoginAuthenticationEntryPoint authenticationEntryPoint,
+                                AuthenticationConfiguration authenticationConfiguration,
+                                CustomAccessDeniedHandler accessDeniedHandler,
+                                DataSource dataSource) {
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.authenticationConfiguration = authenticationConfiguration;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http,
@@ -62,11 +81,16 @@ public class CustomSecurityConfig {
                         .requestMatchers("admin/room/").permitAll()
                         .requestMatchers("favicon.ico").permitAll()
                         .requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/user/login/").authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/user/*").permitAll()
+                        .requestMatchers("/user/logout/").permitAll()
+
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-
+                .logout(logout -> logout.logoutUrl("/user/logout/")
+                        .addLogoutHandler(logoutHandler())
+                        .logoutSuccessHandler(logoutSuccessHandler())
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"))
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
                         .accessDeniedHandler(accessDeniedHandler))
@@ -82,6 +106,22 @@ public class CustomSecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() {
+        return new CustomLogoutSuccessHandler();
+    }
+
+
+
+    @Bean
+    public LogoutHandler logoutHandler(){
+        System.out.println("로그아웃");
+        return new CustomLogoutHandler();
+    }
+
+
+
 
     @Bean
     public CustomAuthenticationFilter ajaxAuthenticationFilter() throws Exception {
