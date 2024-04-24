@@ -83,6 +83,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/user/*").permitAll()
                         .requestMatchers("/user/logout/").permitAll()
+                        .requestMatchers("/").permitAll()
 
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -93,11 +94,12 @@ public class CustomSecurityConfig {
                         .deleteCookies("JSESSIONID"))
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
-                        .accessDeniedHandler(accessDeniedHandler))
-                .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
-                        .userDetailsService(customUserDetailsService)
-                        .tokenRepository(persistentTokenRepository())
-                        .tokenValiditySeconds(60 * 60));
+                        .accessDeniedHandler(accessDeniedHandler));
+
+//                .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
+//                        .userDetailsService(customUserDetailsService)
+//                        .tokenRepository(persistentTokenRepository())
+//                        .tokenValiditySeconds(60 * 60));
 
         return http.build();
     }
@@ -116,7 +118,6 @@ public class CustomSecurityConfig {
 
     @Bean
     public LogoutHandler logoutHandler(){
-        System.out.println("로그아웃");
         return new CustomLogoutHandler();
     }
 

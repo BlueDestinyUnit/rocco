@@ -21,7 +21,7 @@ public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
         System.out.println("로그아웃 석세스");
         // 로그아웃 성공 후의 추가 작업을 수행합니다.
         // 예를 들어, 로그아웃한 사용자의 세션을 종료하거나 리다이렉트를 수행할 수 있습니다.
-        response.sendRedirect("/login?logout");
+//        response.sendRedirect("/login?logout");
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("message", "Logout successful");
 
