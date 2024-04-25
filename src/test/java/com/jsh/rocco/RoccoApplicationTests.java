@@ -1,32 +1,27 @@
 package com.jsh.rocco;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jsh.rocco.domains.dtos.AvailableRoom;
+import com.jsh.rocco.config.security.domains.RoccoUser;
 import com.jsh.rocco.domains.dtos.FindHotel;
 import com.jsh.rocco.domains.entities.*;
 import com.jsh.rocco.domains.enums.roccouser.TelCompany;
 import com.jsh.rocco.domains.enums.roccouser.UserRole;
 import com.jsh.rocco.repositories.PaymentRepository;
 import com.jsh.rocco.repositories.ReservationRepository;
-import com.jsh.rocco.repositories.RoccoUserRepository;
+import com.jsh.rocco.config.security.services.RoccoUserRepository;
 import com.jsh.rocco.services.*;
 import com.jsh.rocco.util.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.config.authentication.PasswordEncoderParser;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.util.DateUtils;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 class RoccoApplicationTests {

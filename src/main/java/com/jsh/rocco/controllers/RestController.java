@@ -1,10 +1,6 @@
 package com.jsh.rocco.controllers;
 
-import com.jsh.rocco.domains.entities.ReservationRoom;
-import com.jsh.rocco.domains.entities.RoccoUser;
 import lombok.extern.log4j.Log4j2;
-import org.json.JSONObject;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

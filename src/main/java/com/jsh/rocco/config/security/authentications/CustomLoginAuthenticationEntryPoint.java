@@ -1,4 +1,4 @@
-package com.jsh.rocco.config.security.test;
+package com.jsh.rocco.config.security.authentications;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

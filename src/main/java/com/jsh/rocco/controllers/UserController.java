@@ -1,8 +1,8 @@
 package com.jsh.rocco.controllers;
 
-import com.jsh.rocco.domains.entities.RoccoUser;
 import com.jsh.rocco.domains.enums.results.CommonResult;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,9 @@ import java.util.Map;
 @RequestMapping("user")
 public class UserController {
     @GetMapping("login")
-    String getLogin(){
+    String getLogin(Authentication authentication){
+//        SecurityUser2 user=(SecurityUser2)authentication.getPrincipal();
+//        System.out.println("username:"+user.getUsername());
         return "user/login";
     }
 

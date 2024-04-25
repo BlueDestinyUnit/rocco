@@ -1,4 +1,4 @@
-package com.jsh.rocco.config.security.test;
+package com.jsh.rocco.config.security.authentications;
 import lombok.Data;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

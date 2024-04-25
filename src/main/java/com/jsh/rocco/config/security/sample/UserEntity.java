@@ -1,4 +1,4 @@
-package com.jsh.rocco.config.security.test;
+package com.jsh.rocco.config.security.sample;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

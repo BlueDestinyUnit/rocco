@@ -1,8 +1,10 @@
 package com.jsh.rocco.config.security;
 
-import com.jsh.rocco.config.security.test.*;
+import com.jsh.rocco.config.security.authentications.CustomAuthenticationFilter;
+import com.jsh.rocco.config.security.authentications.CustomLoginAuthenticationEntryPoint;
+import com.jsh.rocco.config.security.handlers.*;
+import com.jsh.rocco.config.security.services.CustomUserDetailsService;
 //import com.jsh.rocco.services.securities.CustomUserDetailsService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -79,11 +81,10 @@ public class CustomSecurityConfig {
                         .requestMatchers("searchAvailableProperty").permitAll()
                         .requestMatchers("admin/room").permitAll()
                         .requestMatchers("admin/room/").permitAll()
-                        .requestMatchers("favicon.ico").permitAll()
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/user/*").permitAll()
                         .requestMatchers("/user/logout/").permitAll()
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/*").permitAll()
 
                 )
                 .addFilterBefore(ajaxAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
@@ -94,12 +95,12 @@ public class CustomSecurityConfig {
                         .deleteCookies("JSESSIONID"))
                 .exceptionHandling(config -> config
                         .authenticationEntryPoint(authenticationEntryPoint)
-                        .accessDeniedHandler(accessDeniedHandler));
+                        .accessDeniedHandler(accessDeniedHandler))
 
-//                .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
-//                        .userDetailsService(customUserDetailsService)
-//                        .tokenRepository(persistentTokenRepository())
-//                        .tokenValiditySeconds(60 * 60));
+                .rememberMe(httpSecurityRememberMeConfigurer -> httpSecurityRememberMeConfigurer
+                        .userDetailsService(customUserDetailsService)
+                        .tokenRepository(persistentTokenRepository())
+                        .tokenValiditySeconds(60 * 60));
 
         return http.build();
     }

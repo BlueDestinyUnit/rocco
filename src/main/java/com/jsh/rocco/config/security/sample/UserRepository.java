@@ -1,4 +1,4 @@
-package com.jsh.rocco.config.security.test;
+package com.jsh.rocco.config.security.sample;
 
 import org.springframework.data.repository.CrudRepository;
 
