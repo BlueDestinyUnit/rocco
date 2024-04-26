@@ -28,3 +28,28 @@ cover.show = function (onclick) {
     return this;
 }
 
+const userDialog = document.getElementById('userDialog');
+
+
+function loadUserDialog(){
+    cover.show();
+    userDialog.block();
+}
+
+
+
+const loginCaller = document.body.querySelector('[rel="showLoginCaller"]');
+const registerCaller = document.body.querySelector('[rel="showRegisterCaller"]');
+
+console.log(loginCaller);
+
+
+loginCaller.onclick = function () {
+    loadUserDialog();
+}
+registerCaller.onclick = function () {
+    loadUserDialog();
+}
+
+
+

@@ -17,6 +17,62 @@
       flex-direction: row;
       list-style: none;
       gap: 10px;
+
+      > .item {
+        //border-left: 0.0625rem solid #424242;
+
+        > .link {
+          //$color: #bdbdbd;
+          $color: #add8e6;
+
+
+          width: 4.5rem;
+          height: 4.5rem;
+          box-sizing: border-box;
+          color: $color;
+          font-size: 0.8rem;
+          text-decoration: none;
+          transition-duration: 250ms;
+          transition-property: color;
+          transition-timing-function: ease;
+          user-select: none;
+
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          gap: 0.625rem;
+          justify-content: center;
+
+          &:hover {
+            color: lighten($color, 10%);
+          }
+
+          &:active {
+            color: lighten($color, 20%);
+          }
+
+          > .icon {
+            font-size: 1rem;
+          }
+        }
+
+        &.logo {
+          align-items: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          > .image {
+            width: 3rem;
+            margin: 0.75rem;
+          }
+        }
+      }
+
+      &:not(:last-child) {
+        border-bottom: 0.0625rem solid #424242;
+      }
+
     }
   }
 }

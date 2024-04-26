@@ -16,6 +16,45 @@
   list-style: none;
   gap: 10px;
 }
+#header > .section > .menu > .item > .link {
+  width: 4.5rem;
+  height: 4.5rem;
+  box-sizing: border-box;
+  color: #add8e6;
+  font-size: 0.8rem;
+  text-decoration: none;
+  transition-duration: 250ms;
+  transition-property: color;
+  transition-timing-function: ease;
+  user-select: none;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  justify-content: center;
+}
+#header > .section > .menu > .item > .link:hover {
+  color: #d4ebf2;
+}
+#header > .section > .menu > .item > .link:active {
+  color: #fbfdfe;
+}
+#header > .section > .menu > .item > .link > .icon {
+  font-size: 1rem;
+}
+#header > .section > .menu > .item.logo {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#header > .section > .menu > .item.logo > .image {
+  width: 3rem;
+  margin: 0.75rem;
+}
+#header > .section > .menu:not(:last-child) {
+  border-bottom: 0.0625rem solid #424242;
+}
 
 #footer {
   position: relative;
