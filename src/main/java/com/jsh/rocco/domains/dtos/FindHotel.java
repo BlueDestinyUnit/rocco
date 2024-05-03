@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 
-
+import java.time.LocalDateTime;
 
 
 @Data
@@ -17,6 +17,8 @@ public class FindHotel {
     private String propertyRegion;
     private int customers;
     private int roomCount;
-    private String arrivalDate;
-    private String departureDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime arrivalDate;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime departureDate;
 }

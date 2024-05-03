@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -30,9 +32,9 @@ public class ReservationRoom {
     private Room room;
 
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date arrivalDate;
+    private LocalDateTime arrivalDate;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date departureDate;
+    private LocalDateTime departureDate;
 
     private char status = 'H';
 
@@ -40,7 +42,7 @@ public class ReservationRoom {
         super();
     }
 
-    public ReservationRoom(Room room, Date arrivalDate, Date departureDate) {
+    public ReservationRoom(Room room, LocalDateTime arrivalDate, LocalDateTime departureDate) {
         super();
         this.room = room;
         this.arrivalDate = arrivalDate;

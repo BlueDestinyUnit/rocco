@@ -28,28 +28,29 @@ cover.show = function (onclick) {
     return this;
 }
 
-const userDialog = document.getElementById('userDialog');
+
+document.querySelectorAll('[rel="cancelButton"]').forEach(el => {
+    el.onclick = function () {
+        if (el.classList.contains('umBtn')) {
+            cover.hide();
+            userModal.hide();
+            userModalIndex = 1;
+            return;
+        }
+        if (el.classList.contains('pmBtn')) {
+            cover.hide();
+            paymentModal.hide();
+            currentPaymentModalIndex = 1;
+            return;
+        }
+    }}
+);
 
 
-function loadUserDialog(){
-    cover.show();
-    userDialog.block();
-}
 
 
 
-const loginCaller = document.body.querySelector('[rel="showLoginCaller"]');
-const registerCaller = document.body.querySelector('[rel="showRegisterCaller"]');
 
-console.log(loginCaller);
-
-
-loginCaller.onclick = function () {
-    loadUserDialog();
-}
-registerCaller.onclick = function () {
-    loadUserDialog();
-}
 
 
 

@@ -43,48 +43,48 @@ public class PaymentService {
 	@Autowired
 	DateUtil dateUtil;
 
-	@Transactional
-	public void addPayment(FindHotel findHotel, Customer customer, Payment payment , long[] roomArray) {
-		// 예약 저장
-		customerRepository.save(customer);
-
-		System.out.println("1");
-
-		Reservation reservation = new Reservation();
-		reservation.setCustomer(customer);
-		reservation = reservationService.addReservation(reservation);
-		payment.setReservation(reservation);
-
-		System.out.println("2");
-		Arrays.stream(roomArray).forEach(room ->{
-			ReservationRoom reservationRoom = reservationRoomRepository.findRoomByDateRange(room,
-					dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
-					dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate())).orElse(null);
-			if(reservationRoom != null){
-				throw new RuntimeException( "this room exist");
-			}
-		});
-		System.out.println("3");
-		reservationRoomService.addReservationRoom(findHotel,reservation.getId(),roomArray);
-
-		System.out.println("4");
-		Payment dbPayment =paymentRepository.findPayment().orElse(null);
-
-		if(dbPayment == null){
-
-			payment.setPaymentNumber(createPaymentNumber(null));;
-		}else{
-			payment.setPaymentNumber(createPaymentNumber(dbPayment.getPaymentNumber()));
-		}
-
-		payment = paymentRepository.save(payment);
-		payment.setStatus('H');
-		Receipt receipt = new Receipt();
-		receipt.setReceiptNumber(payment.getPaymentNumber().replace("P","R"));
-		receipt.setPayment(payment);
-		recepitRepository.save(receipt);
-
-	}
+//	@Transactional
+//	public void addPayment(FindHotel findHotel, Customer customer, Payment payment , long[] roomArray) {
+//		// 예약 저장
+//		customerRepository.save(customer);
+//
+//		System.out.println("1");
+//
+//		Reservation reservation = new Reservation();
+//		reservation.setCustomer(customer);
+//		reservation = reservationService.addReservation(reservation);
+//		payment.setReservation(reservation);
+//
+//		System.out.println("2");
+//		Arrays.stream(roomArray).forEach(room ->{
+//			ReservationRoom reservationRoom = reservationRoomRepository.findRoomByDateRange(room,
+//					dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
+//					dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate())).orElse(null);
+//			if(reservationRoom != null){
+//				throw new RuntimeException( "this room exist");
+//			}
+//		});
+//		System.out.println("3");
+//		reservationRoomService.addReservationRoom(findHotel,reservation.getId(),roomArray);
+//
+//		System.out.println("4");
+//		Payment dbPayment =paymentRepository.findPayment().orElse(null);
+//
+//		if(dbPayment == null){
+//
+//			payment.setPaymentNumber(createPaymentNumber(null));;
+//		}else{
+//			payment.setPaymentNumber(createPaymentNumber(dbPayment.getPaymentNumber()));
+//		}
+//
+//		payment = paymentRepository.save(payment);
+//		payment.setStatus('H');
+//		Receipt receipt = new Receipt();
+//		receipt.setReceiptNumber(payment.getPaymentNumber().replace("P","R"));
+//		receipt.setPayment(payment);
+//		recepitRepository.save(receipt);
+//
+//	}
 
 	@Transactional
 	public void addPayment2(Reservation reservation, Payment payment, Date arriveDate, Date departureDate) {

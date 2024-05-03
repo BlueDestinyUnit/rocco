@@ -20,6 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +49,12 @@ public class MainController {
     @GetMapping("/searchAvailableProperty")
     @ResponseBody
     public ResponseEntity<?> searchAvailableProperty(FindHotel findHotel) {
+        System.out.println(findHotel.getArrivalDate());
+        String formattedDateTime = findHotel.getArrivalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String formattedDateTime2 = findHotel.getDepartureDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        findHotel.setArrivalDate(LocalDateTime.parse(formattedDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        findHotel.setDepartureDate(LocalDateTime.parse(formattedDateTime2, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
         List<AvailableProperty> propertyList = propertyService.findAvailablePropertiesAndRooms(findHotel);
         System.out.println(propertyList);
         Map<String, Object> response = new HashMap<>();

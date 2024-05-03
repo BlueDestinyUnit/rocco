@@ -1,5 +1,7 @@
 package com.jsh.rocco.domains.entities;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,8 +39,8 @@ public class Receipt {
 	private double price;
 	
 	@Column(updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp		
-	private Date regDate;
+	private LocalDateTime regDate;
 }

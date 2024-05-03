@@ -52,9 +52,15 @@ public class PropertyService {
         int capacity = findHotel.getCustomers()/findHotel.getRoomCount() == 0 ?
                 findHotel.getCustomers() : findHotel.getCustomers()/findHotel.getRoomCount();
         // 지역에 따른 예약이 되지 않은 빈방들
+//        List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndProperties(findHotel.getPropertyRegion(),
+//                capacity, dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
+//                dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
+        System.out.println("1");
         List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndProperties(findHotel.getPropertyRegion(),
-                capacity, dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
-                dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
+                capacity, findHotel.getArrivalDate(),
+                findHotel.getDepartureDate());
+
+
         // 각각의 호텔과 예약이 가능한 방 리스트
         Map<Property, List<AvailableRoom>> properties = new HashMap<>();
         rooms.forEach(room -> {
@@ -74,6 +80,7 @@ public class PropertyService {
                 properties.put(room.getProperty(), roomList);
             }
         });
+        System.out.println("2");
         Map<Property, List<AvailableRoom>> filteredMap = properties.entrySet().stream()
                 .filter(entry -> entry.getValue().size() >= findHotel.getRoomCount())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

@@ -64,7 +64,7 @@
 }
 
 /*다이아 로그*/
-.dialog {
+.modal-container {
   top: calc(50% + 0.25rem);
   left: 50%;
   width: 25rem;
@@ -87,17 +87,17 @@
   gap: 0.5rem;
   justify-content: flex-start;
 }
-.dialog.-visible {
+.modal-container.-visible {
   top: 50%;
   opacity: 1;
   pointer-events: all;
 }
-.dialog > div > .title {
+.modal-container > div > .title {
   font-size: 1.75rem;
   font-weight: 100;
   margin-bottom: 0.75rem;
 }
-.dialog > div > form {
+.modal-container > div > form {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

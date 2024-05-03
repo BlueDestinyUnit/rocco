@@ -1,5 +1,7 @@
 package com.jsh.rocco.domains.entities;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -34,13 +36,13 @@ public class Payment {
 	private String cardType;
 	
 	@Column(updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp		
-	private Date regDate;
+	private LocalDateTime regDate;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+//	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@UpdateTimestamp			
-	private Date updateDate;
+	private LocalDateTime updateDate;
 }

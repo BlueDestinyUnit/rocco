@@ -7,6 +7,7 @@ import com.jsh.rocco.domains.entities.Room;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,7 @@ public interface ReservationRoomRepository extends CrudRepository<ReservationRoo
     List<ReservationRoom> findRoomsByRoomAndDate(long propertyId, Date appri, Date depart);
 
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
-    Optional<ReservationRoom> findRoomByRoomIdAndDate(long roomId, Date appri, Date depart);
+    Optional<ReservationRoom> findRoomByRoomIdAndDate(long roomId, LocalDate appri, LocalDate depart);
 
     @Query("SELECT rr FROM ReservationRoom rr  WHERE rr.room.id = ?1 " +
             "AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3 AND rr.status ='H'")

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,26 +63,27 @@ public class ReservationService {
     }
 
     
-    @Transactional
-    public String addReservation2(List<Room> rooms,Customer customer, Date arriv,Date departure){
-    	Reservation reservation = new Reservation();
-    	reservation.setCustomer(customer);
-    	reservation.setRegDate(new Date());
-    	reservation.setReservationNum("R10001");
-    	reservationRepository.save(reservation);
-    	for(Room room : rooms) {
-    		if(reservationRoomService.findReservationRoom(room.getId(), arriv, departure) != false) {
-    			throw new RuntimeException( "this room exist");
-    		};
-    		ReservationRoom reservationRoom = new ReservationRoom();
-	        reservationRoom.setReservation(reservation);
-	        reservationRoom.setRoom(room);
-	        reservationRoom.setArrivalDate(arriv);
-	        reservationRoom.setDepartureDate(departure);
-	        reservationRoomRepository.save(reservationRoom);
-    	}
-    	return reservation.getReservationNum();
-    }
+//    @Transactional
+//    public String addReservation2(List<Room> rooms,Customer customer, LocalDate arriv,LocalDate departure){
+//    	Reservation reservation = new Reservation();
+//    	reservation.setCustomer(customer);
+//        LocalDate now = LocalDate.now();
+//    	reservation.setRegDate(now);
+//    	reservation.setReservationNum("R10001");
+//    	reservationRepository.save(reservation);
+//    	for(Room room : rooms) {
+//    		if(reservationRoomService.findReservationRoom(room.getId(), arriv, departure) != false) {
+//    			throw new RuntimeException( "this room exist");
+//    		};
+//    		ReservationRoom reservationRoom = new ReservationRoom();
+//	        reservationRoom.setReservation(reservation);
+//	        reservationRoom.setRoom(room);
+//	        reservationRoom.setArrivalDate(arriv);
+//	        reservationRoom.setDepartureDate(departure);
+//	        reservationRoomRepository.save(reservationRoom);
+//    	}
+//    	return reservation.getReservationNum();
+//    }
     
     @Transactional
     public Reservation findByReservationNum(String reservationNum) {

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Component
@@ -36,4 +38,11 @@ public class DateUtil {
 		SimpleDateFormat format = new SimpleDateFormat(pattern);
 		return format.format(date);
 	}
+
+	public LocalDate localParse(String dateStr){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDate date = LocalDate.parse(dateStr, formatter);
+		return date;
+	}
+
 }

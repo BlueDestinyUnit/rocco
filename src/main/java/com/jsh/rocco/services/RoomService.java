@@ -73,9 +73,14 @@ public class RoomService {
             return null;
         }
         // 호텔에 따른예약이 되지 않은 빈방들
+//        List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndProperty(findHotel.getPropertyId(),
+//                capacity, dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
+//                dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
+
         List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndProperty(findHotel.getPropertyId(),
-                capacity, dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
-                dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
+                capacity, findHotel.getArrivalDate(),
+                findHotel.getDepartureDate());
+
         // 호텔과 예약이 가능한 방 리스트
         List<AvailableRoom> roomList = rooms.stream()
                 .map(AvailableRoom::of).collect(Collectors.toList());

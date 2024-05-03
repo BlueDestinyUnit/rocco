@@ -1,5 +1,5 @@
-const paymentDialog = document.getElementById('paymentDialog');
-const elementsWithIndex = document.querySelectorAll('[data-index]');
+const paymentModal = document.getElementById('paymentModal');
+const paymentModalIndex = document.querySelectorAll('[data-index]');
 const paymentReady = document.querySelector('[rel="paymentReady"]');
 const rooms = document.getElementById('rooms')
 const availableRooms = document.getElementById('availableRooms');
@@ -12,24 +12,23 @@ const paymentRegisForm = document.getElementById('paymentRegisForm');
 
 // 버튼
 const returnButtons = document.querySelectorAll('[rel="returnButton"]');
-const cancleButton =document.querySelector('[rel="cancleButton"]');
 const nextButton = document.querySelector('[rel="nextButton"]');
 
 // 다이아로그 인덱스
-let currentIndex = 1;
+let currentPaymentModalIndex = 1;
 
 searchForm.onsubmit = (e) => {
     e.preventDefault();
     const formData = {
         "propertyId":searchForm['propertyId'].value,
-        "arrivalDate": searchForm['arrivalDate'].value,
-        "departureDate": searchForm['departureDate'].value,
+        "arrivalDate": `${searchForm['arrivalDate'].value}T14:00:00`,
+        "departureDate": `${searchForm['departureDate'].value}T12:00:00`,
         "roomCount": searchForm['roomCount'].value,
         "customers": searchForm['customers'].value
     }
 
     fetch('/room/availableRooms', {
-        method: 'POST',
+        method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -79,58 +78,48 @@ searchForm.onsubmit = (e) => {
 // 다이아로그를 여는 함수
 paymentReady.onclick = function (e) {
     cover.show();
-    paymentDialog.show();
-    findDataIndex();
+    paymentModal.show();
+    findDataHotelIndex();
     checkedRooms();
-}
-
-// 취소 버튼
-cancleButton.onclick = function (e) {
-    e.preventDefault();
-    currentIndex = 1;
-    cover.hide();
-    paymentDialog.hide();
 }
 
 // 다음 버튼
 nextButton.onclick = function (e) {
     e.preventDefault();
-    currentIndex += 1;
-    findDataIndex();
+    currentPaymentModalIndex += 1;
+    findDataHotelIndex();
 }
 
 // 뒤로 가기 버튼
 for (let i = 0; i < returnButtons.length; i++) {
     returnButtons[i].addEventListener('click', (e) => {
-        currentIndex -=1;
-        findDataIndex();
+        currentPaymentModalIndex -=1;
+        findDataHotelIndex();
     });
 }
 
 // 고객 정보 입력
 customerRegisForm.onsubmit = function (e) {
     e.preventDefault();
-    currentIndex = currentIndex + 1;
-    findDataIndex();
+    currentPaymentModalIndex = currentPaymentModalIndex + 1;
+    findDataHotelIndex();
 }
 
 // 결제 입력
 paymentRegisForm.onsubmit = function (e) {
     e.preventDefault();
-
     fetch('payment',)
-
-    currentIndex = 1;
+    currentPaymentModalIndex = 1;
     cover.hide();
-    paymentDialog.hide();
+    paymentModal.hide();
 }
 
 
 // 다이아로그 순서를 정하는 함수
-function findDataIndex() {
-    Array.from(elementsWithIndex).forEach(element => {
+function findDataHotelIndex() {
+    Array.from(paymentModalIndex).forEach(element => {
         const dataIndex = element.getAttribute('data-index');
-        if(currentIndex === parseInt(dataIndex)){
+        if(currentPaymentModalIndex === parseInt(dataIndex)){
             element.block();
         }else{
             element.none();

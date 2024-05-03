@@ -56,7 +56,7 @@
         <div class="roomContainer"></div>
     </section>
 
-    <section class="modal-container" id="paymentDialog">
+    <section class="modal-container" id="paymentModal">
         <div class="checked-rooms" data-index="1">
             <h2 class="title">예약 목록 확인</h2>
             <div class="reserve-days">
@@ -109,7 +109,7 @@
 
             </div>
 
-            <button class="_obj-button" rel="nextButton" type="button">고객정보 입력</button>
+            <button class="_obj-button pmBtn" rel="nextButton" type="button">고객정보 입력</button>
         </div>
 
 
@@ -128,8 +128,8 @@
                     <span class="title">폰 번호</span>
                     <input class="_obj-input __field input" name="phone" type="text">
                 </label>
-                <button class="_obj-button" rel="returnButton" type="button">돌아 가기</button>
-                <button class="_obj-button" rel="nextButton" type="submit">결제하러 가기</button>
+                <button class="_obj-button pmBtn" rel="returnButton" type="button">돌아 가기</button>
+                <button class="_obj-button pmBtn" rel="nextButton" type="submit">결제하러 가기</button>
             </form>
         </div>
 
@@ -149,11 +149,11 @@
                     <span class="title">카드 번호</span>
                     <input class="_obj-input __field input" maxlength="25" name="cardNumber" type="text">
                 </label>
-                <button class="_obj-button" rel="returnButton" type="button">돌아 가기</button>
+                <button class="_obj-button pmBtn" rel="returnButton" type="button">돌아 가기</button>
                 <button class="_obj-button" type="submit">결제 하기</button>
             </form>
         </div>
-        <button class="_obj-button" rel="cancleButton" type="button">취소하기</button>
+        <button class="_obj-button pmBtn" rel="cancelButton" type="button">취소하기</button>
     </section>
 
     <button class="_obj-button" rel="paymentReady" type="button">결제하기</button>

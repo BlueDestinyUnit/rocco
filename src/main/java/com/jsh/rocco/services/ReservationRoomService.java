@@ -2,6 +2,7 @@ package com.jsh.rocco.services;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,8 +55,8 @@ public class ReservationRoomService {
             }
             reservationRoom.setReservation(reservation);
             Room dbRoom = roomRepository.findById(room).orElse(null);
-            reservationRoom.setArrivalDate(dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()));
-            reservationRoom.setDepartureDate(dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
+//            reservationRoom.setArrivalDate(dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()));
+//            reservationRoom.setDepartureDate(dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
             reservationRoom.setRoom(dbRoom);
             reservationRoom.setStatus('H');
             reservationRoomRepository.save(reservationRoom);
@@ -98,7 +99,7 @@ public class ReservationRoomService {
         return availableRooms;
     }
 
-    public boolean findReservationRoom(long roomId, Date arriv, Date depart) {
+    public boolean findReservationRoom(long roomId, LocalDate arriv, LocalDate depart) {
         if (reservationRoomRepository.findRoomByRoomIdAndDate(roomId, arriv, depart).orElse(null) != null) {
             return false;
         }

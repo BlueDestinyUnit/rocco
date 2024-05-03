@@ -6,6 +6,8 @@ import com.jsh.rocco.domains.entities.Room;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +40,7 @@ public interface RoomRepository extends CrudRepository<Room,Long> {
             "    AND rr.departureDate <= ?4" +
             "    AND rr.status = 'H'   " +
             ") AND r.property.region = ?1 AND r.capacity >= ?2")
-    List<Room> findAvailableRoomsByDateRangeAndProperties(String region, int customers, Date arrivalDate, Date departureDate);
+    List<Room> findAvailableRoomsByDateRangeAndProperties(String region, int customers, LocalDateTime arrivalDate, LocalDateTime departureDate);
 
     @Query("SELECT r FROM Room r " +
             "WHERE NOT EXISTS (" +
@@ -48,7 +50,7 @@ public interface RoomRepository extends CrudRepository<Room,Long> {
             "    AND rr.departureDate <= ?4" +
             "    AND rr.status = 'H'   " +
             ") AND r.property.id = ?1 AND r.capacity >= ?2")
-    List<Room> findAvailableRoomsByDateRangeAndProperty(long id,int customers, Date arrivalDate, Date departureDate);
+    List<Room> findAvailableRoomsByDateRangeAndProperty(long id, int customers, LocalDateTime arrivalDate, LocalDateTime departureDate);
 
 
 }

@@ -5,6 +5,8 @@ searchForm.onsubmit = (e) => {
     e.preventDefault();
     const propertyRegion = searchForm['propertyRegion'].value;
     const arrivalDate = searchForm['arrivalDate'].value + ' 14:00:00';
+
+    console.log(arrivalDate)
     const departureDate = searchForm['departureDate'].value + ' 12:00:00';
     const roomCount = searchForm['roomCount'].value;
     const customers = searchForm['customers'].value;

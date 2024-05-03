@@ -29,7 +29,7 @@ public class RoomController {
     @GetMapping("/rooms")
     public void getRooms(){}
 
-    @PostMapping("availableRooms")
+    @PatchMapping("availableRooms")
     @ResponseBody
     public ResponseEntity<?> postRooms(@RequestBody FindHotel findHotel){
         List<AvailableRoom> rooms = this.roomService.findAvailablePropertyAndRooms(findHotel);
