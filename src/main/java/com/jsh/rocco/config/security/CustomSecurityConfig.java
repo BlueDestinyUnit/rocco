@@ -84,6 +84,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/user/*").permitAll()
                         .requestMatchers("/user/logout/").permitAll()
+                        .requestMatchers("/payment/").permitAll()
                         .requestMatchers("/*").permitAll()
 
                 )

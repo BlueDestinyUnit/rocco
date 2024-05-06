@@ -21,9 +21,5 @@ public class Customer {
     private long id;
     private String firstName;
     private String lastName;
-
-
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime birthDate;
     private String phone;
 }

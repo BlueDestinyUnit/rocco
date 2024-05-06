@@ -7,6 +7,7 @@
     <title>방 정보</title>
     <link rel="stylesheet" th:href="@{/css/hotel/detail.css}">
     <script th:src="@{/js/hotel/detail.js}" defer></script>
+    <script th:src="@{/js/hotel/detail.payment.js}" defer></script>
 </head>
 <body>
 <!-- 이 부분은 layout.html에서 정의한 컨텐츠 영역에 삽입됩니다. -->
@@ -146,8 +147,18 @@
                     </select>
                 </label>
                 <label class="_obj-label label">
+                    <span class="title">카드사</span>
+                    <select class="_obj-input" name="cardType">
+                        <option disabled hidden selected value="-1">분류</option>
+                        <option selected value="sinhan">신한</option>
+                        <option value="samsung">삼성</option>
+                        <option value="nh">농협</option>
+                    </select>
+                </label>
+
+                <label class="_obj-label label">
                     <span class="title">카드 번호</span>
-                    <input class="_obj-input __field input" maxlength="25" name="cardNumber" type="text">
+                    <input class="_obj-input __field input" maxlength="16" name="cardNum" type="text">
                 </label>
                 <button class="_obj-button pmBtn" rel="returnButton" type="button">돌아 가기</button>
                 <button class="_obj-button" type="submit">결제 하기</button>
