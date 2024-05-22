@@ -2,13 +2,13 @@ package com.jsh.rocco.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jsh.rocco.domains.dtos.AvailableProperty;
+import com.jsh.rocco.domains.dtos.AvailableHotel;
 import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.dtos.FindHotel;
-import com.jsh.rocco.domains.entities.Property;
+import com.jsh.rocco.domains.entities.Hotel;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.enums.results.CommonResult;
-import com.jsh.rocco.services.PropertyService;
+import com.jsh.rocco.services.HotelService;
 import com.jsh.rocco.services.ReservationRoomService;
 import com.jsh.rocco.util.DateUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,13 +31,13 @@ import java.util.Map;
 @Log4j2
 @RequestMapping("/")
 public class MainController {
-    private final PropertyService propertyService;
+    private final HotelService hotelService;
 
     private final DateUtil dateUtil;
 
     @Autowired
-    public MainController(PropertyService propertyService, DateUtil dateUtil) {
-        this.propertyService = propertyService;
+    public MainController(HotelService hotelService, DateUtil dateUtil) {
+        this.hotelService = hotelService;
         this.dateUtil = dateUtil;
     }
 
@@ -46,24 +46,24 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/searchAvailableProperty")
+    @GetMapping("/searchAvailableHotel")
     @ResponseBody
-    public ResponseEntity<?> searchAvailableProperty(FindHotel findHotel) {
+    public ResponseEntity<?> searchAvailableHotel(FindHotel findHotel) {
         System.out.println(findHotel.getArrivalDate());
         String formattedDateTime = findHotel.getArrivalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         String formattedDateTime2 = findHotel.getDepartureDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         findHotel.setArrivalDate(LocalDateTime.parse(formattedDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         findHotel.setDepartureDate(LocalDateTime.parse(formattedDateTime2, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 
-        List<AvailableProperty> propertyList = propertyService.findAvailablePropertiesAndRooms(findHotel);
-        System.out.println(propertyList);
+        List<AvailableHotel> hotelList = hotelService.findAvailablePropertiesAndRooms(findHotel);
+        System.out.println(hotelList);
         Map<String, Object> response = new HashMap<>();
-        if(propertyList.isEmpty()){
+        if(hotelList.isEmpty()){
             response.put("message", CommonResult.FAILURE.name().toLowerCase());
         }else{
             response.put("message", "Search successful");
         }
-        response.put("list",propertyList);
+        response.put("list",hotelList);
         return ResponseEntity.ok().body(response);
     }
 }

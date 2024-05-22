@@ -1,13 +1,13 @@
 package com.jsh.rocco.services;
 
 
-import com.jsh.rocco.domains.dtos.AvailableProperty;
+import com.jsh.rocco.domains.dtos.AvailableHotel;
 import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.dtos.FindHotel;
-import com.jsh.rocco.domains.entities.Property;
+import com.jsh.rocco.domains.entities.Hotel;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
-import com.jsh.rocco.repositories.PropertyRepository;
+import com.jsh.rocco.repositories.HotelRepository;
 import com.jsh.rocco.repositories.RoomRepository;
 import com.jsh.rocco.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +21,15 @@ import java.util.stream.Collectors;
 public class RoomService {
     private final RoomRepository roomRepository;
 
-    private final PropertyRepository propertyRepository;
+    private final HotelRepository hotelRepository;
 
     private final DateUtil dateUtil;
 
     @Autowired
-    public RoomService(RoomRepository roomRepository, PropertyRepository propertyRepository,
+    public RoomService(RoomRepository roomRepository, HotelRepository hotelRepository,
                        DateUtil dateUtil) {
         this.roomRepository = roomRepository;
-        this.propertyRepository = propertyRepository;
+        this.hotelRepository = hotelRepository;
         this.dateUtil = dateUtil;
     }
 
@@ -46,38 +46,38 @@ public class RoomService {
     }
 
     @Transactional
-    public List<ReservationRoom> reservationRoomList(long propertyId, int roomNum){ // 방번호로 예약된것 찾기
-        return roomRepository.findRoomsByRoomNum(propertyId,roomNum);
+    public List<ReservationRoom> reservationRoomList(long hotelId, int roomNum){ // 방번호로 예약된것 찾기
+        return roomRepository.findRoomsByRoomNum(hotelId,roomNum);
     }
 
     @Transactional
-    public List<Room> findRooms(Property property){
-        return this.roomRepository.findRoomsByPropertyName(property.getName());
+    public List<Room> findRooms(Hotel hotel){
+        return this.roomRepository.findRoomsByHotelName(hotel.getName());
     }
 
     @Transactional
-    public void addRoom2(Room room, long propertyId){
-        Property property = propertyRepository.findById(propertyId).orElse(null);
-        room.setProperty(property);
+    public void addRoom2(Room room, long hotelId){
+        Hotel hotel = hotelRepository.findById(hotelId).orElse(null);
+        room.setHotel(hotel);
         roomRepository.save(room);
     }
 
     @Transactional
-    public List<AvailableRoom> findAvailablePropertyAndRooms(FindHotel findHotel) {
+    public List<AvailableRoom> findAvailableHotelAndRooms(FindHotel findHotel) {
         System.out.println(findHotel);
         int capacity = findHotel.getCustomers()/findHotel.getRoomCount() == 0 ?
                 findHotel.getCustomers() : findHotel.getCustomers()/findHotel.getRoomCount();
 
-        Property dbProperty = propertyRepository.findById(findHotel.getPropertyId()).orElse(null);
-        if(dbProperty == null){
+        Hotel dbHotel = hotelRepository.findById(findHotel.getHotelId()).orElse(null);
+        if(dbHotel == null){
             return null;
         }
         // 호텔에 따른예약이 되지 않은 빈방들
-//        List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndProperty(findHotel.getPropertyId(),
+//        List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndHotel(findHotel.getHotelId(),
 //                capacity, dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()),
 //                dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
 
-        List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndProperty(findHotel.getPropertyId(),
+        List<Room> rooms = roomRepository.findAvailableRoomsByDateRangeAndHotel(findHotel.getHotelId(),
                 capacity, findHotel.getArrivalDate(),
                 findHotel.getDepartureDate());
 
@@ -86,5 +86,14 @@ public class RoomService {
                 .map(AvailableRoom::of).collect(Collectors.toList());
 
         return roomList;
+    }
+
+    @Transactional
+    public double totalPrice(long[] roomArray){
+        double totalPrice = 0;
+        for(long room : roomArray){
+           totalPrice += roomRepository.findById(room).orElse(null).getPrice();
+        }
+        return totalPrice;
     }
 }

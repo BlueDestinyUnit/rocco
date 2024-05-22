@@ -20,8 +20,8 @@ public class Room {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "propertyId")
-    private Property property;
+    @JoinColumn(name = "hotelId")
+    private Hotel hotel;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)

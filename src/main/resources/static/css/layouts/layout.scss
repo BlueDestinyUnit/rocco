@@ -43,7 +43,7 @@ ol, ul {
   outline: none;
   padding: 0.625rem 0.75rem;
   transition-duration: 125ms;
-  transition-property: background-color;
+  transition-hotel: background-color;
   transition-timing-function: ease;
   user-select: none;
 
@@ -86,7 +86,7 @@ a {
   pointer-events: none;
   position: fixed;
   transition-duration: 250ms;
-  transition-property: opacity;
+  transition-hotel: opacity;
   transition-timing-function: ease;
   z-index: 8;
 
@@ -110,7 +110,7 @@ a {
   outline: none;
   padding: 0.5rem 0.75rem;
   transition-duration: 125ms;
-  transition-property: border-color, color;
+  transition-hotel: border-color, color;
   transition-timing-function: ease;
 
   &:hover {
@@ -154,7 +154,7 @@ a {
     color: #424242;
     font-size: 0.8rem;
     transition-duration: 125ms;
-    transition-property: color;
+    transition-hotel: color;
     transition-timing-function: ease;
   }
 
@@ -206,7 +206,7 @@ a {
   padding: 0.5rem 0.75rem;
   resize: none;
   transition-duration: 125ms;
-  transition-property: border-color, color;
+  transition-hotel: border-color, color;
   transition-timing-function: ease;
 
   &:hover {

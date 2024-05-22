@@ -16,11 +16,11 @@ const nextButton = document.querySelector('[rel="nextButton"]');
 
 // 다이아로그 인덱스
 let currentPaymentModalIndex = 1;
+let checkdRoomsId = [];
 
-searchForm.onsubmit = (e) => {
-    e.preventDefault();
+function searchAvailableRooms() {
     const formData = {
-        "propertyId":searchForm['propertyId'].value,
+        "hotelId":searchForm['hotelId'].value,
         "arrivalDate": `${searchForm['arrivalDate'].value}T14:00:00`,
         "departureDate": `${searchForm['departureDate'].value}T12:00:00`,
         "roomCount": searchForm['roomCount'].value,
@@ -48,7 +48,7 @@ searchForm.onsubmit = (e) => {
 
             data['rooms'].forEach(room => {
 
-            const itemEl = new DOMParser().parseFromString(`
+                const itemEl = new DOMParser().parseFromString(`
                 <div class="roomItem">
                     <label>
                         <input name="checkbox" type="checkbox" value="${room.id}">
@@ -74,13 +74,22 @@ searchForm.onsubmit = (e) => {
 }
 
 
+searchAvailableRooms();
+
+
+searchForm.onsubmit = (e) => {
+    e.preventDefault();
+    searchAvailableRooms();
+}
+
+
 
 // 다이아로그를 여는 함수
 paymentReady.onclick = function (e) {
     cover.show();
     paymentModal.show();
     findDataHotelIndex();
-    checkedRooms();
+    checkdRoomsId = checkedRooms();
 }
 
 // 다음 버튼
@@ -108,18 +117,22 @@ customerRegisForm.onsubmit = function (e) {
 // 결제 입력
 paymentRegisForm.onsubmit = function (e) {
     e.preventDefault();
-    const formData = {
-        "cardNum" :  String(paymentRegisForm['cardNum'].value),
-        "cardType" : String(paymentRegisForm['cardType'].value)
-    }
-    console.log(formData)
+    const formData = new FormData();
+    formData.append('cardNum',paymentRegisForm['cardNum'].value);
+    formData.append('cardType',paymentRegisForm['cardType'].value);
+    formData.append('roomArray',checkdRoomsId);
+    formData.append('hotelId',searchForm['hotelId'].value);
+    formData.append('arrivalDate', `${searchForm['arrivalDate'].value}T14:00:00`);
+    formData.append('departureDate', `${searchForm['departureDate'].value}T12:00:00`);
+    formData.append('roomCount', searchForm['roomCount'].value);
+    formData.append('customers', searchForm['customers'].value);
+    formData.append('firstName',customerRegisForm['firstName'].value);
+    formData.append('lastName',customerRegisForm['lastName'].value);
+    formData.append('phone',customerRegisForm['phone'].value);
 
     fetch('/payment/', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-        },
-        body: JSON.stringify(formData)
+        body: formData
     })
         .then(response => {
             if (!response.ok) {
@@ -160,12 +173,13 @@ function checkedRooms() {
     Array.from(roomElList).forEach(element => {
         const roomCheckbox = element.querySelector('input[name="checkbox"]');
         const isCheck = roomCheckbox.checked;
-        if(isCheck == true){
+        if(isCheck === true){
             const roomId = roomCheckbox.value;
             const roomName = element.querySelector('.roomName').innerText;
             const roomCapacity = element.querySelector('.roomCapacity').innerText;
             const roomPrice = element.querySelector('.roomPrice').innerText;
-            checkedObject.push({"roomId":roomId,"roomName" : roomName, "roomCapacity" : roomCapacity, "roomPrice" : roomPrice});
+            // checkedObject.push({"roomId":roomId,"roomName" : roomName, "roomCapacity" : roomCapacity, "roomPrice" : roomPrice});
+            checkedObject.push(roomId);
 
             const itemEl = new DOMParser().parseFromString(`
                     <li class="item">

@@ -32,7 +32,7 @@ public class RoomController {
     @PatchMapping("availableRooms")
     @ResponseBody
     public ResponseEntity<?> postRooms(@RequestBody FindHotel findHotel){
-        List<AvailableRoom> rooms = this.roomService.findAvailablePropertyAndRooms(findHotel);
+        List<AvailableRoom> rooms = this.roomService.findAvailableHotelAndRooms(findHotel);
         Map<String, Object> response = new HashMap<>();
         if(rooms == null){
             response.put("result", CommonResult.FAILURE.name().toLowerCase());
@@ -53,7 +53,6 @@ public class RoomController {
 
     @RequestMapping(value = "/thumbnail", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getThumbnail(@RequestParam("index") long index) {
-        System.out.println(index);
         Room room = this.roomService.findById(index);
         if (room == null) {
             return ResponseEntity.notFound().build(); // 404

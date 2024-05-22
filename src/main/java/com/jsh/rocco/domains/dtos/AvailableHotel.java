@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(of = "id")
-public class AvailableProperty {
+public class AvailableHotel {
 
     private long id;
     private String name;

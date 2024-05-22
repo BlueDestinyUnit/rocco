@@ -1,6 +1,6 @@
 package com.jsh.rocco.controllers;
 
-import com.jsh.rocco.domains.entities.Property;
+import com.jsh.rocco.domains.entities.Hotel;
 import com.jsh.rocco.domains.entities.Room;
 import com.jsh.rocco.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,11 @@ public class AdminController {
 
     @PostMapping("room")
     public String postAddRoom(@RequestParam("_thumbnail") MultipartFile thumbnail,
-                              @RequestParam("propertyId") long propertyId,
+                              @RequestParam("hotelId") long hotelId,
                               Room room) throws IOException {
         room.setThumbnail(thumbnail.getBytes());
         room.setThumbnailContentType(thumbnail.getContentType());
-        roomService.addRoom2(room,propertyId);
+        roomService.addRoom2(room,hotelId);
         return "admin/room";
     };
 
@@ -47,13 +47,13 @@ public class AdminController {
 
     @PostMapping("hotel")
     public String postAddHotel(@RequestParam("_thumbnail") MultipartFile thumbnail,
-                               Property property) throws IOException {
+                               Hotel hotel) throws IOException {
 
 
 //        System.out.println("진입은 했니?");
-//        property.setThumbnail(thumbnail.getBytes());
+//        hotel.setThumbnail(thumbnail.getBytes());
 //        room.setThumbnailContentType(thumbnail.getContentType());
-//        roomService.addRoom2(room,propertyId);
+//        roomService.addRoom2(room,hotelId);
         return "admin/room";
     };
 

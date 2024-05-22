@@ -41,8 +41,7 @@ public class DateUtil {
 
 	public LocalDate localParse(String dateStr){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDate date = LocalDate.parse(dateStr, formatter);
-		return date;
+        return LocalDate.parse(dateStr, formatter);
 	}
 
 }

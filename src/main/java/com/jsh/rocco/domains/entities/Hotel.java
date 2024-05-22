@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString(exclude = "rooms")
-public class Property implements Serializable {
+public class Hotel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,7 +27,7 @@ public class Property implements Serializable {
     private String zipCode;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "property",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "hotel",cascade = CascadeType.ALL)
     private List<Room> rooms;
 }
 

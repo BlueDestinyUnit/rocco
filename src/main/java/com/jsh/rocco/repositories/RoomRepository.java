@@ -17,18 +17,17 @@ import org.springframework.stereotype.Repository;
 
 @Repository("roccoRoomRepository")
 public interface RoomRepository extends CrudRepository<Room,Long> {
-    @Query("SELECT r FROM Room r WHERE r.property.id = ?1 AND r.roomNum = ?2")
-    Optional<Room> findRoomByRoomNum(long propertyId, int roomNum);
+    @Query("SELECT r FROM Room r WHERE r.hotel.id = ?1 AND r.roomNum = ?2")
+    Optional<Room> findRoomByRoomNum(long hotelId, int roomNum);
 
-    @Query("SELECT rr FROM ReservationRoom rr INNER JOIN rr.room r WHERE r.property.id = ?1 AND r.roomNum = ?2")
-    List<ReservationRoom> findRoomsByRoomNum(long propertyId, int roomNum);
+    @Query("SELECT rr FROM ReservationRoom rr INNER JOIN rr.room r WHERE r.hotel.id = ?1 AND r.roomNum = ?2")
+    List<ReservationRoom> findRoomsByRoomNum(long hotelId, int roomNum);
 
-    @Query("SELECT r FROM Room r  WHERE r.property.id = ?1")
-    List<Room> findRoomsByPropertyId(long propertyId);
+    @Query("SELECT r FROM Room r  WHERE r.hotel.id = ?1")
+    List<Room> findRoomsByHotelId(long hotelId);
 
-    @Query("SELECT r FROM Room r  WHERE r.property.name = ?1")
-    List<Room> findRoomsByPropertyName(String propertyName);
-
+    @Query("SELECT r FROM Room r  WHERE r.hotel.name = ?1")
+    List<Room> findRoomsByHotelName(String hotelName);
 
 
     /* 예약 가능한 방 리스트 */
@@ -39,7 +38,7 @@ public interface RoomRepository extends CrudRepository<Room,Long> {
             "    AND rr.arrivalDate >= ?3 " +
             "    AND rr.departureDate <= ?4" +
             "    AND rr.status = 'H'   " +
-            ") AND r.property.region = ?1 AND r.capacity >= ?2")
+            ") AND r.hotel.region = ?1 AND r.capacity >= ?2")
     List<Room> findAvailableRoomsByDateRangeAndProperties(String region, int customers, LocalDateTime arrivalDate, LocalDateTime departureDate);
 
     @Query("SELECT r FROM Room r " +
@@ -49,8 +48,8 @@ public interface RoomRepository extends CrudRepository<Room,Long> {
             "    AND rr.arrivalDate >= ?3 " +
             "    AND rr.departureDate <= ?4" +
             "    AND rr.status = 'H'   " +
-            ") AND r.property.id = ?1 AND r.capacity >= ?2")
-    List<Room> findAvailableRoomsByDateRangeAndProperty(long id, int customers, LocalDateTime arrivalDate, LocalDateTime departureDate);
+            ") AND r.hotel.id = ?1 AND r.capacity >= ?2")
+    List<Room> findAvailableRoomsByDateRangeAndHotel(long id, int customers, LocalDateTime arrivalDate, LocalDateTime departureDate);
 
 
 }

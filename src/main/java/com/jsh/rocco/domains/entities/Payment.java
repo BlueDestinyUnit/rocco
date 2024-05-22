@@ -16,13 +16,18 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@Table(name="Payment")
+@Table
 @ToString
 public class Payment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+
+	@ManyToOne
+	@JoinColumn(name="customerId")
+	private Customer customer;
 
 
 	@OneToOne
@@ -38,12 +43,10 @@ public class Payment {
 	private String cardType;
 	
 	@Column(updatable = false)
-//	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp		
 	private LocalDateTime regDate;
-	
-//	@Temporal(TemporalType.TIMESTAMP)
+
 	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	@UpdateTimestamp			
 	private LocalDateTime updateDate;

@@ -44,10 +44,15 @@ public class PaymentService {
 
 	@Autowired
 	DateUtil dateUtil;
+    @Autowired
+    private RoomService roomService;
 
 	@Transactional
 	public Result<CommonResult> addPayment(FindHotel findHotel, Customer customer, Payment payment , long[] roomArray) {
 		// 예약 저장
+		double totalPrice = 0;
+
+
 		customerRepository.save(customer);
 
 		System.out.println("1");
@@ -66,6 +71,10 @@ public class PaymentService {
 				throw new RuntimeException( "this room exist");
 			}
 		});
+
+		totalPrice = roomService.totalPrice(roomArray);
+
+
 		System.out.println("3");
 		reservationRoomService.addReservationRoom(findHotel,reservation.getId(),roomArray);
 
@@ -73,17 +82,22 @@ public class PaymentService {
 		Payment dbPayment =paymentRepository.findPayment().orElse(null);
 
 		if(dbPayment == null){
-
+			System.out.println("5");
 			payment.setPaymentNumber(createPaymentNumber(null));;
 		}else{
+			System.out.println("5-1");
 			payment.setPaymentNumber(createPaymentNumber(dbPayment.getPaymentNumber()));
 		}
-
+		System.out.println("6");
+		payment.setCustomer(customer);
 		payment = paymentRepository.save(payment);
 		payment.setStatus('H');
+		System.out.println("7");
 		Receipt receipt = new Receipt();
+		receipt.setCustomer(customer);
 		receipt.setReceiptNumber(payment.getPaymentNumber().replace("P","R"));
 		receipt.setPayment(payment);
+		receipt.setPrice(totalPrice);
 		recepitRepository.save(receipt);
 
 		return CommonResult.SUCCESS;

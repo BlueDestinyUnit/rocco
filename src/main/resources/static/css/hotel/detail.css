@@ -14,7 +14,7 @@
   position: fixed;
   transform: translate(-50%, -50%);
   transition-duration: 250ms;
-  transition-property: top, opacity;
+  transition-hotel: top, opacity;
   transition-timing-function: ease;
   z-index: 9;
   align-items: stretch;
@@ -208,7 +208,7 @@ main > section > h1 {
   flex-direction: row;
   align-items: stretch;
 }
-.hotelDetail > .propertyImg {
+.hotelDetail > .hotelImg {
   padding: 1rem;
   width: 40%;
   background: #e74c3c;

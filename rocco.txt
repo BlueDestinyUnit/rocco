@@ -72,12 +72,12 @@ CREATE TABLE ReservationRoom
 CREATE TABLE Room
 (
     id         BIGINT primary key auto_increment,
-    propertyId BIGINT       not null,
+    hotelId BIGINT       not null,
     roomNum    INT          NOT NULL,
     name       VARCHAR(100) NOT null,
     capacity   INT          not NULL,
     price double not null,
-    constraint Room_propertyId_FK foreign key (propertyId) references Property (id)
+    constraint Room_hotelId_FK foreign key (hotelId) references Hotel (id)
 ) auto_increment = 1001;
 
 -- =============================
@@ -96,24 +96,24 @@ CREATE TABLE PriceChange
 
 
 -- =============================
---		Property
+--		Hotel
 -- =============================
 
-CREATE TABLE Property
+CREATE TABLE Hotel
 (
     id      BIGINT primary key auto_increment,
     name    VARCHAR(100) not null,
     addressId BIGINT NOT NULL,
     grade   int NOT null,
     intro   VARCHAR(100) not null,
-    constraint Property_addressId_FK foreign key (addressId) references PropertyAddress(id)
+    constraint Hotel_addressId_FK foreign key (addressId) references HotelAddress(id)
 ) auto_increment = 1001;
 
 
 -- =============================
---		PropertyAddress
+--		HotelAddress
 -- =============================
-CREATE TABLE PropertyAddress
+CREATE TABLE HotelAddress
 (
     id      BIGINT primary key auto_increment,
     region  VARCHAR(100) not null,
@@ -160,8 +160,8 @@ CREATE TABLE Receipt
 
 
 drop table Customer;
-drop table Property;
-drop table PropertyAddress;
+drop table Hotel;
+drop table HotelAddress;
 drop table Room;
 drop table Reservationroom;
 drop table Reservation;

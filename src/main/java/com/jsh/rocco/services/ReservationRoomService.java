@@ -6,14 +6,14 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.jsh.rocco.domains.dtos.AvailableProperty;
+import com.jsh.rocco.domains.dtos.AvailableHotel;
 import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.dtos.FindHotel;
-import com.jsh.rocco.domains.entities.Property;
+import com.jsh.rocco.domains.entities.Hotel;
 import com.jsh.rocco.domains.entities.Reservation;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
-import com.jsh.rocco.repositories.PropertyRepository;
+import com.jsh.rocco.repositories.HotelRepository;
 import com.jsh.rocco.repositories.ReservationRepository;
 import com.jsh.rocco.repositories.ReservationRoomRepository;
 import com.jsh.rocco.repositories.RoomRepository;
@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReservationRoomService {
-    private final PropertyRepository propertyRepository;
+    private final HotelRepository hotelRepository;
     private final ReservationRoomRepository reservationRoomRepository;
     private final ReservationRepository reservationRepository;
     private final RoomRepository roomRepository;
@@ -33,12 +33,12 @@ public class ReservationRoomService {
 
 
     @Autowired
-    public ReservationRoomService(PropertyRepository propertyRepository,
+    public ReservationRoomService(HotelRepository hotelRepository,
                                   ReservationRoomRepository reservationRoomRepository,
                                   ReservationRepository reservationRepository,
                                   RoomRepository roomRepository,
                                   DateUtil dateUtil) {
-        this.propertyRepository = propertyRepository;
+        this.hotelRepository = hotelRepository;
         this.reservationRoomRepository = reservationRoomRepository;
         this.reservationRepository = reservationRepository;
         this.roomRepository = roomRepository;
@@ -55,6 +55,8 @@ public class ReservationRoomService {
             }
             reservationRoom.setReservation(reservation);
             Room dbRoom = roomRepository.findById(room).orElse(null);
+            reservationRoom.setArrivalDate(findHotel.getArrivalDate());
+            reservationRoom.setDepartureDate(findHotel.getDepartureDate());
 //            reservationRoom.setArrivalDate(dateUtil.parseDateStringWithFormat(findHotel.getArrivalDate()));
 //            reservationRoom.setDepartureDate(dateUtil.parseDateStringWithFormat(findHotel.getDepartureDate()));
             reservationRoom.setRoom(dbRoom);
@@ -80,9 +82,9 @@ public class ReservationRoomService {
 
 
     @Transactional
-    public List<Room> availableRooms(long propertyId, Date arriv, Date depart) {
-        List<Room> rooms = propertyRepository.findById(propertyId).orElse(null).getRooms();
-        List<ReservationRoom> dBrooms = reservationRoomRepository.findRoomsByRoomAndDate(propertyId, arriv, depart);
+    public List<Room> availableRooms(long hotelId, Date arriv, Date depart) {
+        List<Room> rooms = hotelRepository.findById(hotelId).orElse(null).getRooms();
+        List<ReservationRoom> dBrooms = reservationRoomRepository.findRoomsByRoomAndDate(hotelId, arriv, depart);
         List<Room> availableRooms = new ArrayList<>();
         for (Room room : rooms) {
             boolean isReserved = false;

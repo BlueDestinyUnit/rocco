@@ -1,7 +1,7 @@
 package com.jsh.rocco.repositories;
 
 
-import com.jsh.rocco.domains.entities.Property;
+import com.jsh.rocco.domains.entities.Hotel;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
 import org.springframework.data.jpa.repository.Query;
@@ -22,8 +22,8 @@ public interface ReservationRoomRepository extends CrudRepository<ReservationRoo
     List<ReservationRoom> findByRoomAndDate(long roomId, Date appri, Date depart);
 
 
-    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.property.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
-    List<ReservationRoom> findRoomsByRoomAndDate(long propertyId, Date appri, Date depart);
+    @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.hotel.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
+    List<ReservationRoom> findRoomsByRoomAndDate(long hotelId, Date appri, Date depart);
 
     @Query("SELECT rr FROM ReservationRoom rr WHERE rr.room.id = ?1 AND rr.arrivalDate >= ?2 AND rr.departureDate <= ?3")
     Optional<ReservationRoom> findRoomByRoomIdAndDate(long roomId, LocalDate appri, LocalDate depart);

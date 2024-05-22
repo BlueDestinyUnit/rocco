@@ -24,7 +24,7 @@
   font-size: 0.8rem;
   text-decoration: none;
   transition-duration: 250ms;
-  transition-property: color;
+  transition-hotel: color;
   transition-timing-function: ease;
   user-select: none;
   align-items: center;
@@ -78,7 +78,7 @@
   position: fixed;
   transform: translate(-50%, -50%);
   transition-duration: 250ms;
-  transition-property: top, opacity;
+  transition-hotel: top, opacity;
   transition-timing-function: ease;
   z-index: 9;
   align-items: stretch;
@@ -140,7 +140,7 @@ ol, ul {
   outline: none;
   padding: 0.625rem 0.75rem;
   transition-duration: 125ms;
-  transition-property: background-color;
+  transition-hotel: background-color;
   transition-timing-function: ease;
   user-select: none;
 }
@@ -179,7 +179,7 @@ a {
   pointer-events: none;
   position: fixed;
   transition-duration: 250ms;
-  transition-property: opacity;
+  transition-hotel: opacity;
   transition-timing-function: ease;
   z-index: 8;
 }
@@ -200,7 +200,7 @@ a {
   outline: none;
   padding: 0.5rem 0.75rem;
   transition-duration: 125ms;
-  transition-property: border-color, color;
+  transition-hotel: border-color, color;
   transition-timing-function: ease;
 }
 ._obj-input:hover {
@@ -238,7 +238,7 @@ a {
   color: #424242;
   font-size: 0.8rem;
   transition-duration: 125ms;
-  transition-property: color;
+  transition-hotel: color;
   transition-timing-function: ease;
 }
 ._obj-label > .__warning {
@@ -279,7 +279,7 @@ a {
   padding: 0.5rem 0.75rem;
   resize: none;
   transition-duration: 125ms;
-  transition-property: border-color, color;
+  transition-hotel: border-color, color;
   transition-timing-function: ease;
 }
 ._obj-textarea:hover {

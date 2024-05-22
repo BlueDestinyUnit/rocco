@@ -32,7 +32,7 @@ class RoccoApplicationTests {
     private CustomerService customerService;
 
     @Autowired
-    private PropertyService propertyService;
+    private HotelService hotelService;
 
     @Autowired
     private RoomService roomService;
@@ -78,27 +78,27 @@ class RoccoApplicationTests {
     @Test
     @Transactional
     @Commit
-    void testProperty() {
-        Property property = new Property();
-        property.setName("테스트3");
-        property.setGrade(4);
-        property.setIntro("멋진");
+    void testHotel() {
+        Hotel hotel = new Hotel();
+        hotel.setName("테스트3");
+        hotel.setGrade(4);
+        hotel.setIntro("멋진");
 
-        propertyService.addProperty(property);
+        hotelService.addHotel(hotel);
     }
 
     @Test
     @Transactional
     @Commit
     void testRoom() {
-        Property property = propertyService.getProperty(1002);
+        Hotel hotel = hotelService.getHotel(1002);
         for(int i=1;i<=4; i++) {
             Room room2 = new Room();
             room2.setRoomNum(i);
             room2.setName("방2_"+i);
             room2.setCapacity(4);
             room2.setPrice(2000);
-            room2.setProperty(property);
+            room2.setHotel(hotel);
             roomService.addRoom(room2);
         }
     }
@@ -167,7 +167,7 @@ class RoccoApplicationTests {
 //    @Commit
 //    void testHotel(){
 //        List<Room> reservationRoomList = reservationRoomService.findAvailableRooms("대구",parseDate("2024-03-29 14:00:00"), parseDate("2024-03-30 12:00:00"));
-//        reservationRoomList.forEach(r -> System.out.println(r.getProperty().getRooms()));
+//        reservationRoomList.forEach(r -> System.out.println(r.getHotel().getRooms()));
 //    }
 
     
@@ -209,7 +209,7 @@ class RoccoApplicationTests {
 //
 //        findHotel.setArrivalDate("2024-04-12 14:00:00");
 //        findHotel.setDepartureDate("2024-04-13 12:00:00");
-//        findHotel.setPropertyId(1001);
+//        findHotel.setHotelId(1001);
 //        long[] array = {1001,1002,1003};
 //        Payment payment = new Payment();
 //        payment.setCardNum("1001-1001-1001");
