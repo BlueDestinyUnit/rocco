@@ -7,6 +7,7 @@
     <title>Layout</title>
     <link rel="stylesheet" th:href="@{/css/layouts/layout.css}">
     <script src="https://kit.fontawesome.com/4605a6ca86.js" crossorigin="anonymous"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/layouts/layout.js}" defer></script>
     <script th:src="@{/js/layouts/layout.userModal.js}" defer></script>
     <script sec:authorize="authenticated" th:src="@{/js/layouts/layout.logout.js}" defer></script>
@@ -60,6 +61,9 @@
 
     <div data-user-index="2">
         <form novalidate id="registerForm">
+            <div class="address-wrapper">
+                <div class="dialog"></div>
+            </div>
             <h2 class="title">회원가입</h2>
             <input hidden name="emailSalt" type="hidden">
             <label class="_obj-label label" rel="emailLabel">
@@ -93,28 +97,30 @@
             </label>
             <label class="_obj-label label" rel="phoneLabel">
                 <span class="__text">연락처</span>
-                <span class="_horizontal">
-                <select required class="_object-select" name="telCompany">
-                    <option disabled hidden selected value="-1">통신사</option>
-                    <option value="KT">KT</option>
-                    <option value="LGU">LGU+</option>
-                    <option value="SKT">SKT</option>
-                    <option value="ETC">기타</option>
-                </select>
-                <select required class="_object-select" name="infoTelFirst">
-                    <option selected value="010">010</option>
-                </select>
-                <input required autocomplete="off" class="_obj-input __field input" maxlength="4" minlength="3" name="infoTelSecond" placeholder="0000" spellcheck="false" type="tel">
-                <input required autocomplete="off" class="_obj-input __field input" maxlength="4" minlength="3" name="infoTelThird" placeholder="0000" spellcheck="false" type="tel">
-            </span>
-            </label>
-            <label class="_obj-check-label label">
-                <input hidden class="__input" name="agree" type="checkbox">
-                <span class="__checkbox"></span>
-                <span class="__text">
-                    <a th:href="@{/assets/htmls/term-policy.html}" target="_blank">서비스 이용약관</a> 및 <a
-                        th:href="@{/assets/htmls/term-privacy.html}" target="_blank">개인정보 처리방침</a>을 읽어보았으며 이해하였고 동의합니다.
+                <span class="__horizontal">
+                    <select required class="_obj-select" name="telCompany">
+                        <option disabled hidden selected value="-1">통신사</option>
+                        <option value="KT">KT</option>
+                        <option value="LGU">LGU+</option>
+                        <option value="SKT">SKT</option>
+                        <option value="ETC">기타</option>
+                    </select>
+                    <select required class="_obj-select" name="infoTelFirst">
+                        <option selected value="010">010</option>
+                    </select>
+                    <input required autocomplete="off" class="_obj-input __field input" maxlength="4" minlength="3" name="infoTelSecond" placeholder="0000" spellcheck="false" type="tel">
+                    <input required autocomplete="off" class="_obj-input __field input" maxlength="4" minlength="3" name="infoTelThird" placeholder="0000" spellcheck="false" type="tel">
                 </span>
+            </label>
+            <label class="_obj-label" rel="addressLabel">
+                <span class="__text">주소</span>
+                <span class="__horizontal">
+                <input required disabled autocomplete="off" class="_obj-input __field __spring" maxlength="6" minlength="6" name="addressPostal" placeholder="우편 번호" spellcheck="false" type="text" >
+                <button class="_obj-button" name="addressFind" type="button">주소 찾기</button>
+            </span>
+                <input disabled required class="_obj-input __field" maxlength="100" minlength="1" name="addressPrimary" placeholder="기본 주소 (주소 찾기 클릭)" spellcheck="false" type="text" >
+                <input class="_obj-input __field" maxlength="100" name="addressSecondary" placeholder="상세 주소 (건물 이름, 동/호수)" spellcheck="false" type="text">
+                <span class="__warning">올바른 주소를 입력해 주세요.</span>
             </label>
             <button class="_obj-button" type="submit">
                 <i class="__icon"></i>

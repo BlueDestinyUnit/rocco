@@ -14,7 +14,7 @@
   position: fixed;
   transform: translate(-50%, -50%);
   transition-duration: 250ms;
-  transition-hotel: top, opacity;
+  transition-property: top, opacity;
   transition-timing-function: ease;
   z-index: 9;
   align-items: stretch;

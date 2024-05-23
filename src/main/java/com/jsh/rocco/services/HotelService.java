@@ -9,7 +9,7 @@ import com.jsh.rocco.domains.entities.Room;
 import com.jsh.rocco.repositories.HotelRepository;
 import com.jsh.rocco.repositories.ReservationRoomRepository;
 import com.jsh.rocco.repositories.RoomRepository;
-import com.jsh.rocco.util.DateUtil;
+import com.jsh.rocco.util.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

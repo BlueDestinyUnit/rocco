@@ -1,30 +1,16 @@
 package com.jsh.rocco;
 
-import com.jsh.rocco.config.security.domains.RoccoUser;
-import com.jsh.rocco.domains.dtos.FindHotel;
 import com.jsh.rocco.domains.entities.*;
-import com.jsh.rocco.domains.enums.roccouser.TelCompany;
-import com.jsh.rocco.domains.enums.roccouser.UserRole;
 import com.jsh.rocco.repositories.PaymentRepository;
 import com.jsh.rocco.repositories.ReservationRepository;
 import com.jsh.rocco.config.security.services.RoccoUserRepository;
 import com.jsh.rocco.services.*;
-import com.jsh.rocco.util.DateUtil;
+import com.jsh.rocco.util.date.DateUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @SpringBootTest
 class RoccoApplicationTests {
@@ -72,7 +58,6 @@ class RoccoApplicationTests {
 //        customer.setFirstName("테스트1");
 //        customer.setLastName("테스트1");
 //        customerService.addCustomer(customer);
-        System.out.println(customerService.findById(1006).getBirthDate());;
     }
 
     @Test

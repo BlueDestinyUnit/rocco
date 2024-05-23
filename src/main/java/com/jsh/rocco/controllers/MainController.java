@@ -1,26 +1,16 @@
 package com.jsh.rocco.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsh.rocco.domains.dtos.AvailableHotel;
-import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.dtos.FindHotel;
-import com.jsh.rocco.domains.entities.Hotel;
-import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.enums.results.CommonResult;
 import com.jsh.rocco.services.HotelService;
-import com.jsh.rocco.services.ReservationRoomService;
-import com.jsh.rocco.util.DateUtil;
-import jakarta.servlet.http.HttpServletRequest;
+import com.jsh.rocco.util.date.DateUtil;
 import lombok.extern.log4j.Log4j2;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;

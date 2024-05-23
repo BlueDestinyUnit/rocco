@@ -1,7 +1,8 @@
 const userModal = document.getElementById('userModal');
 const elementsWithUserModalIndex = document.querySelectorAll('[data-user-index]');
 const loginForm = userModal.querySelector('#loginForm');
-
+const registerForm = userModal.querySelector('#registerForm');
+const addressWrapper = userModal.querySelector('.address-wrapper');
 
 let userModalIndex = 1;
 
@@ -101,6 +102,21 @@ function cancelUserModal() {
     userModal.hide();
     cover.hide();
 }
+
+
+registerForm['addressFind'].onclick = () => {
+    addressWrapper.show();
+    new daum.Postcode({
+        width: '100%',
+        height: '100%',
+        oncomplete: (data) => {
+            registerForm['addressPostal'].value = data['zonecode'];
+            registerForm['addressPrimary'].value = data['address'];
+            registerForm['addressSecondary'].focus();
+            addressWrapper.hide();
+        }
+    }).embed(addressWrapper.querySelector(':scope > .dialog'));
+};
 
 
 

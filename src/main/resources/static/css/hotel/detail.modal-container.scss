@@ -2,7 +2,7 @@
 
 
 /*모달 컨테이너*/
-.modal-container {
+#paymentModal {
   top: calc(50% + 0.25rem);
   left: 50%;
   width: 25rem;
@@ -16,7 +16,7 @@
   position: fixed;
   transform: translate(-50%, -50%);
   transition-duration: 250ms;
-  transition-hotel: top, opacity;
+  transition-property: top, opacity;
   transition-timing-function: ease;
   z-index: 9;
 

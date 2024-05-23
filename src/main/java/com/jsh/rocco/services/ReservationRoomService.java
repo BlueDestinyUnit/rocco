@@ -1,15 +1,9 @@
 package com.jsh.rocco.services;
 
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
-import com.jsh.rocco.domains.dtos.AvailableHotel;
-import com.jsh.rocco.domains.dtos.AvailableRoom;
 import com.jsh.rocco.domains.dtos.FindHotel;
-import com.jsh.rocco.domains.entities.Hotel;
 import com.jsh.rocco.domains.entities.Reservation;
 import com.jsh.rocco.domains.entities.ReservationRoom;
 import com.jsh.rocco.domains.entities.Room;
@@ -17,7 +11,7 @@ import com.jsh.rocco.repositories.HotelRepository;
 import com.jsh.rocco.repositories.ReservationRepository;
 import com.jsh.rocco.repositories.ReservationRoomRepository;
 import com.jsh.rocco.repositories.RoomRepository;
-import com.jsh.rocco.util.DateUtil;
+import com.jsh.rocco.util.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
