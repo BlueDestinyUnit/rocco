@@ -37,9 +37,7 @@ public class UserService {
 
     @Transactional
     public Result sendRegisterEmail(String email,String authCode) throws NoSuchAlgorithmException, MessagingException {
-//        if (!EmailAuthRegex.email.tests(email)) {
-//            return CommonResult.FAILURE;
-//        }
+
         Context context = new Context();
         context.setVariable("code", authCode);
         new MailSender(this.mailSender)
