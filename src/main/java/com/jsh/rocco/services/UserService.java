@@ -1,12 +1,12 @@
 package com.jsh.rocco.services;
 
-import com.jsh.rocco.config.security.services.RoccoUserRepository;
+import com.jsh.rocco.config.security.repositories.RoccoUserRepository;
 import com.jsh.rocco.config.security.domains.RoccoUser;
+import com.jsh.rocco.domains.enums.results.EmailAuthResult;
 import com.jsh.rocco.util.misc.MailSender;
 import com.jsh.rocco.domains.enums.results.CommonResult;
 import com.jsh.rocco.domains.enums.results.Result;
 import jakarta.mail.MessagingException;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -36,12 +36,16 @@ public class UserService {
 
 
     @Transactional
-    public Result sendRegisterEmail(String email,String authCode) throws NoSuchAlgorithmException, MessagingException {
-
+    public Result<?> sendRegisterEmail(String email,String authCode) throws NoSuchAlgorithmException, MessagingException {
+        RoccoUser user = roccoUserRepository.findUserByEmail(email).orElse(null);
+        if(user != null){
+            return EmailAuthResult.FAILURE_DUPLICATE_EMAIL;
+        }
+        System.out.println(user);
         Context context = new Context();
         context.setVariable("code", authCode);
         new MailSender(this.mailSender)
-                .setFrom("inst.yhp@gmail.com")
+                .setFrom("whtjdghks03@gmail.com")
                 .setSubject("[Rocco] 회원가입 인증번호")
                 .setText(this.templateEngine.process("user/registerEmail", context), true)
                 .setTo(email)

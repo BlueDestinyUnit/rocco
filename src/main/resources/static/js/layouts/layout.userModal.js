@@ -75,7 +75,6 @@ loginForm.onsubmit = function (e) {
 
 function logout(e) {
     e.preventDefault();
-    console.log('fadfas')
     fetch('/user/logout/', {
         method: 'POST',
         headers: {
@@ -103,6 +102,74 @@ function cancelUserModal() {
     cover.hide();
 }
 
+registerForm['emailSend'].onclick = function (e) {
+    e.preventDefault();
+    const formData = {
+        email: registerForm['email'].value
+    };
+    console.log(registerForm['email'].value)
+    fetch('user/sendEmailCode', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data['result']);
+
+        const [dTitle, dContent, dOnclick] = {
+            failure: ['경고', '규칙에 맞게 이메일을 작성해주세요', () => registerForm['emailCode'].focus()],
+            failure_duplicate_email: ['경고', '이미 쓰고 있는 이메일입니다.', () => {
+                registerForm['email'].focus();
+            }],
+            success: ['알림', '이메일의 전송을 완료 했습니다.', () => {
+                registerForm['email'].disable();
+                registerForm['emailSend'].disable();
+                registerForm['emailCode'].enable();
+                registerForm['emailCode'].focus();
+                registerForm['emailVerify'].enable();
+            }]
+        }[data.result] || ['경고', '서버가 예상치 못한 응답을 반환하였습니다. 잠시 후 다시 시도해 주세요.'];
+        DialogObj.createSimpleOk(dTitle, dContent, dOnclick).show();
+    })
+    .catch(error => {
+        // fetch 중에 오류가 발생한 경우 처리합니다.
+        console.error('There has been a problem with your fetch operation:', error);
+        // 여기서 서버 오류인지 네트워크 오류인지 판단하고 적절한 조치를 취할 수 있습니다.
+    });
+}
+
+
+registerForm['emailVerify'].onclick = function (e) {
+    e.preventDefault();
+    const formData = {
+        email: registerForm['emailCode'].value
+    };
+    fetch('user/emailVerify', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data)})
+    .catch(error => {
+        // fetch 중에 오류가 발생한 경우 처리합니다.
+        console.error('There has been a problem with your fetch operation:', error);
+        // 여기서 서버 오류인지 네트워크 오류인지 판단하고 적절한 조치를 취할 수 있습니다.
+    });
+}
+
 
 registerForm['addressFind'].onclick = () =>  {
     addressWrapper.show();
@@ -117,6 +184,9 @@ registerForm['addressFind'].onclick = () =>  {
         }
     }).embed(addressWrapper.querySelector(':scope > .dialog'));
 };
+
+
+
 
 
 

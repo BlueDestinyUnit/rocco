@@ -3,7 +3,7 @@ package com.jsh.rocco;
 import com.jsh.rocco.domains.entities.*;
 import com.jsh.rocco.repositories.PaymentRepository;
 import com.jsh.rocco.repositories.ReservationRepository;
-import com.jsh.rocco.config.security.services.RoccoUserRepository;
+import com.jsh.rocco.config.security.repositories.RoccoUserRepository;
 import com.jsh.rocco.services.*;
 import com.jsh.rocco.util.date.DateUtil;
 import org.junit.jupiter.api.Test;

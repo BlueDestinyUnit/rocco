@@ -20,6 +20,18 @@ HTMLElement.prototype.none = function () {
     return this;
 }
 
+HTMLElement.prototype.disable = function () {
+    this.setAttribute('disabled', '');
+    return this;
+}
+
+HTMLElement.prototype.enable = function () {
+    this.removeAttribute('disabled');
+    return this;
+}
+
+
+
 const cover = document.getElementById('cover');
 
 cover.show = function (onclick) {
@@ -47,9 +59,12 @@ document.querySelectorAll('[rel="cancelButton"]').forEach(el => {
 );
 
 class DialogObj {
+    static cover = null;
+
     element;
 
     constructor(params) {
+        console.log(params)
         if (DialogObj.cover === null) {
             const cover = document.createElement('div');
             cover.classList.add('_obj-dialog-cover');
@@ -102,6 +117,25 @@ class DialogObj {
                 }
             }]
         });
+    }
+
+    hide() {
+        setTimeout(() => {
+            DialogObj.cover.hide();
+            this.element.hide();
+        }, 100);
+        return this;
+    }
+
+
+
+    show() {
+        setTimeout(() => {
+            console.log(this.element)
+            DialogObj.cover.show();
+            this.element.show();
+        }, 100);
+        return this;
     }
 }
 

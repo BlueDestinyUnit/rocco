@@ -3,6 +3,7 @@ package com.jsh.rocco.config.security.services;
 
 import com.jsh.rocco.config.security.domains.RoccoUser;
 import com.jsh.rocco.config.security.domains.SecurityUser;
+import com.jsh.rocco.config.security.repositories.RoccoUserRepository;
 import com.jsh.rocco.config.security.sample.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     // JPA 사용, Mybatis 사용시 mapper를 등록하셔서 user 정보를 받아오시면 됩니다.
     private final UserRepository userRepository;
-    @Autowired RoccoUserRepository roccoUserRepository;
+    @Autowired
+    RoccoUserRepository roccoUserRepository;
 
     @Autowired
     public CustomUserDetailsService(UserRepository userRepository) {

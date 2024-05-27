@@ -1,4 +1,4 @@
-package com.jsh.rocco.config.security.services;
+package com.jsh.rocco.config.security.repositories;
 
 import com.jsh.rocco.config.security.domains.RoccoUser;
 import org.springframework.data.jpa.repository.Query;
