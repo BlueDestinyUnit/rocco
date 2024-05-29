@@ -72,9 +72,9 @@ public class CustomSecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("layouts/layout").permitAll()
-                        .requestMatchers("register").permitAll()
-                        .requestMatchers("user/login").permitAll()
-                        .requestMatchers("user/login/*").permitAll()
+                        .requestMatchers("user/register").permitAll()
+                        .requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/user/login/*").permitAll()
                         .requestMatchers("room/*").permitAll()
                         .requestMatchers("hotel/*").permitAll()
                         .requestMatchers("search").permitAll()

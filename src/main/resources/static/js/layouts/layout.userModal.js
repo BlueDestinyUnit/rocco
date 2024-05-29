@@ -47,7 +47,7 @@ loginForm.onsubmit = function (e) {
     };
 
 
-    fetch('/user/login/', {
+    fetch('../user/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ loginForm.onsubmit = function (e) {
 
 function logout(e) {
     e.preventDefault();
-    fetch('/user/logout/', {
+    fetch('../user/logout/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -108,7 +108,7 @@ registerForm['emailSend'].onclick = function (e) {
         email: registerForm['email'].value
     };
     console.log(registerForm['email'].value)
-    fetch('user/sendEmailCode', {
+    fetch('../user/sendEmailCode', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(formData)
@@ -186,7 +186,40 @@ registerForm['addressFind'].onclick = () =>  {
 };
 
 
+registerForm.onsubmit = function (e) {
+    console.log(registerForm['telCompany'].value)
 
+    e.preventDefault();
+    const formData = {
+        email: registerForm['email'].value,
+        password: registerForm['password'].value,
+        nickname: registerForm['nickname'].value,
+        telCompany : registerForm['telCompany'].value,
+        phone : registerForm['infoTelFirst'].value + registerForm['infoTelSecond'].value + registerForm['infoTelThird'].value,
+        addressPostal : registerForm['addressPostal'].value,
+        addressPrimary : registerForm['addressPrimary'].value,
+        addressSecondary : registerForm['addressSecondary'].value,
+    }
+    fetch('../user/register', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data)})
+    .catch(error => {
+        // fetch 중에 오류가 발생한 경우 처리합니다.
+        console.error('There has been a problem with your fetch operation:', error);
+        // 여기서 서버 오류인지 네트워크 오류인지 판단하고 적절한 조치를 취할 수 있습니다.
+    });
+
+}
 
 
 

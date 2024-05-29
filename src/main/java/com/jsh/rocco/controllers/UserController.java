@@ -1,5 +1,6 @@
 package com.jsh.rocco.controllers;
 
+import com.jsh.rocco.config.security.domains.RoccoUser;
 import com.jsh.rocco.domains.enums.results.CommonResult;
 import com.jsh.rocco.domains.enums.results.EmailAuthResult;
 import com.jsh.rocco.domains.enums.results.Result;
@@ -8,6 +9,7 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -40,14 +42,12 @@ public class UserController {
     @PostMapping("logout")
     @ResponseBody
     public String logoutMessage() {
-        System.out.println("뭐냐?");
         return "messages ok";
     }
 
     @PostMapping("logout/")
     @ResponseBody
     public String logout2Message() {
-        System.out.println("뭐냐?2");
         return "messages ok";
     }
 
@@ -99,5 +99,19 @@ public class UserController {
         response.put("result",result.name().toLowerCase());
         return ResponseEntity.ok().body(response);
     }
+
+
+    @PostMapping(value = "register",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<?> postRegisterUser(HttpSession session,
+                                              @RequestBody RoccoUser requestParam) {
+        System.out.println(requestParam);
+        Map<String, Object> response = new HashMap<>();
+
+        Result<?> result = userService.userRegister(requestParam);
+        response.put("result",result.name().toLowerCase());
+        return ResponseEntity.ok().body(response);
+    }
+
 
 }

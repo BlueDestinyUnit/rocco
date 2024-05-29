@@ -21,12 +21,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        log.info("이유가 뭔가 :" + authentication);
         String loginId = authentication.getName();
         String password = (String) authentication.getCredentials();
 
         SecurityUser roccoUser = (SecurityUser) userDetailsService.loadUserByUsername(loginId);
-        System.out.println("로코유저"+roccoUser);
         if(!passwordEncoder.matches(password, roccoUser.getPassword())) {
             throw new BadCredentialsException("Invalid Password");
         }

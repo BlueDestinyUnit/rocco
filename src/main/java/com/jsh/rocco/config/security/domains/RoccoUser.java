@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -31,30 +32,28 @@ public class RoccoUser  implements UserDetails {
     private String password;
     private String nickname;
     private char sex = 'x';
-    private String phone;
+
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private Date birthDate;
     @Enumerated(EnumType.STRING)
     private TelCompany telCompany;
+    private String phone;
 
     private String addressPostal;
     private String addressPrimary;
     private String addressSecondary;
     @Column(updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @CreationTimestamp
-    private Date regDate;
+    private LocalDateTime regDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @UpdateTimestamp
-    private Date updateDate;
-    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime updateDate;
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     @UpdateTimestamp
-    private Date expireDate;
+    private LocalDateTime expireDate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
