@@ -2,6 +2,7 @@ package com.jsh.rocco.controllers;
 
 import com.jsh.rocco.domains.entities.Hotel;
 import com.jsh.rocco.domains.entities.Room;
+import com.jsh.rocco.services.HotelService;
 import com.jsh.rocco.services.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,17 +19,22 @@ import java.io.IOException;
 public class AdminController {
     private final RoomService roomService;
 
-    @Autowired
-    public AdminController(RoomService roomService) {
-        this.roomService = roomService;
-    }
+    private final HotelService hotelService;
 
+    @Autowired
+    public AdminController(RoomService roomService
+            , HotelService hotelService) {
+        this.roomService = roomService;
+        this.hotelService = hotelService;
+    }
 
 
     @GetMapping("room")
     public String getAddRoom() {
-      return "admin/room";
-    };
+        return "admin/room";
+    }
+
+    ;
 
     @PostMapping("room")
     public String postAddRoom(@RequestParam("_thumbnail") MultipartFile thumbnail,
@@ -36,25 +42,24 @@ public class AdminController {
                               Room room) throws IOException {
         room.setThumbnail(thumbnail.getBytes());
         room.setThumbnailContentType(thumbnail.getContentType());
-        roomService.addRoom2(room,hotelId);
+        roomService.addRoom2(room, hotelId);
         return "admin/room";
-    };
+    }
+
+    ;
 
     @GetMapping("hotel")
     public String getAddHotel() {
         return "admin/hotel";
-    };
+    }
+
+    ;
 
     @PostMapping("hotel")
     public String postAddHotel(@RequestParam("_thumbnail") MultipartFile thumbnail,
                                Hotel hotel) throws IOException {
-
-
-//        System.out.println("진입은 했니?");
-//        hotel.setThumbnail(thumbnail.getBytes());
-//        room.setThumbnailContentType(thumbnail.getContentType());
-//        roomService.addRoom2(room,hotelId);
+        hotelService.addHotel(hotel);
         return "admin/room";
-    };
+    }
 
 }

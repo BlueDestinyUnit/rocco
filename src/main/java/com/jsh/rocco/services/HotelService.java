@@ -13,10 +13,7 @@ import com.jsh.rocco.util.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,7 +59,7 @@ public class HotelService {
 
 
         // 각각의 호텔과 예약이 가능한 방 리스트
-        Map<Hotel, List<AvailableRoom>> properties = new HashMap<>();
+        LinkedHashMap<Hotel, List<AvailableRoom>> properties = new LinkedHashMap<>();
         rooms.forEach(room -> {
             AvailableRoom availableRoom = new AvailableRoom();
             availableRoom.setId(room.getId());
@@ -81,9 +78,17 @@ public class HotelService {
             }
         });
         System.out.println("2");
+//        Map<Hotel, List<AvailableRoom>> filteredMap = properties.entrySet().stream()
+//                .filter(entry -> entry.getValue().size() >= findHotel.getRoomCount())
+//                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         Map<Hotel, List<AvailableRoom>> filteredMap = properties.entrySet().stream()
                 .filter(entry -> entry.getValue().size() >= findHotel.getRoomCount())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue,  // 병합 함수 (동일 키 처리)
+                        LinkedHashMap::new  // 순서를 유지하기 위해 LinkedHashMap 사용
+                ));
         List<AvailableHotel> hotelList = new ArrayList<>();
         for(Map.Entry<Hotel, List<AvailableRoom>> entry : filteredMap.entrySet()) {
             AvailableHotel availableHotel = new AvailableHotel();

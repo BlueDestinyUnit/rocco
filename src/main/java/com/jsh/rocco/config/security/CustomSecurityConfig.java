@@ -80,7 +80,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("search").permitAll()
                         .requestMatchers("searchAvailableHotel").permitAll()
                         .requestMatchers("admin/room").permitAll()
-                        .requestMatchers("admin/room/").permitAll()
+                        .requestMatchers("admin/hotel").permitAll()
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/user/*").permitAll()
                         .requestMatchers("/user/logout/").permitAll()
