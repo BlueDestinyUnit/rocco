@@ -12,28 +12,35 @@
 <body>
 <!-- 이 부분은 layout.html에서 정의한 컨텐츠 영역에 삽입됩니다. -->
 <section layout:fragment="content">
-    <h1>Main Content</h1>
     <section class="search hotels-search">
         <form id="searchForm">
             <label>
                 <span>지역 : </span>
-                <input name="hotelRegion" type="text" value="대구">
+                <select class="_obj-select" name="hotelRegion" id="">
+                    <option selected value="대구">대구</option>
+                    <option value="광주">광주</option>
+                    <option value="부산">부산</option>
+                    <option value="대전">대전</option>
+                    <option value="서울">서울</option>
+                    <option value="경기">경기</option>
+                </select>
+<!--                <input name="hotelRegion" type="text" value="대구">-->
             </label>
             <label class="arriv">
-                <input type="date" id="arrivalDate" name="arrivalDate" value="2024-04-13">
+                <input class="_obj-input" type="date" id="arrivalDate" name="arrivalDate" value="2024-04-13">
             </label>
             <label class="depart">
-                <input type="date" id="departureDate" name="departureDate" value="2024-04-14">
+                <input class="_obj-input" type="date" id="departureDate" name="departureDate" value="2024-04-14">
             </label>
             <label>
-                <input name="customers" type="number" value="1">
+                <input class="_obj-input" name="customers" type="number" value="1">
             </label>
             <label>
-                <input name="roomCount" type="number" value="1">
+                <input class="_obj-input" name="roomCount" type="number" value="1">
             </label>
 
-            <button type="reset">리셋</button>
-            <button type="submit">검색</button>
+            <button class="_obj-button" type="reset">리셋</button>
+            <button class="_obj-button" type="submit">검색</button>
         </form>
     </section>
     <section id="hotelSection">
