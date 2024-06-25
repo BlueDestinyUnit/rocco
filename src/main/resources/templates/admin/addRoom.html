@@ -1,0 +1,70 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{./layouts/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+
+    <!-- 추가적으로 필요한 CSS나 스타일시트를 로드할 수 있습니다. -->
+</head>
+<body>
+<!-- 이 부분은 layout.html에서 정의한 컨텐츠 영역에 삽입됩니다. -->
+<section layout:fragment="content">
+    <h1>방 추가</h1>
+    <section>
+<!--        <form method="post" id="searchForm" action="./room" enctype="multipart/form-data">-->
+<!--            <label>-->
+<!--                <span>호텔  : </span>-->
+<!--                <input name="hotelId" type="text" value="1001">-->
+<!--            </label>-->
+<!--            <label class="arriv">-->
+<!--                <input type="text" name="roomNum" value="1">-->
+<!--            </label>-->
+<!--            <label class="depart">-->
+<!--                <input type="text" id="name" name="name" value="테스트방1">-->
+<!--            </label>-->
+<!--            <label>-->
+<!--                <input name="price" type="number" value="1000000">-->
+<!--            </label>-->
+<!--            <label>-->
+<!--                <input name="_thumbnail" type="file" >-->
+<!--            </label>-->
+<!--            <button type="reset">리셋</button>-->
+<!--            <button type="submit">제출</button>-->
+<!--        </form>-->
+
+        <form class="row g-3" method="post" action="./room" enctype="multipart/form-data">
+            <div class="col-md-6">
+                <label for="hotelId" class="form-label">호텔 일련번호</label>
+                <input name="hotelId" type="text" class="form-control" id="hotelId">
+            </div>
+            <div class="col-md-6">
+                <label for="roomNum" class="form-label">방 번호</label>
+                <input name="roomNum" type="number" class="form-control" id="roomNum">
+            </div>
+            <div class="col-12">
+                <label for="roomName" class="form-label">방 이름</label>
+                <input name="roomName" type="text" class="form-control" id="roomName" placeholder="1234 Main St">
+            </div>
+            <div class="col-12">
+                <label for="roomCapacity" class="form-label">수용량</label>
+                <input name="capacity" type="number" class="form-control" id="roomCapacity" placeholder="Apartment, studio, or floor">
+            </div>
+            <div class="col-md-6">
+                <label for="roomPrice" class="form-label">가격</label>
+                <input name="price" type="number" class="form-control" id="roomPrice">
+            </div>
+            <div class="mb-3">
+                <label for="formFile" class="form-label">방 이미지</label>
+                <input name="_thumbnail" class="form-control" type="file" id="formFile">
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">제출</button>
+            </div>
+        </form>
+
+    </section>
+    <!-- 추가적인 메인 페이지의 컨텐츠를 여기에 추가할 수 있습니다. -->
+</section>
+</body>
+</html>

@@ -30,7 +30,6 @@ public class RoccoUser  implements UserDetails {
     private long id;
     private String email;
     private String password;
-    private String nickname;
     private char sex = 'x';
 
     @Enumerated(EnumType.STRING)

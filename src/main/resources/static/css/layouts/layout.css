@@ -58,7 +58,7 @@
 
 #footer {
   position: relative;
-  height: 100px;
+  min-height: 100px;
   background-color: darkkhaki;
   transform: translateY(-100%);
 }

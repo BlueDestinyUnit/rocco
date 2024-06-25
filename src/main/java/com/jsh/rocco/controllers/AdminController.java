@@ -29,9 +29,9 @@ public class AdminController {
     }
 
 
-    @GetMapping("room")
+    @GetMapping("addRoom")
     public String getAddRoom() {
-        return "admin/room";
+        return "/admin/addRoom";
     }
 
     ;
@@ -43,14 +43,14 @@ public class AdminController {
         room.setThumbnail(thumbnail.getBytes());
         room.setThumbnailContentType(thumbnail.getContentType());
         roomService.addRoom2(room, hotelId);
-        return "admin/room";
+        return "addRoom";
     }
 
     ;
 
-    @GetMapping("hotel")
+    @GetMapping("addHotel")
     public String getAddHotel() {
-        return "admin/hotel";
+        return "/admin/addHotel";
     }
 
     ;
@@ -59,7 +59,7 @@ public class AdminController {
     public String postAddHotel(@RequestParam("_thumbnail") MultipartFile thumbnail,
                                Hotel hotel) throws IOException {
         hotelService.addHotel(hotel);
-        return "admin/room";
+        return "addHotel";
     }
 
 }

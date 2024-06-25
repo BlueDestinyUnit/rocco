@@ -4,7 +4,7 @@ spring:
     hikari:
       jdbc-url: jdbc:mysql://web-db.cwyul76uxnv8.ap-northeast-2.rds.amazonaws.com:3306/rocco
       username: root
-      password: qwer1234
+      password: navy3fleet
       maximum-pool-size: 30
   jpa:
     database: mysql
