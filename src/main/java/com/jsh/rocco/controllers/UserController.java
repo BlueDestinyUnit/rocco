@@ -2,7 +2,6 @@ package com.jsh.rocco.controllers;
 
 import com.jsh.rocco.config.security.domains.RoccoUser;
 import com.jsh.rocco.domains.enums.results.CommonResult;
-import com.jsh.rocco.domains.enums.results.EmailAuthResult;
 import com.jsh.rocco.domains.enums.results.Result;
 import com.jsh.rocco.services.UserService;
 import jakarta.mail.MessagingException;
@@ -50,8 +49,6 @@ public class UserController {
     public String logout2Message() {
         return "messages ok";
     }
-
-
 
     @PostMapping("sendEmailCode")
     @ResponseBody
